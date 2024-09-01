@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.squmish.rcuapp.viewmodel.DashboardViewModel" />
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardBackgroundColor="@color/gray_616161"
+        android:layout_marginBottom="@dimen/_30sdp">
+
+
+        <com.squmish.rcuapp.widget.SmallText
+            android:id="@+id/totalVerification"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:paddingStart="20dp"
+            android:text="@string/totalVerification"
+            tools:ignore="MissingConstraints,RtlSymmetry">
+
+        </com.squmish.rcuapp.widget.SmallText>
+
+        <LinearLayout
+            android:id="@+id/ll_TotalVerification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/_15sdp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginEnd="@dimen/_20sdp"
+            tools:ignore="MissingConstraints">
+
+            <com.squmish.rcuapp.widget.HeaderText
+                android:id="@+id/totalVerificationCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/white_circle_drawable"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:text="1">
+
+            </com.squmish.rcuapp.widget.HeaderText>
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvDashboard"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:clipToPadding="false"
+            android:fadeScrollbars="false"
+            android:paddingTop="6dp"
+            android:paddingBottom="56dp"
+            android:overScrollMode="never"
+            android:layout_marginBottom="@dimen/_50sdp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@+id/ll_TotalVerification"
+            tools:listitem="@layout/item_dashboard" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
