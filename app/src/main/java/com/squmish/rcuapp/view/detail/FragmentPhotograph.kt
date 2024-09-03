@@ -9,9 +9,12 @@ import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.Typeface
 import android.media.ExifInterface
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.CalendarContract.Colors
 import android.provider.MediaStore
 import android.text.Layout
 import android.text.StaticLayout
@@ -20,6 +23,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.core.content.FileProvider
 import androidx.core.view.forEach
 import com.karumi.dexter.BuildConfig
@@ -98,6 +102,7 @@ class FragmentPhotograph: BaseFragment(), FragmentLifecycleInterface {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -176,6 +181,7 @@ class FragmentPhotograph: BaseFragment(), FragmentLifecycleInterface {
 
 
     // For Upload Image
+    @RequiresApi(Build.VERSION_CODES.Q)
     @SuppressLint("DefaultLocale")
     private fun uploadImage() {
         if (imgFile != null) {
@@ -215,7 +221,7 @@ class FragmentPhotograph: BaseFragment(), FragmentLifecycleInterface {
             paint1.textSize = 100F
 
             // text shadow
-            paint1.setShadowLayer(1f, 0f, 0f, Color.WHITE)
+         ///   paint1.setShadowLayer(1f, 0f, 0f, Color.WHITE)
 
 
             // set text width to canvas width minus 16dp padding
@@ -232,10 +238,15 @@ class FragmentPhotograph: BaseFragment(), FragmentLifecycleInterface {
             val x = ((mutableBitmap.width - textWidth) - 10).toFloat()
             val y = ((mutableBitmap.height - textHeight) - 40).toFloat()
 
+            paint1.setShadowLayer(100F, 100F, 100F,Color.RED);
+
+            paint1.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+
             // draw text to the Canvas center
             canvas1.save()
             canvas1.translate(x, y)
             textLayout.draw(canvas1)
+
           //  binding.ivImage.setImageBitmap(mutableBitmap)
             saveImage(mutableBitmap)
         }
