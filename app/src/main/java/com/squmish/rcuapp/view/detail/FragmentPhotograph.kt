@@ -163,7 +163,7 @@ class FragmentPhotograph: BaseFragment(), FragmentLifecycleInterface {
             imgFile = File(imagesFolder, Date().time.toString() + ".jpg")
             imagePath = FileProvider.getUriForFile(
                 requireActivity(),
-                BuildConfig.APPLICATION_ID  + ".fileProvider",
+                com.squmish.rcuapp.BuildConfig.APPLICATION_ID + ".fileProvider",
                 imgFile!!
             )
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -248,7 +248,7 @@ class FragmentPhotograph: BaseFragment(), FragmentLifecycleInterface {
         try {
             imagesFolder.mkdirs()
             imgFile = File(imagesFolder, "LocationImage" + ".jpg")
-            imagePath = FileProvider.getUriForFile(requireActivity(), BuildConfig.APPLICATION_ID  + ".fileProvider", imgFile!!)
+            imagePath = FileProvider.getUriForFile(requireActivity(), com.squmish.rcuapp.BuildConfig.APPLICATION_ID  + ".fileProvider", imgFile!!)
 
             val fOut: FileOutputStream = FileOutputStream(imgFile)
             val mutableBitmap = getResizedBitmap(mutableBitmap!!, 500);

@@ -7,6 +7,11 @@ android {
     namespace = "com.squmish.rcuapp"
     compileSdk = 34
 
+    buildFeatures {
+        buildConfig = true
+    }
+
+
     defaultConfig {
         applicationId = "com.squmish.rcuapp"
         minSdk = 26
