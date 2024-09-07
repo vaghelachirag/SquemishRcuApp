@@ -172,7 +172,7 @@
 
 
     <string name="address">Address :  </string>
-    <string name="mobileNumber">Mobile Number :  </string>
+    <string name="mobileNumber">Mobile No :  </string>
     <string name="bank">Bank : </string>
     <string name="product">Product : </string>
     <string name="caseId">CaseId : </string>
@@ -184,7 +184,7 @@
     <!--  Residence Verification-->
     <string name="refNo">Ref No :  </string>
     <string name="caseID">Case Id : </string>
-    <string name="bankName">Bank/NBFC Name : </string>
+    <string name="bankName">bank/nbfc : </string>
     <string name="verificationFor">Verification for : </string>
     <string name="verificationType">Verification Type : </string>
     <string name="applicant">Applicant/ Father Name :</string>
@@ -196,7 +196,7 @@
     <string name="prepost">Pre/Post :</string>
     <string name="loanAmount">Loan Amount :</string>
     <string name="triggers">Triggers :</string>
-    <string name="backendname">BackendName :</string>
+    <string name="backendname">Assign :</string>
 
 
    <!-- Final Submit-->

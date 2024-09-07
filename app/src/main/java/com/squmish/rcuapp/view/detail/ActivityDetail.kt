@@ -174,12 +174,13 @@ class ActivityDetail  : BaseActivity()  {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
         } else {
-            try {
+          /*  try {
                 mFusedLocationClient.lastLocation.addOnCompleteListener(this) { task ->
                     val location: Location? = task.result
                     if (location == null) {
 
                     } else {
+
                         currentLat = location.latitude
                         currentLong = location.longitude
                         addresses = geocoder!!.getFromLocation(location.latitude, location.longitude, 1);
@@ -192,7 +193,7 @@ class ActivityDetail  : BaseActivity()  {
                 locationManager!!.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 10f, locationListener!!)
             }catch (_: Exception){
 
-            }
+            }*/
         }
     }
 

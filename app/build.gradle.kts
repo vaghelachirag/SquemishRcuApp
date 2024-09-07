@@ -83,35 +83,38 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
 
-    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.8.3")
+    implementation (libs.androidx.lifecycle.runtime.ktx.v283)
 
     //Networking
-    implementation ("com.squareup.okhttp3:logging-interceptor:4.2.2")
-    implementation ("com.squareup.retrofit2:adapter-rxjava2:2.6.2")
+    implementation (libs.logging.interceptor)
+    implementation (libs.adapter.rxjava2)
 
-    implementation ("com.squareup.retrofit2:retrofit:2.2.0")
-    implementation ("com.squareup.retrofit2:converter-gson:2.2.0")
+    implementation (libs.retrofit)
+    implementation (libs.converter.gson)
 
-    implementation ("io.reactivex.rxjava2:rxandroid:2.1.1")
-    implementation ("com.jakewharton.rxbinding3:rxbinding:3.1.0")
-
+    implementation (libs.rxandroid)
+    implementation (libs.rxbinding)
 
     // Room Database
-    implementation ("androidx.room:room-runtime:2.6.1")
-    annotationProcessor ("androidx.room:room-compiler:2.6.1")
-
+    implementation (libs.androidx.room.runtime)
+    annotationProcessor (libs.androidx.room.compiler)
 
     //Image Process
-    implementation ("com.github.bumptech.glide:glide:4.11.0")
-    implementation ("com.github.bumptech.glide:annotations:4.11.0")
+    implementation (libs.glide)
+    implementation (libs.annotations)
 
 
-    implementation ("com.karumi:dexter:6.0.2")
+    implementation (libs.dexter)
 
     // dp and sp size for multiple layout
-    implementation ("com.intuit.ssp:ssp-android:1.1.0")
-    implementation ("com.intuit.sdp:sdp-android:1.1.0")
+    implementation (libs.ssp.android)
+    implementation (libs.sdp.android)
 
-    implementation ("com.google.android.material:material:1.5.0")
+    implementation (libs.material)
+
+    implementation (libs.firebase.messaging.ktx)
+    implementation (platform(libs.firebase.bom))
+    implementation (libs.androidx.work.runtime.ktx)
+    implementation  (platform(libs.firebase.bom.v2931))
 
 }
