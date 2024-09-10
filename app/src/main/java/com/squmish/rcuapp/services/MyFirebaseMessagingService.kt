@@ -26,7 +26,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService(){
 
 
     override fun onNewToken(token: String) {
-        Log.d("New_Token", token)
+        Log.e("NewToken", token)
+        getSharedPreferences("_", MODE_PRIVATE).edit().putString("fb", token).apply()
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
