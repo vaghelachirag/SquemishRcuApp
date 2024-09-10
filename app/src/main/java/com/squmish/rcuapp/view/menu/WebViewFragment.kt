@@ -12,6 +12,7 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import com.squmish.rcuapp.databinding.FragmentLoadWebUrlBinding
 import com.squmish.rcuapp.view.base.BaseFragment
 import com.squmish.rcuapp.viewmodel.WebViewViewModel
@@ -88,4 +89,6 @@ class WebViewFragment: BaseFragment() {
 
         return binding.root
     }
+     
+
 }

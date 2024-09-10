@@ -20,11 +20,8 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.squmish.rcuapp.MainActivity
-import com.squmish.rcuapp.uttils.Utils
-import com.squmish.rcuapp.view.adapter.MenuItemAdapter
-import com.squmish.rcuapp.view.base.BaseActivity
 import com.example.rcuapp.view.dialougs.ChangePasswordDialoug
+import com.squmish.rcuapp.MainActivity
 import com.squmish.rcuapp.R
 import com.squmish.rcuapp.databinding.ActivityDashboardBinding
 import com.squmish.rcuapp.interfaces.OnItemSelected
@@ -35,12 +32,17 @@ import com.squmish.rcuapp.network.Networking
 import com.squmish.rcuapp.uttils.AppConstants
 import com.squmish.rcuapp.uttils.Session
 import com.squmish.rcuapp.uttils.Utility
+import com.squmish.rcuapp.uttils.Utils
+import com.squmish.rcuapp.view.adapter.MenuItemAdapter
+import com.squmish.rcuapp.view.base.BaseActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 
 @Suppress("DEPRECATION")
 class DashboardActivity : BaseActivity() {
+
+
     private lateinit var binding: ActivityDashboardBinding
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -58,6 +60,11 @@ class DashboardActivity : BaseActivity() {
         activityDashboard = this
         binding = DataBindingUtil.setContentView(this, R.layout.activity_dashboard)
         session = Session(this);
+
+      /*  binding.pullToRefresh.setOnRefreshListener(OnRefreshListener {
+         Log.e("Onrefresh","OnRefresh")
+        })
+*/
 
 
         // Set up ActionBar
@@ -145,6 +152,7 @@ class DashboardActivity : BaseActivity() {
                 binding.drawer.openDrawer(GravityCompat.START)
             }
         }
+
     }
 
     private fun showLogoutAlertDialog() {

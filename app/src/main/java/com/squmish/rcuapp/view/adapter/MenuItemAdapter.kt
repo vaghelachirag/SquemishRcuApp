@@ -36,7 +36,6 @@ class MenuItemAdapter(val context: Context, private val list: ArrayList<GetMenuL
         val options: RequestOptions = RequestOptions()
             .centerCrop()
             .placeholder(R.mipmap.ic_launcher_round)
-            .circleCrop()
             .error(R.mipmap.ic_launcher_round)
 
         Glide.with(context).load(list[position].getIcon()).apply(options).into(holder.binding.ivLogo)
