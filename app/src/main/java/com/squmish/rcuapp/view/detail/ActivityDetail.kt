@@ -3,6 +3,7 @@ import android.annotation.SuppressLint
 
 import android.os.Bundle
 import android.util.Log
+import android.view.WindowManager
 import androidx.viewpager.widget.ViewPager
 import com.squmish.rcuapp.uttils.Utils
 import com.squmish.rcuapp.view.adapter.VerificationDetailViewPagerAdapter
@@ -27,7 +28,7 @@ open class ActivityDetail  : BaseActivity()  {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE)
         binding.lifecycleOwner = this
         detailViewModel.init(this)
         setProgressData()

@@ -13,6 +13,7 @@ import com.squmish.rcuapp.network.CallbackObserver
 import com.squmish.rcuapp.network.Networking
 import com.squmish.rcuapp.uttils.AppConstants
 import com.squmish.rcuapp.uttils.Utility
+import com.squmish.rcuapp.view.menu.DashboardActivity
 import com.squmish.rcuapp.view.menu.DashboardFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -34,8 +35,8 @@ class RCOVerificationViewModel(private val context: Context, private  val bindin
             Networking.with(context)
                 .getServices()
                 .getRcuVerificationWebpage(menuId,
-                    DashboardFragment.currentLat.toString(),
-                    DashboardFragment.currentLong.toString(),
+                    DashboardActivity.currentLat.toString(),
+                    DashboardActivity.currentLong.toString(),
                     AppConstants.verificationId.toString())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

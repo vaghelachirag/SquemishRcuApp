@@ -59,7 +59,7 @@ class FragmentBasicInformation  : BaseFragment(), FragmentLifecycleInterface {
 
         }
 
-        DashboardActivity().navController.popBackStack(R.id.dashboardFragment, false);
+       // DashboardActivity().navController.popBackStack(R.id.dashboardFragment, false);
 
         return binding.root
     }

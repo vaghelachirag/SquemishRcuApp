@@ -41,7 +41,7 @@ import com.squmish.rcuapp.uttils.ImagePickerDialog
 import com.squmish.rcuapp.uttils.Utility
 import com.squmish.rcuapp.uttils.Utility.Companion.setAllEnabled
 import com.squmish.rcuapp.uttils.onItemClick
-import com.squmish.rcuapp.view.menu.DashboardFragment
+import com.squmish.rcuapp.view.menu.DashboardActivity
 import java.io.File
 import java.io.FileOutputStream
 import java.util.Date
@@ -126,17 +126,17 @@ class FragmentPhotograph: BaseFragment(), FragmentLifecycleInterface {
             .withPermissions(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE)
             .withListener(object : MultiplePermissionsListener {
                 override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
-                   // openImagePickerDialog()
+                    // openImagePickerDialog()
                     displayCamera()
 
-                   /* if (report!!.areAllPermissionsGranted()) {
-                        openImagePickerDialog()
-                    } else {
-                        Utility.showSettingsDialog(requireActivity())
-                    }
-                    if (report.isAnyPermissionPermanentlyDenied) {
-                        Utility.showSettingsDialog(requireActivity())
-                    }*/
+                    /* if (report!!.areAllPermissionsGranted()) {
+                         openImagePickerDialog()
+                     } else {
+                         Utility.showSettingsDialog(requireActivity())
+                     }
+                     if (report.isAnyPermissionPermanentlyDenied) {
+                         Utility.showSettingsDialog(requireActivity())
+                     }*/
                 }
 
                 override fun onPermissionRationaleShouldBeShown(permissions: MutableList<com.karumi.dexter.listener.PermissionRequest>?, token: PermissionToken?) {
@@ -204,13 +204,13 @@ class FragmentPhotograph: BaseFragment(), FragmentLifecycleInterface {
 
             val builder = StringBuilder()
             builder.append(Utility.getCurrentDate()).append("\n")
-            builder.append("Latitude: ").append(String.format("%.6f", DashboardFragment.currentLat)).append("\n")
-            builder.append("Longitude: ").append(String.format("%.6f", DashboardFragment.currentLong)).append("\n")
+            builder.append("Latitude: ").append(String.format("%.6f", DashboardActivity.currentLat)).append("\n")
+            builder.append("Longitude: ").append(String.format("%.6f", DashboardActivity.currentLong)).append("\n")
             builder.append(ActivityDetail.useraddress)
 
             val scale = resources.displayMetrics.density
 
-          //  saveToInternalStorage(mutableBitmap)
+            //  saveToInternalStorage(mutableBitmap)
 
             val canvas1 = Canvas(mutableBitmap)
             val paint1 = TextPaint(Paint.ANTI_ALIAS_FLAG)
@@ -222,7 +222,7 @@ class FragmentPhotograph: BaseFragment(), FragmentLifecycleInterface {
             paint1.textSize = 100F
 
             // text shadow
-         ///   paint1.setShadowLayer(1f, 0f, 0f, Color.WHITE)
+            ///   paint1.setShadowLayer(1f, 0f, 0f, Color.WHITE)
 
 
             // set text width to canvas width minus 16dp padding
@@ -239,7 +239,7 @@ class FragmentPhotograph: BaseFragment(), FragmentLifecycleInterface {
             val x = ((mutableBitmap.width - textWidth) - 10).toFloat()
             val y = ((mutableBitmap.height - textHeight) - 40).toFloat()
 
-          //  paint1.setShadowLayer(100F, 100F, 100F,Color.RED);
+            paint1.setShadowLayer(100F, 100F, 100F,Color.RED);
 
             paint1.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
 
@@ -248,7 +248,7 @@ class FragmentPhotograph: BaseFragment(), FragmentLifecycleInterface {
             canvas1.translate(x, y)
             textLayout.draw(canvas1)
 
-          //  binding.ivImage.setImageBitmap(mutableBitmap)
+            //  binding.ivImage.setImageBitmap(mutableBitmap)
             saveImage(mutableBitmap)
         }
 
@@ -264,7 +264,7 @@ class FragmentPhotograph: BaseFragment(), FragmentLifecycleInterface {
 
             val fOut: FileOutputStream = FileOutputStream(imgFile)
             val mutableBitmap = getResizedBitmap(mutableBitmap!!, 500);
-            mutableBitmap.compress(Bitmap.CompressFormat.PNG, 80, fOut)
+            mutableBitmap.compress(Bitmap.CompressFormat.PNG, 50, fOut)
             fOut.flush()
             fOut.close()
 

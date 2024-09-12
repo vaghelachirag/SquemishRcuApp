@@ -21,6 +21,7 @@ import com.squmish.rcuapp.network.CallbackObserver
 import com.squmish.rcuapp.network.Networking
 import com.squmish.rcuapp.uttils.AppConstants
 import com.squmish.rcuapp.uttils.Utility
+import com.squmish.rcuapp.view.menu.DashboardActivity
 import com.squmish.rcuapp.view.menu.DashboardFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -143,8 +144,8 @@ class DocumentProfileVerificationViewModel(private val context: Context, private
             edAuthorizePersonDesignation.set(Utility.getNullToBlankString(ActivityDetail.selectedData!!.getFirequestDocumentProfileVerification()!!.getAuthorisedPersonDesignation().toString()))
             edDocument.set(Utility.getNullToBlankString(ActivityDetail.selectedData!!.getFirequestDocumentProfileVerification()!!.getDocumentName().toString()))
 
-            edtLatitude.set(DashboardFragment.currentLat.toString())
-            edtLongitude.set(DashboardFragment.currentLong.toString())
+            edtLatitude.set(DashboardActivity.currentLat.toString())
+            edtLongitude.set(DashboardActivity.currentLong.toString())
 
         }catch (_: Exception){
         }

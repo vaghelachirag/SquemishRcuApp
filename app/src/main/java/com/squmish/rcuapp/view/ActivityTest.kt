@@ -31,7 +31,6 @@ import com.squmish.rcuapp.R
 import com.squmish.rcuapp.databinding.TestActivityBinding
 import com.squmish.rcuapp.view.base.BaseActivity
 import com.squmish.rcuapp.view.menu.DashboardFragment
-import com.squmish.rcuapp.view.menu.DashboardFragment.Companion
 import java.util.Locale
 
 
@@ -57,11 +56,6 @@ open class ActivityTest: BaseActivity()  {
     private val REQUEST_CHECK_SETTINGS = 0x1
 
 
-    companion object {
-        public  var currentLat : Double = 0.0
-        public  var currentLong : Double = 0.0
-        public  var useraddress : String = ""
-    }
 
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String?>, grantResults: IntArray) {
@@ -153,11 +147,10 @@ open class ActivityTest: BaseActivity()  {
             override fun onLocationChanged(location: Location) {
                 Log.i("LOCATION", location.toString())
                 Log.e("Location",location.toString())
-                DashboardFragment.currentLat = location.latitude
-                DashboardFragment.currentLong = location.longitude
+
                 addresses = geocoder!!.getFromLocation(location.latitude, location.longitude, 1);
                 if(!addresses.isNullOrEmpty()){
-                    DashboardFragment.useraddress = addresses!![0].getAddressLine(0)
+                  //  DashboardFragment.useraddress = addresses!![0].getAddressLine(0)
                     Log.e("Address",addresses.toString())
                 }
                 //Toast.makeText(getApplicationContext(),location.toString(),Toast.LENGTH_SHORT).show();

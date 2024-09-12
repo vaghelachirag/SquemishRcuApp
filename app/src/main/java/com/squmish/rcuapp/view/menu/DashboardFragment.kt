@@ -39,6 +39,7 @@ import com.squmish.rcuapp.uttils.Session.Companion.DATA
 import com.squmish.rcuapp.view.base.BaseFragment
 import com.squmish.rcuapp.view.detail.ActivityDetail
 import com.squmish.rcuapp.viewmodel.DashboardViewModel
+import java.util.Locale
 
 
 class DashboardFragment: BaseFragment() {
@@ -51,21 +52,6 @@ class DashboardFragment: BaseFragment() {
     // Location
     var locationManager: LocationManager? = null
     var locationListener: LocationListener? = null
-
-    var geocoder: Geocoder? = null
-    var addresses: List<Address>? = null
-
-    lateinit var mFusedLocationClient: FusedLocationProviderClient
-
-    // For Location Request
-    private var googleApiClient: GoogleApiClient? = null
-    private val REQUEST_CHECK_SETTINGS = 0x1
-
-    companion object {
-        public  var currentLat : Double = 0.0
-        public  var currentLong : Double = 0.0
-        public  var useraddress : String = ""
-    }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String?>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
@@ -81,31 +67,6 @@ class DashboardFragment: BaseFragment() {
         _binding = DashboardFragmentBinding.inflate(inflater, container, false)
         binding.viewModel = dashboardViewModel
         binding.lifecycleOwner = this
-
-
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
-        geocoder = Geocoder(requireActivity(), Locale.getDefault())
-        locationManager = requireActivity().getSystemService(LOCATION_SERVICE) as LocationManager
-
-        googleApiClient = getAPIClientInstance();
-        if (googleApiClient != null) {
-            googleApiClient!!.connect();
-        }
-
-        getUserCurrentLocation()
-
-        Dexter.withActivity(requireActivity())
-            .withPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
-            .withListener(object : MultiplePermissionsListener {
-                override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
-                    requestGPSSettings()
-                }
-
-                override fun onPermissionRationaleShouldBeShown(permissions: MutableList<com.karumi.dexter.listener.PermissionRequest>?, token: PermissionToken?) {
-                    token!!.continuePermissionRequest()
-                }
-            }).withErrorListener { }.onSameThread().check()
-
 
         dashboardViewModel.isLoading.observe(requireActivity()) { isLoading ->
             if (isLoading && isAdded) showProgressbar()
@@ -123,49 +84,6 @@ class DashboardFragment: BaseFragment() {
         return binding.root
     }
 
-    private fun getAPIClientInstance(): GoogleApiClient {
-        return GoogleApiClient.Builder(requireActivity())
-            .addApi(LocationServices.API).build()
-    }
-
-    private fun requestGPSSettings() {
-        val locationRequest: LocationRequest = LocationRequest.create()
-        locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY)
-        locationRequest.setInterval(2000)
-        locationRequest.setFastestInterval(500)
-        val builder = LocationSettingsRequest.Builder().addLocationRequest(locationRequest)
-        builder.setAlwaysShow(true)
-        val result: PendingResult<LocationSettingsResult> =
-            LocationServices.SettingsApi.checkLocationSettings(googleApiClient!!, builder.build())
-        result.setResultCallback { result ->
-            val status: Status = result.status
-            when (status.statusCode) {
-                LocationSettingsStatusCodes.SUCCESS -> {
-                    Log.i("", "All location settings are satisfied.")
-                }
-
-                LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> {
-                    Log.i(
-                        "",
-                        "Location settings are not satisfied. Show the user a dialog to" + "upgrade location settings "
-                    )
-                    try { status.startResolutionForResult(
-                        requireActivity(), REQUEST_CHECK_SETTINGS)
-                    } catch (e: IntentSender.SendIntentException) {
-                        Log.e("Applicationsett", e.toString())
-                    }
-                }
-
-                LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE -> {
-                    Log.i(
-                        "",
-                        "Location settings are inadequate, and cannot be fixed here. Dialog " + "not created."
-                    )
-                }
-            }
-        }
-    }
-
     fun  redirectToDetailScreen(getPendingRequestData: GetPendingRequestData) {
         val bundle = Bundle()
         bundle.putSerializable(DATA, getPendingRequestData.getFirequestId())
@@ -179,58 +97,5 @@ class DashboardFragment: BaseFragment() {
     override fun onResume() {
         super.onResume()
         dashboardViewModel.init(requireContext())
-    }
-
-    private fun getUserCurrentLocation() {
-        locationListener = object : LocationListener {
-            override fun onLocationChanged(location: Location) {
-                Log.i("LOCATION", location.toString())
-                Log.e("Location",location.toString())
-                currentLat = location.latitude
-                currentLong = location.longitude
-                addresses = geocoder!!.getFromLocation(location.latitude, location.longitude, 1);
-                if(!addresses.isNullOrEmpty()){
-                    useraddress = addresses!![0].getAddressLine(0)
-                    Log.e("Address",addresses.toString())
-                }
-                //Toast.makeText(getApplicationContext(),location.toString(),Toast.LENGTH_SHORT).show();
-            }
-
-            override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {
-                Log.e("Location","Status Changed")
-            }
-            override fun onProviderEnabled(provider: String) {
-                Log.e("Location","Enable")
-            }
-            override fun onProviderDisabled(provider: String) {
-                Log.e("Location","Disable")
-                //  Utility.showLocationAlert(this@ActivityDetail)
-            }
-        }
-
-        if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
-        } else {
-            /*  try {
-                  mFusedLocationClient.lastLocation.addOnCompleteListener(this) { task ->
-                      val location: Location? = task.result
-                      if (location == null) {
-
-                      } else {
-
-                          currentLat = location.latitude
-                          currentLong = location.longitude
-                          addresses = geocoder!!.getFromLocation(location.latitude, location.longitude, 1);
-                          if (!addresses.isNullOrEmpty()){
-                              useraddress = addresses!![0].getAddressLine(0)
-                              Log.e("CurrentLocation",location.latitude.toString())
-                          }
-                      }
-                  }
-                  locationManager!!.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 10f, locationListener!!)
-              }catch (_: Exception){
-
-              }*/
-        }
     }
 }
