@@ -33,15 +33,12 @@ import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.squmish.rcuapp.databinding.DashboardFragmentBinding
-import com.squmish.rcuapp.model.getverificationDetailResponse.GetVerificationDetailData
 import com.squmish.rcuapp.model.pendingRequest.GetPendingRequestData
 import com.squmish.rcuapp.uttils.AppConstants
 import com.squmish.rcuapp.uttils.Session.Companion.DATA
 import com.squmish.rcuapp.view.base.BaseFragment
 import com.squmish.rcuapp.view.detail.ActivityDetail
-import com.squmish.rcuapp.view.detail.ActivityDetail.Companion.useraddress
 import com.squmish.rcuapp.viewmodel.DashboardViewModel
-import java.util.Locale
 
 
 class DashboardFragment: BaseFragment() {
