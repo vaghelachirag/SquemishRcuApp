@@ -50,20 +50,27 @@
             </com.squmish.rcuapp.widget.HeaderText>
         </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvDashboard"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/refreshLayout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:clipToPadding="false"
-            android:fadeScrollbars="false"
-            android:paddingTop="6dp"
-            android:paddingBottom="56dp"
-            android:overScrollMode="never"
-            android:layout_marginBottom="@dimen/_50sdp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@+id/ll_TotalVerification"
-            tools:listitem="@layout/item_dashboard" />
+            app:layout_constraintTop_toBottomOf="@+id/ll_TotalVerification">
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvDashboard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:fadeScrollbars="false"
+                android:paddingTop="6dp"
+                android:paddingBottom="56dp"
+                android:overScrollMode="never"
+                android:layout_marginBottom="@dimen/_50sdp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+
+                tools:listitem="@layout/item_dashboard" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -74,6 +74,7 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.play.services.location)
+    implementation(libs.androidx.swiperefreshlayout)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -112,9 +113,15 @@ dependencies {
 
     implementation (libs.material)
 
-    implementation (libs.firebase.messaging.ktx)
     implementation (platform(libs.firebase.bom))
     implementation (libs.androidx.work.runtime.ktx)
     implementation  (platform(libs.firebase.bom.v2931))
+
+    implementation ("com.google.firebase:firebase-analytics:18.0.3")
+    implementation ("com.google.firebase:firebase-messaging:21.1.0")
+
+    implementation ("com.google.firebase:firebase-core:17.2.1")
+    implementation ("com.google.firebase:firebase-messaging:20.0.0")
+    implementation ("com.google.firebase:firebase-auth:19.1.0")
 
 }

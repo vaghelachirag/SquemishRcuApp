@@ -29,6 +29,7 @@ rxbinding = "3.1.0"
 sdpAndroid = "1.1.0"
 sspAndroid = "1.1.0"
 workRuntimeKtx = "2.9.1"
+swiperefreshlayout = "1.1.0"
 
 [libraries]
 adapter-rxjava2 = { module = "com.squareup.retrofit2:adapter-rxjava2", version.ref = "adapterRxjava2" }
@@ -68,6 +69,7 @@ rxandroid = { module = "io.reactivex.rxjava2:rxandroid", version.ref = "rxandroi
 rxbinding = { module = "com.jakewharton.rxbinding3:rxbinding", version.ref = "rxbinding" }
 sdp-android = { module = "com.intuit.sdp:sdp-android", version.ref = "sdpAndroid" }
 ssp-android = { module = "com.intuit.ssp:ssp-android", version.ref = "sspAndroid" }
+androidx-swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swiperefreshlayout" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

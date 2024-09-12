@@ -13,8 +13,12 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import com.squmish.rcuapp.R
 import com.squmish.rcuapp.databinding.FragmentLoadWebUrlBinding
 import com.squmish.rcuapp.view.base.BaseFragment
+import com.squmish.rcuapp.view.menu.DashboardActivity
 import com.squmish.rcuapp.viewmodel.WebViewViewModel
 
 
@@ -25,6 +29,7 @@ class WebViewFragment: BaseFragment() {
     private val webViewViewModel by lazy { WebViewViewModel(activity as Context) }
     var menuId: String = ""
 
+
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -34,6 +39,8 @@ class WebViewFragment: BaseFragment() {
         menuId = requireArguments().getString("webURL").toString()
         context?.let { webViewViewModel.init(it,menuId) }
         Log.e("MenuId",menuId)
+
+        requireActivity().onBackPressedDispatcher.addCallback(requireActivity(), callback)
 
         webViewViewModel.isLoading.observe(requireActivity()) { isLoading ->
             if (isLoading && isAdded) showProgressbar()
@@ -48,18 +55,10 @@ class WebViewFragment: BaseFragment() {
 
                 showProgressbar()
                 binding.webView.setWebViewClient(object : WebViewClient() {
-                    @Deprecated("Deprecated in Java", ReplaceWith(
-                        "Toast.makeText(activity, description, Toast.LENGTH_SHORT).show()",
-                        "android.widget.Toast",
-                        "android.widget.Toast"
+                    @Deprecated("Deprecated in Java", ReplaceWith("Toast.makeText(activity, description, Toast.LENGTH_SHORT).show()", "android.widget.Toast", "android.widget.Toast"
                     )
                     )
-                    override fun onReceivedError(
-                        view: WebView,
-                        errorCode: Int,
-                        description: String,
-                        failingUrl: String
-                    ) {
+                    override fun onReceivedError(view: WebView, errorCode: Int, description: String, failingUrl: String) {
                         Toast.makeText(activity, description, Toast.LENGTH_SHORT).show()
                     }
 
@@ -89,6 +88,11 @@ class WebViewFragment: BaseFragment() {
 
         return binding.root
     }
-     
 
+    val callback: OnBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+             Log.e("OnBack","OnBack")
+
+            }
+        }
 }

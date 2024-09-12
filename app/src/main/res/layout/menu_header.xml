@@ -7,13 +7,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:padding="24dp">
+        android:padding="@dimen/_12sdp">
 
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/navHeaderLogo"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_100sdp"
+            android:layout_height="@dimen/_60sdp"
             android:src="@drawable/icon_splash"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
