@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.squmish.rcuapp.uttils.Utils
 import com.squmish.rcuapp.view.adapter.DashboardAdapter
-import com.example.rcuapp.view.menu.DashboardFragment
+import com.squmish.rcuapp.view.menu.DashboardFragment
 import com.squmish.rcuapp.R
 import com.squmish.rcuapp.databinding.DashboardFragmentBinding
 import com.squmish.rcuapp.interfaces.OnItemSelected
@@ -50,7 +50,7 @@ class DashboardViewModel(val context: Context, val dashboardFragment: DashboardF
     }
 
     @SuppressLint("HardwareIds")
-    private fun getPendingRequest() {
+    fun getPendingRequest() {
 
         if (Utility.isNetworkConnected(context)){
             isLoading.postValue(true)
@@ -62,15 +62,18 @@ class DashboardViewModel(val context: Context, val dashboardFragment: DashboardF
                 .subscribe(object : CallbackObserver<GetPendingRequestResponse>() {
                     override fun onSuccess(response: GetPendingRequestResponse) {
                         isLoading.postValue(false)
+                        binding.refreshLayout.isRefreshing = false
                     }
 
                     override fun onFailed(code: Int, message: String) {
                         isLoading.postValue(false)
+                        binding.refreshLayout.isRefreshing = false
                     }
 
                     override fun onNext(t: GetPendingRequestResponse) {
                         Log.e("Status",t.getStatusCode().toString())
                         isLoading.postValue(false)
+                        binding.refreshLayout.isRefreshing = false
                         if(t.getStatusCode() == 200){
                           verificationList.clear()
                           if(t.getData() != null){

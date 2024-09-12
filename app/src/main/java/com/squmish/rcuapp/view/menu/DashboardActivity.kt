@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -49,7 +50,7 @@ class DashboardActivity : BaseActivity() {
 
 
     private lateinit var binding: ActivityDashboardBinding
-    private lateinit var navController: NavController
+    lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
     private var activityDashboard : DashboardActivity? = null
 
@@ -65,6 +66,8 @@ class DashboardActivity : BaseActivity() {
         activityDashboard = this
         binding = DataBindingUtil.setContentView(this, R.layout.activity_dashboard)
         session = Session(this);
+
+        window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE)
 
       /*  binding.pullToRefresh.setOnRefreshListener(OnRefreshListener {
          Log.e("Onrefresh","OnRefresh")

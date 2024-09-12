@@ -1,4 +1,4 @@
-package com.example.rcuapp.view
+package com.squmish.rcuapp.view
 
 import android.annotation.SuppressLint
 import android.os.Bundle
