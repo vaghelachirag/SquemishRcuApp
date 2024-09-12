@@ -41,6 +41,7 @@ import com.squmish.rcuapp.uttils.ImagePickerDialog
 import com.squmish.rcuapp.uttils.Utility
 import com.squmish.rcuapp.uttils.Utility.Companion.setAllEnabled
 import com.squmish.rcuapp.uttils.onItemClick
+import com.squmish.rcuapp.view.menu.DashboardFragment
 import java.io.File
 import java.io.FileOutputStream
 import java.util.Date
@@ -203,8 +204,8 @@ class FragmentPhotograph: BaseFragment(), FragmentLifecycleInterface {
 
             val builder = StringBuilder()
             builder.append(Utility.getCurrentDate()).append("\n")
-            builder.append("Latitude: ").append(String.format("%.6f", ActivityDetail.currentLat)).append("\n")
-            builder.append("Longitude: ").append(String.format("%.6f", ActivityDetail.currentLong)).append("\n")
+            builder.append("Latitude: ").append(String.format("%.6f", DashboardFragment.currentLat)).append("\n")
+            builder.append("Longitude: ").append(String.format("%.6f", DashboardFragment.currentLong)).append("\n")
             builder.append(ActivityDetail.useraddress)
 
             val scale = resources.displayMetrics.density

@@ -38,11 +38,7 @@ import com.squmish.rcuapp.uttils.AppConstants
 import com.squmish.rcuapp.uttils.Session.Companion.DATA
 import com.squmish.rcuapp.view.base.BaseFragment
 import com.squmish.rcuapp.view.detail.ActivityDetail
-import com.squmish.rcuapp.view.detail.ActivityDetail.Companion.currentLat
-import com.squmish.rcuapp.view.detail.ActivityDetail.Companion.currentLong
-import com.squmish.rcuapp.view.detail.ActivityDetail.Companion.useraddress
 import com.squmish.rcuapp.viewmodel.DashboardViewModel
-import java.util.Locale
 
 
 class DashboardFragment: BaseFragment() {
@@ -64,6 +60,12 @@ class DashboardFragment: BaseFragment() {
     // For Location Request
     private var googleApiClient: GoogleApiClient? = null
     private val REQUEST_CHECK_SETTINGS = 0x1
+
+    companion object {
+        public  var currentLat : Double = 0.0
+        public  var currentLong : Double = 0.0
+        public  var useraddress : String = ""
+    }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String?>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)

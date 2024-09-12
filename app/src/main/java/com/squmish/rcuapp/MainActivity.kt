@@ -1,6 +1,7 @@
 package com.squmish.rcuapp
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -19,6 +20,9 @@ class MainActivity : AppCompatActivity() {
 
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(navController.graph)
+
+        Log.e("Token",getSharedPreferences("_", MODE_PRIVATE).getString("fb","").toString())
+
 
     }
 

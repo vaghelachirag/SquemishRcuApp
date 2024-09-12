@@ -51,8 +51,6 @@ open class ActivityDetail  : BaseActivity()  {
 
     companion object {
         public  var selectedData: GetVerificationDetailData? = null
-        public  var currentLat : Double = 0.0
-        public  var currentLong : Double = 0.0
         public  var useraddress : String = ""
     }
 
