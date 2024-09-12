@@ -42,7 +42,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService(){
         var pendingIntent : PendingIntent? = null
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
-
             pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE) ;
         }
         else

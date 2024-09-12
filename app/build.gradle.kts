@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id ("com.google.gms.google-services")
+
 }
 
 android {
@@ -112,16 +114,9 @@ dependencies {
     implementation (libs.sdp.android)
 
     implementation (libs.material)
-
-    implementation (platform(libs.firebase.bom))
     implementation (libs.androidx.work.runtime.ktx)
-    implementation  (platform(libs.firebase.bom.v2931))
 
-    implementation ("com.google.firebase:firebase-analytics:18.0.3")
-    implementation ("com.google.firebase:firebase-messaging:21.1.0")
-
-    implementation ("com.google.firebase:firebase-core:17.2.1")
-    implementation ("com.google.firebase:firebase-messaging:20.0.0")
-    implementation ("com.google.firebase:firebase-auth:19.1.0")
-
+    implementation ("com.google.firebase:firebase-messaging-ktx:23.0.3")
+    implementation ("com.google.firebase:firebase-bom:29.3.1")
+    implementation ("com.google.firebase:firebase-messaging:23.0.3")
 }

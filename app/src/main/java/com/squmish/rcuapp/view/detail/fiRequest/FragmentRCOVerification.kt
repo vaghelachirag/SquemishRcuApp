@@ -11,10 +11,14 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
+import androidx.core.view.forEach
 import com.squmish.rcuapp.databinding.FragmentRcoVerificationBinding
 import com.squmish.rcuapp.interfaces.FragmentLifecycleInterface
 import com.squmish.rcuapp.model.getverificationDetailResponse.GetVerificationDetailData
+import com.squmish.rcuapp.uttils.AppConstants
+import com.squmish.rcuapp.uttils.Utility.Companion.setAllEnabled
 import com.squmish.rcuapp.view.base.BaseFragment
+import com.squmish.rcuapp.view.detail.ActivityDetail
 import com.squmish.rcuapp.viewmodel.verificationDetail.RCOVerificationViewModel
 
 class FragmentRCOVerification: BaseFragment(), FragmentLifecycleInterface {
@@ -32,8 +36,20 @@ class FragmentRCOVerification: BaseFragment(), FragmentLifecycleInterface {
         binding.lifecycleOwner = this
         rcuVerificationViewModel.init(context)
         setObserver()
+        setView()
         return binding.root
     }
+    private fun setView() {
+        if(ActivityDetail.selectedData!!.getStatus() != null){
+            if(ActivityDetail.selectedData!!.getStatus() == AppConstants.statusPending){
+                binding.constraintLayout.forEach { child -> child.setAllEnabled(false) }
+            }
+            else{
+                binding.constraintLayout.forEach { child -> child.setAllEnabled(true) }
+            }
+        }
+    }
+
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun setObserver() {

@@ -36,7 +36,7 @@
         android:theme="@style/Theme.MyPraticeApplication"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".view.ActivityTest"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.MyPraticeApplication">
@@ -79,11 +79,10 @@
         </provider>
 
         <service
-            android:name=".services.MyFirebaseMessagingService"
-            android:stopWithTask="false"
-            android:exported="true">
+            android:name=".services.Firebase_MessagingService"
+            android:exported="false"
+            android:stopWithTask="false">
             <intent-filter>
-
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>

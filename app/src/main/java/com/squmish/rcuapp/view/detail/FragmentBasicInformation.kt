@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
+import com.squmish.rcuapp.R
 import com.squmish.rcuapp.view.base.BaseFragment
 import com.squmish.rcuapp.view.menu.DashboardActivity
 import com.squmish.rcuapp.databinding.FragmentBasicInformationBinding
@@ -52,6 +54,13 @@ class FragmentBasicInformation  : BaseFragment(), FragmentLifecycleInterface {
             if (isLoading && isAdded) showProgressbar()
             else if (!isLoading && isAdded) hideProgressbar()
         }
+
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(requireActivity()) {
+
+        }
+
+        DashboardActivity().navController.popBackStack(R.id.dashboardFragment, false);
+
         return binding.root
     }
 
@@ -98,4 +107,5 @@ class FragmentBasicInformation  : BaseFragment(), FragmentLifecycleInterface {
     override fun onResumeFragment(s: String?) {
 
     }
+
 }
