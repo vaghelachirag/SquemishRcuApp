@@ -1,11 +1,7 @@
 package com.squmish.rcuapp.services
 
 import com.google.firebase.messaging.FirebaseMessagingService
-import android.R
-import android.annotation.SuppressLint
 import android.app.Notification
-import androidx.core.content.ContextCompat
-import androidx.core.app.NotificationCompat
 import android.app.NotificationChannel
 import android.os.Build
 import android.app.NotificationManager
@@ -18,10 +14,17 @@ import androidx.annotation.RequiresApi
 import org.json.JSONObject
 import com.google.firebase.messaging.RemoteMessage
 import android.content.Intent
+import android.graphics.BitmapFactory
 import com.squmish.rcuapp.MainActivity
 
 
 class Firebase_MessagingService : FirebaseMessagingService() {
+
+    lateinit var notificationManager: NotificationManager
+    lateinit var notificationChannel: NotificationChannel
+    lateinit var builder: Notification.Builder
+    private val channelId = "i.apps.notifications"
+    private val description = "Test notification"
 
     override fun onNewToken(s: String) {
         Log.i("NEW_TOKEN", "******************************")
@@ -37,57 +40,50 @@ class Firebase_MessagingService : FirebaseMessagingService() {
         Log.i("NEW_TOKEN", "******************************")
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-
-        var intent = Intent(this, MainActivity::class.java)
-        var request_code = 0
-
-        val params = remoteMessage.data
-        val jsonObject = JSONObject(params as Map<*, *>?)
-        Log.e("JSON_OBJECT", jsonObject.toString())
-        Log.e("function", (jsonObject["function"]).toString())
+        super.onMessageReceived(remoteMessage)
+        Log.d("onMessageReceived", "onMessageReceived: ${remoteMessage.notification!!.body}")
 
 
+        notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        val NOTIFICATION_CHANNEL_ID = "FCM"+request_code.toString()
-        val pattern = longArrayOf(0, 1000, 500, 1000)
-        val mNotificationManager =
-            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        val intent = Intent(this, MainActivity::class.java)
+        var pendingIntent : PendingIntent? = null
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+            pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE) ;
+        }
+        else
+        {
+            pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        }
+
+
+        // checking if android version is greater than oreo(API 26) or not
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val notificationChannel = NotificationChannel(
-                NOTIFICATION_CHANNEL_ID, "FCM"+request_code.toString(),
-                NotificationManager.IMPORTANCE_HIGH
-            )
-            notificationChannel.description = ""
+            notificationChannel = NotificationChannel(channelId, description, NotificationManager.IMPORTANCE_HIGH)
             notificationChannel.enableLights(true)
-            notificationChannel.lightColor = Color.RED
-            notificationChannel.vibrationPattern = pattern
-            notificationChannel.enableVibration(true)
-            mNotificationManager.createNotificationChannel(notificationChannel)
+            notificationChannel.lightColor = Color.GREEN
+            notificationChannel.enableVibration(false)
+            notificationManager.createNotificationChannel(notificationChannel)
+
+            builder = Notification.Builder(this, channelId)
+                .setContentTitle(remoteMessage.notification!!.title)
+                .setContentText(remoteMessage.notification!!.body)
+                .setSmallIcon(com.squmish.rcuapp.R.mipmap.ic_launcher)
+                .setLargeIcon(BitmapFactory.decodeResource(this.resources, com.squmish.rcuapp.R.drawable.ic_launcher_background))
+                .setContentIntent(pendingIntent)
+        } else {
+
+            builder = Notification.Builder(this)
+                .setContentTitle(remoteMessage.notification!!.title)
+                .setContentText(remoteMessage.notification!!.body)
+                .setSmallIcon(com.squmish.rcuapp.R.mipmap.ic_launcher)
+                .setLargeIcon(BitmapFactory.decodeResource(this.resources, com.squmish.rcuapp.R.drawable.ic_launcher_background))
+                .setContentIntent(pendingIntent)
         }
+        notificationManager.notify(1234, builder.build())
 
-        // to diaplay notification in DND Mode
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = mNotificationManager.getNotificationChannel(NOTIFICATION_CHANNEL_ID)
-            channel.canBypassDnd()
-        }
-
-        @SuppressLint("WrongConstant") val pi = PendingIntent.getActivity(
-            this, request_code, intent, Intent.FLAG_ACTIVITY_NEW_TASK or PendingIntent.FLAG_MUTABLE)
-
-        val notificationBuilder = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
-        notificationBuilder.setAutoCancel(true)
-            .setColor(ContextCompat.getColor(this, R.color.background_dark))
-            .setContentTitle(remoteMessage.notification!!.title)
-            .setContentText(remoteMessage.notification!!.body)
-            .setDefaults(Notification.DEFAULT_ALL)
-            .setWhen(System.currentTimeMillis())
-            .setSmallIcon(R.drawable.ic_popup_reminder)
-            .setContentIntent(pi)
-            .setAutoCancel(true)
-            .setVibrate(longArrayOf(1000, 1000, 1000, 1000, 1000))
-            .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM))
-        mNotificationManager.notify(1000, notificationBuilder.build())
     }
 }

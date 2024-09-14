@@ -1,36 +1,26 @@
 {
   "project_info": {
-    "project_number": "184100748197",
-    "project_id": "patienttracking-3a284",
-    "storage_bucket": "patienttracking-3a284.appspot.com"
+    "project_number": "450766187243",
+    "project_id": "squmishrcuapp",
+    "storage_bucket": "squmishrcuapp.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:184100748197:android:b2dfaa796768709f9b064c",
+        "mobilesdk_app_id": "1:450766187243:android:86738598a495c303112cae",
         "android_client_info": {
           "package_name": "com.squmish.rcuapp"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "184100748197-hij3b0oouedi0esra8q6bha16r1bh23h.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCg9a9VBTsORjgcYek9LtWH3dG9z6thq6I"
+          "current_key": "AIzaSyDilnoMAbk0Cr8UGWlWnWKPd7SDGwCkG7M"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "184100748197-hij3b0oouedi0esra8q6bha16r1bh23h.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }
