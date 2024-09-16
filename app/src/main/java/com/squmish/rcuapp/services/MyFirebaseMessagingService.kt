@@ -14,6 +14,8 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.squmish.rcuapp.MainActivity
 import com.squmish.rcuapp.R
+import com.squmish.rcuapp.uttils.Session
+import com.squmish.rcuapp.uttils.Session.Companion.KEY_USER_TOKEN
 
 class MyFirebaseMessagingService : FirebaseMessagingService(){
 
@@ -27,7 +29,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService(){
 
     override fun onNewToken(token: String) {
         Log.e("NewToken", token)
+        var session = Session(applicationContext)
+        session.storeTokenByKey(KEY_USER_TOKEN,token)
         getSharedPreferences("_", MODE_PRIVATE).edit().putString("fb", token).apply()
+
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {

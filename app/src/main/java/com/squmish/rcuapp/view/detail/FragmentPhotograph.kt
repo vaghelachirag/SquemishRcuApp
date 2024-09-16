@@ -206,7 +206,7 @@ class FragmentPhotograph: BaseFragment(), FragmentLifecycleInterface {
             builder.append(Utility.getCurrentDate()).append("\n")
             builder.append("Latitude: ").append(String.format("%.6f", DashboardActivity.currentLat)).append("\n")
             builder.append("Longitude: ").append(String.format("%.6f", DashboardActivity.currentLong)).append("\n")
-            builder.append(ActivityDetail.useraddress)
+            builder.append(DashboardActivity.useraddress)
 
             val scale = resources.displayMetrics.density
 

@@ -2,17 +2,17 @@ package com.squmish.rcuapp.view.menu
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.BroadcastReceiver
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.content.IntentSender
+import android.content.IntentFilter
+import android.content.ServiceConnection
 import android.content.pm.PackageManager
-import android.location.Address
-import android.location.Geocoder
-import android.location.Location
-import android.location.LocationListener
-import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
+import android.os.IBinder
+import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
@@ -25,6 +25,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.MutableLiveData
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -35,19 +36,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.rcuapp.view.dialougs.ChangePasswordDialoug
-import com.google.android.gms.common.api.GoogleApiClient
-import com.google.android.gms.common.api.PendingResult
-import com.google.android.gms.common.api.Status
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.location.LocationSettingsRequest
-import com.google.android.gms.location.LocationSettingsResult
-import com.google.android.gms.location.LocationSettingsStatusCodes
-import com.karumi.dexter.Dexter
-import com.karumi.dexter.MultiplePermissionsReport
-import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.squmish.rcuapp.MainActivity
 import com.squmish.rcuapp.R
 import com.squmish.rcuapp.databinding.ActivityDashboardBinding
@@ -56,6 +45,7 @@ import com.squmish.rcuapp.model.getMenuListResponse.GetMenuListData
 import com.squmish.rcuapp.model.getMenuListResponse.GetMenuListResponse
 import com.squmish.rcuapp.network.CallbackObserver
 import com.squmish.rcuapp.network.Networking
+import com.squmish.rcuapp.services.LocationUpdatesService
 import com.squmish.rcuapp.uttils.AppConstants
 import com.squmish.rcuapp.uttils.Session
 import com.squmish.rcuapp.uttils.Utility
@@ -68,7 +58,7 @@ import java.util.Locale
 
 
 @Suppress("DEPRECATION")
-class DashboardActivity : BaseActivity() {
+class DashboardActivity : BaseActivity(){
 
 
     private lateinit var binding: ActivityDashboardBinding
@@ -82,34 +72,24 @@ class DashboardActivity : BaseActivity() {
     val isLoading = MutableLiveData<Boolean>()
     var menuList: ArrayList<GetMenuListData> = ArrayList()
 
-    // Location
-    var locationManager: LocationManager? = null
-    var locationListener: LocationListener? = null
-
-    var geocoder: Geocoder? = null
-    var addresses: List<Address>? = null
-
-    lateinit var mFusedLocationClient: FusedLocationProviderClient
-
-    // For Location Request
-    private var googleApiClient: GoogleApiClient? = null
-    private val REQUEST_CHECK_SETTINGS = 0x1
 
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String?>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) { locationManager!!.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, locationListener!!) }
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) { locationManager!!.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, locationListener!!) }
-        }
-    }
+    // A reference to the service used to get location updates.
+    private var mService: LocationUpdatesService? = null;
+    // Tracks the bound state of the service.
+    private var mBound: Boolean = false
 
+    private val MY_PERMISSIONS_REQUEST_LOCATION = 68
+    private val REQUEST_CHECK_SETTINGS = 129
+
+    private var broadcastReceiver: BroadcastReceiver? = null
 
     companion object {
         public  var currentLat : Double = 0.0
         public  var currentLong : Double = 0.0
         public  var useraddress : String = ""
     }
+
 
     @SuppressLint("DiscouragedPrivateApi", "SimpleDateFormat", "SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -119,36 +99,6 @@ class DashboardActivity : BaseActivity() {
         session = Session(this);
 
         window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE)
-
-      /*  binding.pullToRefresh.setOnRefreshListener(OnRefreshListener {
-         Log.e("Onrefresh","OnRefresh")
-        })
-*/
-
-
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-        geocoder = Geocoder(this, Locale.getDefault())
-        locationManager = this.getSystemService(LOCATION_SERVICE) as LocationManager
-
-        googleApiClient = getAPIClientInstance();
-        if (googleApiClient != null) {
-            googleApiClient!!.connect();
-        }
-
-        getUserCurrentLocation()
-
-        Dexter.withActivity(this)
-            .withPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
-            .withListener(object : MultiplePermissionsListener {
-                override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
-                    requestGPSSettings()
-                }
-
-                override fun onPermissionRationaleShouldBeShown(permissions: MutableList<com.karumi.dexter.listener.PermissionRequest>?, token: PermissionToken?) {
-                    token!!.continuePermissionRequest()
-                }
-            }).withErrorListener { }.onSameThread().check()
-
 
 
         // Set up ActionBar
@@ -163,9 +113,8 @@ class DashboardActivity : BaseActivity() {
 
         getSessionData()
 
-
         supportActionBar!!.title = "Test"
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_nav_menup)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.icon_main)
 
         navController = findNavController(R.id.navHostFragmentPickford)
 
@@ -187,108 +136,143 @@ class DashboardActivity : BaseActivity() {
         getMenuListResponse()
         askNotificationPermission()
         Log.e("Token", getToken(this).toString())
-    }
-
-    private fun getAPIClientInstance(): GoogleApiClient {
-        return GoogleApiClient.Builder(this)
-            .addApi(LocationServices.API).build()
-    }
-
-    private fun requestGPSSettings() {
-        val locationRequest: LocationRequest = LocationRequest.create()
-        locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY)
-        locationRequest.setInterval(2000)
-        locationRequest.setFastestInterval(500)
-        val builder = LocationSettingsRequest.Builder().addLocationRequest(locationRequest)
-        builder.setAlwaysShow(true)
-        val result: PendingResult<LocationSettingsResult> =
-            LocationServices.SettingsApi.checkLocationSettings(googleApiClient!!, builder.build())
-        result.setResultCallback { result ->
-            val status: Status = result.status
-            when (status.statusCode) {
-                LocationSettingsStatusCodes.SUCCESS -> {
-                    Log.i("", "All location settings are satisfied.")
-                }
-
-                LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> {
-                    Log.i(
-                        "",
-                        "Location settings are not satisfied. Show the user a dialog to" + "upgrade location settings "
-                    )
-                    try { status.startResolutionForResult(
-                        this, REQUEST_CHECK_SETTINGS)
-                    } catch (e: IntentSender.SendIntentException) {
-                        Log.e("Applicationsett", e.toString())
-                    }
-                }
-
-                LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE -> {
-                    Log.i(
-                        "",
-                        "Location settings are inadequate, and cannot be fixed here. Dialog " + "not created."
-                    )
-                }
-            }
-        }
-    }
-
-    private fun getUserCurrentLocation() {
-        locationListener = object : LocationListener {
-            override fun onLocationChanged(location: Location) {
-                Log.i("LOCATION", location.toString())
-                Log.e("Location",location.toString())
-                currentLat = location.latitude
-                currentLong = location.longitude
-                addresses = geocoder!!.getFromLocation(location.latitude, location.longitude, 1);
-                if(!addresses.isNullOrEmpty()){
-                    useraddress = addresses!![0].getAddressLine(0)
-                    Log.e("Address",addresses.toString())
-                }
-                //Toast.makeText(getApplicationContext(),location.toString(),Toast.LENGTH_SHORT).show();
-            }
-
-            override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {
-                Log.e("Location","Status Changed")
-            }
-            override fun onProviderEnabled(provider: String) {
-                Log.e("Location","Enable")
-            }
-            override fun onProviderDisabled(provider: String) {
-                Log.e("Location","Disable")
-                //  Utility.showLocationAlert(this@ActivityDetail)
-            }
-        }
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
+            ActivityCompat.requestPermissions(this@DashboardActivity, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), MY_PERMISSIONS_REQUEST_LOCATION)
         } else {
-            /*  try {
-                  mFusedLocationClient.lastLocation.addOnCompleteListener(this) { task ->
-                      val location: Location? = task.result
-                      if (location == null) {
-
-                      } else {
-
-                          currentLat = location.latitude
-                          currentLong = location.longitude
-                          addresses = geocoder!!.getFromLocation(location.latitude, location.longitude, 1);
-                          if (!addresses.isNullOrEmpty()){
-                              useraddress = addresses!![0].getAddressLine(0)
-                              Log.e("CurrentLocation",location.latitude.toString())
-                          }
-                      }
-                  }
-                  locationManager!!.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 10f, locationListener!!)
-              }catch (_: Exception){
-
-              }*/
+            Log.e("MainActivity:","Location Permission Already Granted")
+            if (getLocationMode() == 3) {
+                Log.e("MainActivity:","Already set High Accuracy Mode")
+                initializeService()
+            } else {
+                Log.e("MainActivity:","Alert Dialog Shown")
+                showAlertDialog(this@DashboardActivity)
+            }
         }
+
+        broadcastReceiver = object : BroadcastReceiver() {
+            override fun onReceive(contxt: Context?, intent: Intent?) {
+
+                when (intent?.action) {
+                    "NotifyUser" -> {
+                        try {
+                            val name = intent.getStringExtra("pinned_location_name")
+                            val lat = intent.getStringExtra("pinned_location_lat")
+                            val long = intent.getStringExtra("pinned_location_long")
+
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val intentFilter = IntentFilter()
+        intentFilter.addAction("NotifyUser")
+        broadcastReceiver?.let {
+            LocalBroadcastManager.getInstance(this).registerReceiver(it, intentFilter)
+        }
+    }
+
+    override fun onPause() {
+        broadcastReceiver?.let {
+            LocalBroadcastManager.getInstance(this).unregisterReceiver(it)
+        }
+        super.onPause()
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            MY_PERMISSIONS_REQUEST_LOCATION -> {
+                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    Log.e("MainActivity:","Location Permission Granted")
+                    if (getLocationMode() == 3) {
+                        Log.e("MainActivity:","Already set High Accuracy Mode")
+                        initializeService()
+                    } else {
+                        Log.e("MainActivity:","Alert Dialog Shown")
+                        showAlertDialog(this@DashboardActivity)
+                    }
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return
+            }
+        }
+    }
+
+
+    private fun showAlertDialog(context: Context?) {
+        try {
+            context?.let {
+                val builder = androidx.appcompat.app.AlertDialog.Builder(it)
+                builder.setTitle(it.resources.getString(R.string.app_name))
+                    .setMessage("Please select High accuracy Location Mode from Mode Settings")
+                    .setPositiveButton(it.resources.getString(android.R.string.ok)) { dialog, which ->
+                        dialog.dismiss()
+                        startActivityForResult(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), REQUEST_CHECK_SETTINGS)
+                    }
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setCancelable(false)
+                    .show()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+    private fun getLocationMode(): Int {
+        return Settings.Secure.getInt(getContentResolver(), Settings.Secure.LOCATION_MODE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CHECK_SETTINGS) {
+            initializeService()
+        }
+    }
+
+    // Monitors the state of the connection to the service.
+    private var mServiceConnection: ServiceConnection = object : ServiceConnection {
+        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+            val binder: LocationUpdatesService.LocalBinder = service as LocationUpdatesService.LocalBinder
+            mService = binder.service
+            mBound = true
+            // Check that the user hasn't revoked permissions by going to Settings.
+
+            mService?.requestLocationUpdates()
+
+        }
+
+        override fun onServiceDisconnected(name: ComponentName?) {
+            mService = null
+            mBound = false
+        }
+    }
+
+    private fun initializeService(){
+        bindService(Intent(this, LocationUpdatesService::class.java), mServiceConnection, Context.BIND_AUTO_CREATE)
+    }
+
+    override fun onStop() {
+        if (mBound) {
+            // Unbind from the service. This signals to the service that this activity is no longer
+            // in the foreground, and the service can respond by promoting itself to a foreground
+            // service.
+            unbindService(mServiceConnection)
+            mBound = false
+        }
+        super.onStop()
     }
 
     private fun getToken(context: Context): String? {
         return context.getSharedPreferences("_", MODE_PRIVATE).getString("fb", "empty")
     }
-
 
     private fun askNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -467,9 +451,9 @@ class DashboardActivity : BaseActivity() {
                 if (title != null) binding.tvTitle.text = "Dashboard"
             }
             if (menuData.getMenuId() == AppConstants.changePassword){
-              /*  navController.navigate(R.id.changePasswordFragment)
-                binding.toolbarDashboard.setTitle(R.string.changePassword_Txt)
-                binding.toolbarDashboard.setNavigationIcon(null);*/
+                /*  navController.navigate(R.id.changePasswordFragment)
+                  binding.toolbarDashboard.setTitle(R.string.changePassword_Txt)
+                  binding.toolbarDashboard.setNavigationIcon(null);*/
                 //showChangePasswordDialoug()
                 Utils().showChangePasswordDialog(this,binding)
             }
@@ -491,4 +475,6 @@ class DashboardActivity : BaseActivity() {
             })
             .show()
     }
+
+
 }

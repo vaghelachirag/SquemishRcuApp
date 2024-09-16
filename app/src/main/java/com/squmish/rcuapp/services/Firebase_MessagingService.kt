@@ -16,6 +16,8 @@ import com.google.firebase.messaging.RemoteMessage
 import android.content.Intent
 import android.graphics.BitmapFactory
 import com.squmish.rcuapp.MainActivity
+import com.squmish.rcuapp.uttils.Session
+import com.squmish.rcuapp.uttils.Session.Companion.KEY_USER_TOKEN
 
 
 class Firebase_MessagingService : FirebaseMessagingService() {
@@ -38,6 +40,10 @@ class Firebase_MessagingService : FirebaseMessagingService() {
         Log.i("NEW_TOKEN", "******************************")
         Log.i("NEW_TOKEN", "******************************")
         Log.i("NEW_TOKEN", "******************************")
+
+        var session = Session(applicationContext)
+        session.storeTokenByKey(KEY_USER_TOKEN,s)
+        getSharedPreferences("_", MODE_PRIVATE).edit().putString("fb", s).apply()
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {

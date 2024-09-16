@@ -49,10 +49,18 @@ class Session(val context: Context) {
         pref.edit().putString(key, Value).apply()
     }
 
-    fun storeDataByKey(key: String, Value: Boolean) {
-        pref.edit().putBoolean(key, Value).apply()
+    fun storeDataByKey(key: String, value: Boolean) {
+        pref.edit().putBoolean(key, value).apply()
     }
 
+
+    fun storeTokenByKey(key: String, Value: String) {
+        pref.edit().putString(key, Value).apply()
+    }
+
+    fun getStoreTokenByKey() : String? {
+        return  pref.getString(KEY_USER_TOKEN,"")
+    }
 
     fun storeIsFirstTimeKey(Value: Boolean) {
         pref.edit().putBoolean(FIRST_TIME, Value).apply()
@@ -107,5 +115,6 @@ class Session(val context: Context) {
 
         const val KEY_USER_NAME = "userName"
         const val KEY_USER_PROFILE = "userImage"
+        const val KEY_USER_TOKEN = "userToken"
     }
 }
