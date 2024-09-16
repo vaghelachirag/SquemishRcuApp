@@ -291,7 +291,7 @@ class LocationUpdatesService : Service(){
         val builder = NotificationCompat.Builder(this)
             .setContentTitle("Location Service")
             .setOngoing(true)
-            .setSmallIcon(R.mipmap.ic_launcher)
+            .setSmallIcon(R.drawable.icon_main)
             .setWhen(System.currentTimeMillis())
 
         // Set the Channel ID for Android O.
@@ -342,7 +342,7 @@ class LocationUpdatesService : Service(){
         return isInBackground
     }
 
-    fun sendNotification(context: Context, placeId: String) {
+    private fun sendNotification(context: Context, placeId: String) {
         try {
             // Get an instance of the Notification manager
             val mNotificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
@@ -378,21 +378,15 @@ class LocationUpdatesService : Service(){
             val builder = NotificationCompat.Builder(context)
 
             // Define the notification settings.
-            builder.setSmallIcon(R.mipmap.ic_launcher)
-                // In a real app, you may want to use a library like Volley
-                // to decode the Bitmap.
-                .setLargeIcon(BitmapFactory.decodeResource(context.resources, R.mipmap.ic_launcher))
+            builder.setSmallIcon(R.drawable.icon_main)
+                .setLargeIcon(BitmapFactory.decodeResource(context.resources, R.drawable.icon_main))
                 .setColor(Color.RED)
-                .setContentTitle("You are around at " + placeId)
+                .setContentTitle("You are around at $placeId")
                 .setSound(defaultSoundUri)
                 .setContentIntent(notificationPendingIntent)
 
             // Set the Channel ID for Android O.
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                builder.setChannelId("channel_01") // Channel ID
-            } else {
-                builder.priority = Notification.PRIORITY_HIGH
-            }
+            builder.setChannelId("channel_01") // Channel ID
 
             // Dismiss notification once the user touches it.
             builder.setAutoCancel(true)

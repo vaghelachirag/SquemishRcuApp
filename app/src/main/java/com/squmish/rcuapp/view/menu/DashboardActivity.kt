@@ -112,9 +112,10 @@ class DashboardActivity : BaseActivity(){
         }
 
         getSessionData()
+        setVersionName()
 
         supportActionBar!!.title = "Test"
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.icon_main)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_nav_menup)
 
         navController = findNavController(R.id.navHostFragmentPickford)
 
@@ -167,6 +168,10 @@ class DashboardActivity : BaseActivity(){
                 }
             }
         }
+    }
+
+    private fun setVersionName() {
+        binding.txtVersion
     }
 
     override fun onResume() {
@@ -227,9 +232,10 @@ class DashboardActivity : BaseActivity(){
         }
     }
     private fun getLocationMode(): Int {
-        return Settings.Secure.getInt(getContentResolver(), Settings.Secure.LOCATION_MODE)
+        return Settings.Secure.getInt(contentResolver, Settings.Secure.LOCATION_MODE)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CHECK_SETTINGS) {
