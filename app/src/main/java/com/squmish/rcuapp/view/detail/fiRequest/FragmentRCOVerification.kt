@@ -39,13 +39,17 @@ class FragmentRCOVerification: BaseFragment(), FragmentLifecycleInterface {
         setView()
         return binding.root
     }
+    @SuppressLint("SetJavaScriptEnabled")
     private fun setView() {
         if(ActivityDetail.selectedData!!.getStatus() != null){
             if(ActivityDetail.selectedData!!.getStatus() == AppConstants.statusPending){
-                binding.constraintLayout.forEach { child -> child.setAllEnabled(false) }
+                  binding.constraintLayout.forEach { child -> child.setAllEnabled(false)
+                    binding.webView.getSettings().javaScriptEnabled = false;
+                }
             }
             else{
-                binding.constraintLayout.forEach { child -> child.setAllEnabled(true) }
+                binding.constraintLayout.forEach { child -> child.setAllEnabled(true)
+                    binding.webView.getSettings().javaScriptEnabled = true;}
             }
         }
     }
@@ -63,8 +67,6 @@ class FragmentRCOVerification: BaseFragment(), FragmentLifecycleInterface {
 
         rcuVerificationViewModel.webViewURL.observeForever {
             if (!it.isNullOrEmpty()){
-
-                binding.webView.getSettings().javaScriptEnabled = true;
 
                 showProgressbar()
                 binding.webView.setWebViewClient(object : WebViewClient() {
