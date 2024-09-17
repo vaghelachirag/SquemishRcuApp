@@ -7,6 +7,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.IntentSender
 import android.content.ServiceConnection
 import android.content.pm.PackageManager
 import android.os.Build
@@ -36,7 +37,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.rcuapp.view.dialougs.ChangePasswordDialoug
+import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.gms.common.api.PendingResult
+import com.google.android.gms.common.api.Status
+import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.LocationSettingsRequest
+import com.google.android.gms.location.LocationSettingsResult
+import com.google.android.gms.location.LocationSettingsStatusCodes
 import com.squmish.rcuapp.MainActivity
 import com.squmish.rcuapp.R
 import com.squmish.rcuapp.databinding.ActivityDashboardBinding
@@ -91,6 +99,11 @@ class DashboardActivity : BaseActivity(){
     }
 
 
+    // For Location Request
+    private var googleApiClient: GoogleApiClient? = null
+
+
+
     @SuppressLint("DiscouragedPrivateApi", "SimpleDateFormat", "SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -138,6 +151,11 @@ class DashboardActivity : BaseActivity(){
         askNotificationPermission()
         Log.e("Token", getToken(this).toString())
 
+        googleApiClient = getAPIClientInstance();
+        if (googleApiClient != null) {
+            googleApiClient!!.connect();
+        }
+
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this@DashboardActivity, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), MY_PERMISSIONS_REQUEST_LOCATION)
         } else {
@@ -147,9 +165,11 @@ class DashboardActivity : BaseActivity(){
                 initializeService()
             } else {
                 Log.e("MainActivity:","Alert Dialog Shown")
-                showAlertDialog(this@DashboardActivity)
+               // showAlertDialog(this@DashboardActivity)
+                requestGPSSettings()
             }
         }
+
 
         broadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(contxt: Context?, intent: Intent?) {
@@ -169,6 +189,50 @@ class DashboardActivity : BaseActivity(){
             }
         }
     }
+
+    private fun getAPIClientInstance(): GoogleApiClient {
+        return GoogleApiClient.Builder(this)
+            .addApi(LocationServices.API).build()
+    }
+
+    private fun requestGPSSettings() {
+        val locationRequest: LocationRequest = LocationRequest.create()
+        locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY)
+        locationRequest.setInterval(2000)
+        locationRequest.setFastestInterval(500)
+        val builder = LocationSettingsRequest.Builder().addLocationRequest(locationRequest)
+        builder.setAlwaysShow(true)
+        val result: PendingResult<LocationSettingsResult> =
+            LocationServices.SettingsApi.checkLocationSettings(googleApiClient!!, builder.build())
+        result.setResultCallback { result ->
+            val status: Status = result.status
+            when (status.statusCode) {
+                LocationSettingsStatusCodes.SUCCESS -> {
+                    Log.i("", "All location settings are satisfied.")
+                }
+
+                LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> {
+                    Log.i(
+                        "",
+                        "Location settings are not satisfied. Show the user a dialog to" + "upgrade location settings "
+                    )
+                    try { status.startResolutionForResult(
+                        this, REQUEST_CHECK_SETTINGS)
+                    } catch (e: IntentSender.SendIntentException) {
+                        Log.e("Applicationsett", e.toString())
+                    }
+                }
+
+                LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE -> {
+                    Log.i(
+                        "",
+                        "Location settings are inadequate, and cannot be fixed here. Dialog " + "not created."
+                    )
+                }
+            }
+        }
+    }
+
 
     private fun setVersionName() {
         binding.txtVersion
@@ -219,7 +283,7 @@ class DashboardActivity : BaseActivity(){
                 val builder = androidx.appcompat.app.AlertDialog.Builder(it)
                 builder.setTitle(it.resources.getString(R.string.app_name))
                     .setMessage("Please select High accuracy Location Mode from Mode Settings")
-                    .setPositiveButton(it.resources.getString(android.R.string.ok)) { dialog, which ->
+                    .setPositiveButton(it.resources.getString(android.R.string.ok)) { dialog, _ ->
                         dialog.dismiss()
                         startActivityForResult(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), REQUEST_CHECK_SETTINGS)
                     }
