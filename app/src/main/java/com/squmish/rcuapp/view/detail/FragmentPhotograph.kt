@@ -42,6 +42,7 @@ import com.squmish.rcuapp.uttils.Utility
 import com.squmish.rcuapp.uttils.Utility.Companion.setAllEnabled
 import com.squmish.rcuapp.uttils.onItemClick
 import com.squmish.rcuapp.view.menu.DashboardActivity
+import com.squmish.rcuapp.view.menu.DashboardFragment
 import java.io.File
 import java.io.FileOutputStream
 import java.util.Date
@@ -239,7 +240,7 @@ class FragmentPhotograph: BaseFragment(), FragmentLifecycleInterface {
             val x = ((mutableBitmap.width - textWidth) - 10).toFloat()
             val y = ((mutableBitmap.height - textHeight) - 40).toFloat()
 
-            paint1.setShadowLayer(100F, 100F, 100F,Color.RED);
+            //  paint1.setShadowLayer(100F, 100F, 100F,Color.RED);
 
             paint1.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
 
@@ -264,7 +265,7 @@ class FragmentPhotograph: BaseFragment(), FragmentLifecycleInterface {
 
             val fOut: FileOutputStream = FileOutputStream(imgFile)
             val mutableBitmap = getResizedBitmap(mutableBitmap!!, 500);
-            mutableBitmap.compress(Bitmap.CompressFormat.PNG, 50, fOut)
+            mutableBitmap.compress(Bitmap.CompressFormat.PNG, 80, fOut)
             fOut.flush()
             fOut.close()
 
