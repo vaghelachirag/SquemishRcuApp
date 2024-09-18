@@ -57,8 +57,6 @@ class ActivityTest: AppCompatActivity()  {
         binding = ActivityTestBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-        setDashboardSelectionList()
     }
 
     private fun setDashboardSelectionList() {
