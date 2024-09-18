@@ -1,52 +1,42 @@
-package com.squmish.rcuapp.view.adapter
-
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.squmish.rcuapp.R
-import com.squmish.rcuapp.model.dashboard.DashboardDataModel
+import com.squmish.rcuapp.databinding.ItemDashboardBinding
+import com.squmish.rcuapp.databinding.ItemDashboardSelectionBinding
+import com.squmish.rcuapp.interfaces.OnItemSelected
+import com.squmish.rcuapp.model.dashboard.getDashboardApiResponse.GetMobileDashboardDetailDto
+import com.squmish.rcuapp.model.pendingRequest.GetPendingRequestData
+import com.squmish.rcuapp.view.adapter.DashboardMenuViewHolder
+import com.squmish.rcuapp.view.adapter.DashboardViewHolder
+import com.squmish.rcuapp.viewmodel.DashboardMenuViewModel
+import com.squmish.rcuapp.viewmodel.DashboardViewModel
 
-class DashboardSelectionAdapter(var context: Context) :  RecyclerView.Adapter<DashboardSelectionAdapter.ViewHolder>(){
+class DashboardSelectionAdapter(val context: Context, private val list: ArrayList<GetMobileDashboardDetailDto>, val viewModel: DashboardMenuViewModel, val onItemSelected: OnItemSelected<GetMobileDashboardDetailDto>,) :  RecyclerView.Adapter<DashboardMenuViewHolder>() {
 
-    private var dataList = emptyList<DashboardDataModel>()
 
-    internal fun setDataList(dataList: List<DashboardDataModel>) {
-        this.dataList = dataList
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DashboardMenuViewHolder {
+
+        val layoutInflater = LayoutInflater.from(parent.context)
+
+        val binder = DataBindingUtil.inflate<ItemDashboardSelectionBinding>(
+            layoutInflater,
+            R.layout.item_dashboard_selection,
+            parent,
+            false
+        )
+        return DashboardMenuViewHolder(context,binder, viewModel)
     }
 
-    // Provide a direct reference to each of the views with data items
+    @SuppressLint("SetTextI18n")
+    override fun onBindViewHolder(holder: DashboardMenuViewHolder, @SuppressLint("RecyclerView") position: Int) {
+        holder.bind(list[position])
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var image: ImageView = itemView.findViewById(R.id.image)
-        var title: TextView = itemView.findViewById(R.id.title)
-        var desc: TextView = itemView.findViewById(R.id.desc)
     }
-
-    // Usually involves inflating a layout from XML and returning the holder
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DashboardSelectionAdapter.ViewHolder {
-
-        // Inflate the custom layout
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_dashboard_selection, parent, false)
-        return ViewHolder(view)
+    override fun getItemCount(): Int {
+        return list.size
     }
-
-    // Involves populating data into the item through holder
-    override fun onBindViewHolder(holder: DashboardSelectionAdapter.ViewHolder, position: Int) {
-
-        // Get the data model based on position
-        val data = dataList[position]
-
-        // Set item views based on your views and data model
-        holder.title.text = data.title
-        holder.desc.text = data.desc
-
-        holder.image.setImageResource(data.image)
-    }
-
-    //  total count of items in the list
-    override fun getItemCount() = dataList.size
 }

@@ -1,6 +1,7 @@
 package com.squmish.rcuapp.network
 import com.example.rcuapp.model.saveresidenceverification.SaveVerificationDataDetail
 import com.squmish.rcuapp.model.changepassword.GetChangePasswordResponse
+import com.squmish.rcuapp.model.dashboard.getDashboardApiResponse.GetDashboardApiResponse
 import com.squmish.rcuapp.model.finalSubmission.GetFinalSubmissionApiResponse
 import com.squmish.rcuapp.model.finalSubmission.SaveFinalSubmissionData
 import com.squmish.rcuapp.model.getAcceptRejectResponse.GetAcceptRejectResponse
@@ -89,4 +90,8 @@ interface ApiInterface {
 
     @GET("api/MobileAppMenu/GetWebViewUrl")
     fun getRcuVerificationWebpage(@Query("MenuId") menuId: String,@Query("Latitude") latitude: String,@Query("Longitude") longitude: String,@Query("FIRequestId") fIRequestId: String): Observable<GetMenuURLResponse>
+
+    @GET("api/MobileAppMenu/GetDashboard")
+    fun getDashboardMenuResponse(): Observable<GetDashboardApiResponse>
+
 }

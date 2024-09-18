@@ -53,6 +53,7 @@ class DashboardFragment: BaseFragment() {
     var locationManager: LocationManager? = null
     var locationListener: LocationListener? = null
 
+    @Deprecated("Deprecated in Java")
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String?>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
