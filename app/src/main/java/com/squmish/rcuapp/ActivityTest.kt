@@ -14,15 +14,12 @@ class ActivityTest: AppCompatActivity()  {
     private var dashboardDataModel = mutableListOf<DashboardDataModel>()
 
 
-    private val dashboardMenuViewModel by lazy { DashboardMenuViewModel(this,binding) }
+  //  private val dashboardMenuViewModel by lazy { DashboardMenuViewModel(this,binding) }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTestBinding.inflate(layoutInflater)
-        binding.viewModel = dashboardMenuViewModel
-        binding.lifecycleOwner = this
-        dashboardMenuViewModel.init();
         setContentView(binding.root)
 
     }

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/dashboardFragment"
+            android:id="@+id/dashboardMenuFragment"
             android:icon="@drawable/ic_home"
             android:iconTint="@color/main_bg"
             android:title="@string/dashboard" />

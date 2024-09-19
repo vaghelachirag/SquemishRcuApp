@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.squmish.rcuapp.R
 import com.squmish.rcuapp.databinding.ActivityTestBinding
+import com.squmish.rcuapp.databinding.DashboardMenuFragmentBinding
 import com.squmish.rcuapp.interfaces.OnItemSelected
 import com.squmish.rcuapp.model.base.BaseViewModel
 import com.squmish.rcuapp.model.dashboard.getDashboardApiResponse.GetDashboardApiResponse
@@ -19,7 +20,7 @@ import com.squmish.rcuapp.uttils.Utils
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class DashboardMenuViewModel(val context: Context,val binding: ActivityTestBinding) : BaseViewModel() {
+class DashboardMenuViewModel(val context: Context,val binding: DashboardMenuFragmentBinding) : BaseViewModel() {
 
     var dashboardMenuList: ArrayList<GetMobileDashboardDetailDto> = ArrayList()
     private var dashboardAdapter: DashboardSelectionAdapter? = null

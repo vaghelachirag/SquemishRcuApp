@@ -133,9 +133,9 @@ class DashboardActivity : BaseActivity(){
         navController = findNavController(R.id.navHostFragmentPickford)
 
         appBarConfiguration = AppBarConfiguration.Builder(
-            R.id.dashboardFragment,
+            R.id.dashboardMenuFragment,
             R.id.settingFragment,
-            R.id.dashboardFragment,
+            R.id.dashboardMenuFragment,
         ).setDrawerLayout(binding.drawer).build()
 
 
@@ -390,7 +390,7 @@ class DashboardActivity : BaseActivity(){
 
             when (menuItem.itemId) {
                 R.id.dashboardFragment -> {
-                    navController.navigate(R.id.dashboardFragment)
+                    navController.navigate(R.id.dashboardMenuFragment)
                     binding.toolbarDashboard.setTitle("Test")
                     supportActionBar!!.title = "test"
                     supportActionBar?.setDisplayShowHomeEnabled(false);
@@ -515,7 +515,7 @@ class DashboardActivity : BaseActivity(){
         }else{
 
             if (menuData.getMenuId() == AppConstants.home){
-                navController.navigate(R.id.dashboardFragment)
+                navController.navigate(R.id.dashboardMenuFragment)
                 supportActionBar?.setDisplayShowHomeEnabled(false);
                 binding.toolbarDashboard.setNavigationIcon(null);
                 if (title != null) binding.tvTitle.text = "Dashboard"

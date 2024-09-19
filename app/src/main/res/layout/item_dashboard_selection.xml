@@ -30,6 +30,7 @@
     app:cardElevation="8dp">
 
     <LinearLayout
+        android:id="@+id/llMain"
         android:layout_width="@dimen/_100sdp"
         android:layout_height="@dimen/_100sdp"
         android:orientation="vertical">
@@ -51,6 +52,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/llCounter"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_gravity="right"
@@ -58,7 +60,8 @@
                 android:layout_marginTop="@dimen/_30sdp"
                 android:layout_marginLeft="@dimen/_25sdp"
                 android:background="@drawable/bg_border_fill_rounded">
-                <TextView
+                <com.squmish.rcuapp.widget.HeaderText
+                    android:id="@+id/txtCounter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1"
@@ -67,12 +70,12 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/_12sdp">
 
-                </TextView>
+                </com.squmish.rcuapp.widget.HeaderText>
             </LinearLayout>
 
         </FrameLayout>
 
-        <TextView
+        <com.squmish.rcuapp.widget.SmallText
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -84,7 +87,7 @@
             android:textColor="@android:color/black"
             android:textSize="@dimen/_10sdp" />
 
-        <TextView
+        <com.squmish.rcuapp.widget.HeaderText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/desc"
