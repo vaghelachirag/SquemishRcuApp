@@ -10,7 +10,14 @@
         android:id="@+id/dashboardMenuFragment"
         android:name="com.squmish.rcuapp.view.menu.DashboardMenuFragment"
         android:label="@string/dashboard_menu_fragment_label"
+        app:popUpToInclusive="true"
+        app:destination="@id/dashboardFragment"
+        app:popUpTo="@+id/dashboardFragment"
         tools:layout="@layout/dashboard_menu_fragment">
+
+        <action
+            android:id="@+id/action_dashboardMenuFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment" />
 
     </fragment>
 
@@ -18,6 +25,8 @@
         android:id="@+id/dashboardFragment"
         android:name="com.squmish.rcuapp.view.menu.DashboardFragment"
         android:label="@string/dashboard_fragment_label"
+        app:popUpTo="@id/nav_graph"
+        app:popUpToInclusive="false"
         tools:layout="@layout/dashboard_fragment">
 
     </fragment>

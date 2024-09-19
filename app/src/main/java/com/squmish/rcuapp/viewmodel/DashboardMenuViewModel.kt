@@ -5,9 +5,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.squmish.rcuapp.R
-import com.squmish.rcuapp.databinding.ActivityTestBinding
 import com.squmish.rcuapp.databinding.DashboardMenuFragmentBinding
 import com.squmish.rcuapp.interfaces.OnItemSelected
 import com.squmish.rcuapp.model.base.BaseViewModel
@@ -17,10 +15,15 @@ import com.squmish.rcuapp.network.CallbackObserver
 import com.squmish.rcuapp.network.Networking
 import com.squmish.rcuapp.uttils.Utility
 import com.squmish.rcuapp.uttils.Utils
+import com.squmish.rcuapp.view.menu.DashboardMenuFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class DashboardMenuViewModel(val context: Context,val binding: DashboardMenuFragmentBinding) : BaseViewModel() {
+class DashboardMenuViewModel(
+    val context: Context,
+    val binding: DashboardMenuFragmentBinding,
+    val dashboardMenuFragment: DashboardMenuFragment
+) : BaseViewModel() {
 
     var dashboardMenuList: ArrayList<GetMobileDashboardDetailDto> = ArrayList()
     private var dashboardAdapter: DashboardSelectionAdapter? = null
@@ -50,6 +53,7 @@ class DashboardMenuViewModel(val context: Context,val binding: DashboardMenuFrag
                     }
 
                     override fun onNext(t: GetDashboardApiResponse) {
+                        isLoading.postValue(false)
                         Log.e("Status",t.getStatusCode().toString())
                         if(t.getStatusCode() == 200){
                             if(t.getData() != null){
@@ -74,7 +78,7 @@ class DashboardMenuViewModel(val context: Context,val binding: DashboardMenuFrag
             OnItemSelected<GetMobileDashboardDetailDto> {
             override fun onItemSelected(t: GetMobileDashboardDetailDto?, position: Int) {
                 Log.e("OnItem", "OnItem$position")
-               // dashboardFragment.redirectToDetailScreen(verificationList[position])
+                dashboardMenuFragment.redirectToDetailScreen()
             }
         })
         binding.rvDashboardMenu.layoutManager = GridLayoutManager(context,2)

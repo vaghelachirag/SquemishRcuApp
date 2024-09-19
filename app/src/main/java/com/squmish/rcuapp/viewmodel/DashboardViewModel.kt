@@ -92,6 +92,7 @@ class DashboardViewModel(val context: Context, val dashboardFragment: DashboardF
                              }
                           }
                         }else{
+                            isLoading.postValue(false)
                             Utils().showToast(context,t.getMessage().toString())
                         }
                         Log.e("StatusCode",t.getStatus().toString())
@@ -99,6 +100,7 @@ class DashboardViewModel(val context: Context, val dashboardFragment: DashboardF
 
                 })
         }else{
+            isLoading.postValue(false)
             Utils().showToast(context,context.getString(R.string.nointernetconnection).toString())
         }
     }
