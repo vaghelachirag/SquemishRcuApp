@@ -17,6 +17,8 @@ import com.squmish.rcuapp.room.InitDb
 import com.squmish.rcuapp.room.dao.MasterDataDao
 import com.squmish.rcuapp.uttils.AppConstants
 import com.squmish.rcuapp.uttils.Utility
+import com.squmish.rcuapp.view.detail.FragmentBasicInformation
+import com.squmish.rcuapp.view.detail.FragmentFinalSubmit
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.CoroutineScope
@@ -78,6 +80,7 @@ class FinalSubmitViewModel(private val context: Context,private  val binding: Fr
                         isLoading.postValue(false)
                         if(t.getStatusCode() == 200){
                             Utils().showSnackBar(context,t.getMessage().toString(),binding.constraintLayout)
+                            FragmentFinalSubmit().redirectToDashboardScreen()
                         }else{
                             Utils().showSnackBar(context,t.getMessage().toString(),binding.constraintLayout)
                         }

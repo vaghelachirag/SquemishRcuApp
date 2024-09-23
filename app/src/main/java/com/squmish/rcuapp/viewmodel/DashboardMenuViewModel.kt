@@ -76,9 +76,14 @@ class DashboardMenuViewModel(
     private fun setDashboardMenuAdapter() {
         dashboardAdapter =  DashboardSelectionAdapter(context,dashboardMenuList, this, object :
             OnItemSelected<GetMobileDashboardDetailDto> {
-            override fun onItemSelected(t: GetMobileDashboardDetailDto?, position: Int) {
+            override fun onItemSelected(getdashboard: GetMobileDashboardDetailDto?, position: Int) {
                 Log.e("OnItem", "OnItem$position")
-                dashboardMenuFragment.redirectToDetailScreen()
+                if (getdashboard!!.getIsWebView() == true){
+                  dashboardMenuFragment.redirectToWebView(getdashboard.getButtonId().toString())
+                }
+                else{
+                    dashboardMenuFragment.redirectToDetailScreen(getdashboard.getButtonCaption(),)
+                }
             }
         })
         binding.rvDashboardMenu.layoutManager = GridLayoutManager(context,2)

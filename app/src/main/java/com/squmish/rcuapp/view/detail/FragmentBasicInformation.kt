@@ -29,10 +29,12 @@ class FragmentBasicInformation  : BaseFragment(), FragmentLifecycleInterface {
     var data : String = ""
 
 
+    var dashboardActivity : Activity? = null;
+
     companion object {
         fun newInstance(selectedData: GetVerificationDetailData?): FragmentBasicInformation {
             val bundle = Bundle()
-          //  bundle.putSerializable(DATA, selectedData)
+            //  bundle.putSerializable(DATA, selectedData)
             val fragmentEnquiry = FragmentBasicInformation()
             fragmentEnquiry.arguments = bundle
             return fragmentEnquiry
@@ -58,14 +60,13 @@ class FragmentBasicInformation  : BaseFragment(), FragmentLifecycleInterface {
         val callback = requireActivity().onBackPressedDispatcher.addCallback(requireActivity()) {
 
         }
-       // DashboardActivity().navController.popBackStack(R.id.dashboardFragment, false);
+        // DashboardActivity().navController.popBackStack(R.id.dashboardFragment, false);
         return binding.root
     }
 
     private fun setAction() {
         binding.btnAccept.setOnClickListener {
             basicInformationModel.showAcceptRejectDialoug(true)
-            (activity as ActivityDetail).showTab()
         }
         binding.btnReject.setOnClickListener {
             basicInformationModel.showAcceptRejectDialoug(false)
@@ -75,11 +76,11 @@ class FragmentBasicInformation  : BaseFragment(), FragmentLifecycleInterface {
 
     private fun setView() {
         if(ActivityDetail.selectedData!!.getStatus() != null){
-           if(ActivityDetail.selectedData!!.getStatus() == AppConstants.statusPending){
-               binding.llAcceptReject.visibility = View.VISIBLE
-           }
+            if(ActivityDetail.selectedData!!.getStatus() == AppConstants.statusPending){
+                binding.llAcceptReject.visibility = View.VISIBLE
+            }
             else{
-               binding.llAcceptReject.visibility = View.VISIBLE
+                binding.llAcceptReject.visibility = View.VISIBLE
             }
         }
     }
@@ -89,11 +90,20 @@ class FragmentBasicInformation  : BaseFragment(), FragmentLifecycleInterface {
     }
 
     fun redirectToDashboardScreen(){
-      val intent = Intent(activity, DashboardActivity:: class.java)
-       intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-       (activity as Activity).finish()
+
+        dashboardActivity?.let{
+            val intent = Intent (it, DashboardActivity::class.java)
+            it.startActivity(intent)
+            it.finish()
+        }
     }
 
+    @Deprecated("Deprecated in Java")
+    override fun onAttach(activity: Activity) {
+        super.onAttach(activity)
+        dashboardActivity = activity
+
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

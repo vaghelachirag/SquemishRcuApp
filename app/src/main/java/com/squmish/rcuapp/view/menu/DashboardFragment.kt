@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,6 +36,8 @@ class DashboardFragment: BaseFragment() {
     // Location
     var locationManager: LocationManager? = null
     var locationListener: LocationListener? = null
+
+    var rcuType: String = "";
 
     @Deprecated("Deprecated in Java")
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String?>, grantResults: IntArray) {
@@ -75,7 +78,10 @@ class DashboardFragment: BaseFragment() {
             findNavController().navigate(R.id.action_dashboardFragment_to_dashboardMenuFragment)
         }
 
-        (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
+        try {
+            (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
+        }catch (e : Exception){
+        }
 
         return binding.root
     }

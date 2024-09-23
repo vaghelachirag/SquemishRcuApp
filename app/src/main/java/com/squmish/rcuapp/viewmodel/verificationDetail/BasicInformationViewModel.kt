@@ -199,7 +199,8 @@ class BasicInformationViewModel(private val context: Context, val binding: Fragm
                        isLoading.postValue(false)
                        if(t.getStatusCode() == 200){
                            Utils().showToast(context,t.getMessage().toString())
-                           FragmentBasicInformation().redirectToDashboardScreen()
+                            FragmentBasicInformation().redirectToDashboardScreen()
+                         //  (context as ActivityDetail).showTab()
                        }else{
                            Utils().showToast(context,t.getMessage().toString())
                            FragmentBasicInformation().redirectToDashboardScreen()

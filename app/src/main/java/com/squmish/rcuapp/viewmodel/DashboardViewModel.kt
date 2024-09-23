@@ -1,6 +1,7 @@
 package com.squmish.rcuapp.viewmodel
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
@@ -20,8 +21,10 @@ import com.squmish.rcuapp.network.CallbackObserver
 import com.squmish.rcuapp.network.Networking
 import com.squmish.rcuapp.room.InitDb
 import com.squmish.rcuapp.room.dao.MasterDataDao
+import com.squmish.rcuapp.uttils.AppConstants
 import com.squmish.rcuapp.uttils.Session
 import com.squmish.rcuapp.uttils.Utility
+import com.squmish.rcuapp.view.menu.DashboardMenuFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.CoroutineScope
@@ -43,10 +46,13 @@ class DashboardViewModel(val context: Context, val dashboardFragment: DashboardF
     // Session Manager
     var session = Session(context)
 
+    var rcuType = ""
+
     fun init(context: Context) {
         totalVerification.value = 0
-        getPendingRequest()
         masterDataDao = InitDb.appDatabase.getMasterData()
+        rcuType =  (dashboardFragment).requireArguments().getString("RcuType").toString()
+        getPendingRequest()
     }
 
     @SuppressLint("HardwareIds")
@@ -56,7 +62,7 @@ class DashboardViewModel(val context: Context, val dashboardFragment: DashboardF
             isLoading.postValue(true)
             Networking.with(context)
                 .getServices()
-                .getPendingRequest()
+                .getPendingRequest(rcuType)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : CallbackObserver<GetPendingRequestResponse>() {

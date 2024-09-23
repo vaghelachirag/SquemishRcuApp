@@ -40,7 +40,7 @@ class DashboardSelectionAdapter(val context: Context, private val list: ArrayLis
             holder.binding.llCounter.visibility = View.GONE
         }
 
-        holder.binding.txtCounter.text = list[position].getAdditionalCaption()
+        holder.binding.txtCounter.text = list[position].getAdditionalCaption()!!.trim()
 
         holder.binding.llMain.setOnClickListener {
             onItemSelected.onItemSelected(list[position], position)

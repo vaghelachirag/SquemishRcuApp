@@ -58,7 +58,7 @@ open class ActivityDetail  : BaseActivity()  {
 
     override fun onResume() {
         super.onResume()
-    //  detailViewModel.init(this)
+        //  detailViewModel.init(this)
         Log.e("OnResume","OnResume")
     }
 
@@ -66,7 +66,7 @@ open class ActivityDetail  : BaseActivity()  {
     private fun setView() {
         binding.lifecycleOwner = this
 
-       detailViewModel.isLoading.observe(this) { isLoading ->
+        detailViewModel.isLoading.observe(this) { isLoading ->
             if (isLoading) showProgressbar()
             else if (!isLoading) hideProgressbar()
         }
@@ -82,11 +82,6 @@ open class ActivityDetail  : BaseActivity()  {
             selectedData = detailViewModel.getVerificationDetailData.value
             Utils().setVerificationType(selectedData)
             setStatePageAdapter()
-        }
-
-        val tabStrip = binding.tabLayout.getChildAt(0)
-        for (i in 0 until binding.tabLayout.childCount) {
-            binding.tabLayout.getChildAt(i).setOnTouchListener { _, _ -> true }
         }
 
     }
@@ -117,10 +112,10 @@ open class ActivityDetail  : BaseActivity()  {
 
         if(selectedData!!.getStatus() != null){
             if(selectedData!!.getStatus() == AppConstants.statusPending){
-               hideTab()
+                hideTab()
             }
             else{
-              showTab()
+                showTab()
             }
         }
 
@@ -145,21 +140,21 @@ open class ActivityDetail  : BaseActivity()  {
     private fun setProgressData() {
     }
 
-  public fun showTab(){
-      (binding.tabLayout.getTabAt(1)!!.view as LinearLayout).visibility = View.VISIBLE
-      (binding.tabLayout.getTabAt(2)!!.view as LinearLayout).visibility = View.VISIBLE
-      (binding.tabLayout.getTabAt(3)!!.view as LinearLayout).visibility = View.VISIBLE
-      (binding.tabLayout.getTabAt(4)!!.view as LinearLayout).visibility = View.VISIBLE
-      (binding.tabLayout.getTabAt(5)!!.view as LinearLayout).visibility = View.VISIBLE
-  }
+    public fun showTab(){
+        (binding.tabLayout.getTabAt(1)!!.view as LinearLayout).visibility = View.VISIBLE
+        (binding.tabLayout.getTabAt(2)!!.view as LinearLayout).visibility = View.VISIBLE
+        (binding.tabLayout.getTabAt(3)!!.view as LinearLayout).visibility = View.VISIBLE
+      //  (binding.tabLayout.getTabAt(4)!!.view as LinearLayout).visibility = View.VISIBLE
+      //  (binding.tabLayout.getTabAt(5)!!.view as LinearLayout).visibility = View.VISIBLE
+    }
 
     private fun hideTab(){
 
         (binding.tabLayout.getTabAt(1)!!.view as LinearLayout).visibility = View.GONE
         (binding.tabLayout.getTabAt(2)!!.view as LinearLayout).visibility = View.GONE
         (binding.tabLayout.getTabAt(3)!!.view as LinearLayout).visibility = View.GONE
-        (binding.tabLayout.getTabAt(4)!!.view as LinearLayout).visibility = View.GONE
-        (binding.tabLayout.getTabAt(5)!!.view as LinearLayout).visibility = View.GONE
+       // (binding.tabLayout.getTabAt(4)!!.view as LinearLayout).visibility = View.GONE
+     //   (binding.tabLayout.getTabAt(5)!!.view as LinearLayout).visibility = View.GONE
     }
 
 }

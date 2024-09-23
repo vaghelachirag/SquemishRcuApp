@@ -1,5 +1,7 @@
 package com.squmish.rcuapp.view.detail
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +13,7 @@ import com.squmish.rcuapp.model.getverificationDetailResponse.GetVerificationDet
 import com.squmish.rcuapp.uttils.AppConstants
 import com.squmish.rcuapp.uttils.Utility.Companion.setAllEnabled
 import com.squmish.rcuapp.view.base.BaseFragment
+import com.squmish.rcuapp.view.menu.DashboardActivity
 import com.squmish.rcuapp.viewmodel.verificationDetail.FinalSubmitViewModel
 
 class FragmentFinalSubmit  : BaseFragment(), FragmentLifecycleInterface {
@@ -35,6 +38,12 @@ class FragmentFinalSubmit  : BaseFragment(), FragmentLifecycleInterface {
         }
     }
 
+    fun redirectToDashboardScreen(){
+        val intent = Intent(activity, DashboardActivity:: class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+        (activity as Activity).finish()
+        //  findNavController().navigate(R.id.action_fragmentbasicinformation_to_dashboardMenuFragment)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {

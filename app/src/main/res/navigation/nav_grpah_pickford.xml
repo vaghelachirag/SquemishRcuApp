@@ -21,6 +21,13 @@
             app:popUpTo="@+id/dashboardMenuFragment"
             app:popUpToInclusive="true"/>
 
+        <action
+            android:id="@+id/action_dashboardMenuFragment_to_webViewFragment"
+            app:destination="@id/webViewFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/dashboardMenuFragment"
+            app:popUpToInclusive="true"/>
+
     </fragment>
 
     <fragment
@@ -91,8 +98,9 @@
         tools:layout="@layout/fragment_basic_information">
 
         <action
-            android:id="@+id/action_fragmentbasicinformation_to_dashboardFragment"
-            app:destination="@id/dashboardFragment" />
+            android:id="@+id/action_fragmentbasicinformation_to_dashboardMenuFragment"
+            app:destination="@id/dashboardMenuFragment" />
+
     </fragment>
 
 </navigation>

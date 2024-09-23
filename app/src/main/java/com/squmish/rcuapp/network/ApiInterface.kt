@@ -36,7 +36,7 @@ interface ApiInterface {
     fun registerUser(@Body requestBody: RequestBody): Observable<GetDeviceRegistrationResponse>
 
     @GET("api/FIRequestVerificationView/GetPendingVerification")
-    fun getPendingRequest(): Observable<GetPendingRequestResponse>
+    fun getPendingRequest(@Query("rcutype") Rcutype: String): Observable<GetPendingRequestResponse>
 
     @GET("api/MasterData/GetAllMaster")
     fun getMasterApiData(): Observable<GetMasterApiResponse>

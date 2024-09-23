@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import com.squmish.rcuapp.R
-import com.squmish.rcuapp.databinding.ActivityDashboardBinding
 import com.squmish.rcuapp.databinding.DashboardMenuFragmentBinding
 import com.squmish.rcuapp.view.base.BaseFragment
 import com.squmish.rcuapp.viewmodel.DashboardMenuViewModel
@@ -40,9 +39,17 @@ class DashboardMenuFragment: BaseFragment()  {
         return binding.root
     }
 
-    fun  redirectToDetailScreen() {
+    fun  redirectToDetailScreen(rcuType: String?) {
         val bundle = Bundle()
-        findNavController().navigate(R.id.action_dashboardMenuFragment_to_dashboardFragment)
+        bundle.putString("RcuType", rcuType)
+        findNavController().navigate(R.id.action_dashboardMenuFragment_to_dashboardFragment,bundle)
+
+    }
+
+    fun  redirectToWebView(rcuType: String?) {
+        val bundle = Bundle()
+        bundle.putString("webURL", rcuType)
+        findNavController().navigate(R.id.action_dashboardMenuFragment_to_webViewFragment,bundle)
 
     }
 
