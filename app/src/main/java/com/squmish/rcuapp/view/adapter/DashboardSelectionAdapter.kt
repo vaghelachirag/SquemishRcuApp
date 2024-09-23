@@ -6,15 +6,12 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.squmish.rcuapp.R
-import com.squmish.rcuapp.databinding.ItemDashboardBinding
 import com.squmish.rcuapp.databinding.ItemDashboardSelectionBinding
 import com.squmish.rcuapp.interfaces.OnItemSelected
 import com.squmish.rcuapp.model.dashboard.getDashboardApiResponse.GetMobileDashboardDetailDto
-import com.squmish.rcuapp.model.pendingRequest.GetPendingRequestData
 import com.squmish.rcuapp.view.adapter.DashboardMenuViewHolder
-import com.squmish.rcuapp.view.adapter.DashboardViewHolder
+
 import com.squmish.rcuapp.viewmodel.DashboardMenuViewModel
-import com.squmish.rcuapp.viewmodel.DashboardViewModel
 
 class DashboardSelectionAdapter(val context: Context, private val list: ArrayList<GetMobileDashboardDetailDto>, val viewModel: DashboardMenuViewModel, val onItemSelected: OnItemSelected<GetMobileDashboardDetailDto>,) :  RecyclerView.Adapter<DashboardMenuViewHolder>() {
 

@@ -15,6 +15,7 @@ import android.os.Bundle
 import android.os.IBinder
 import android.provider.Settings
 import android.util.Log
+import android.view.Menu
 import android.view.View
 import android.view.WindowManager
 import android.widget.TextView
@@ -62,7 +63,6 @@ import com.squmish.rcuapp.view.adapter.MenuItemAdapter
 import com.squmish.rcuapp.view.base.BaseActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import java.util.Locale
 
 
 @Suppress("DEPRECATION")
@@ -188,6 +188,11 @@ class DashboardActivity : BaseActivity(){
                 }
             }
         }
+    }
+
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        return false
     }
 
     private fun getAPIClientInstance(): GoogleApiClient {

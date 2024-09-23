@@ -1,20 +1,21 @@
 package com.squmish.rcuapp.view.detail
-import android.annotation.SuppressLint
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.WindowManager
+import android.widget.LinearLayout
 import androidx.viewpager.widget.ViewPager
+import com.squmish.rcuapp.databinding.ActivityDetailBinding
+import com.squmish.rcuapp.interfaces.FragmentLifecycleInterface
+import com.squmish.rcuapp.model.getverificationDetailResponse.GetVerificationDetailData
+import com.squmish.rcuapp.uttils.AppConstants
 import com.squmish.rcuapp.uttils.Utils
 import com.squmish.rcuapp.view.adapter.VerificationDetailViewPagerAdapter
 import com.squmish.rcuapp.view.base.BaseActivity
 import com.squmish.rcuapp.view.detail.fiRequest.FragmentRCOVerification
 import com.squmish.rcuapp.viewmodel.DetailViewModel
-
-import com.squmish.rcuapp.databinding.ActivityDetailBinding
-import com.squmish.rcuapp.interfaces.FragmentLifecycleInterface
-import com.squmish.rcuapp.model.getverificationDetailResponse.GetVerificationDetailData
-
 
 
 open class ActivityDetail  : BaseActivity()  {
@@ -114,6 +115,15 @@ open class ActivityDetail  : BaseActivity()  {
         binding.viewPager.isSaveEnabled = true
         binding.viewPager.offscreenPageLimit = 8
 
+        if(selectedData!!.getStatus() != null){
+            if(selectedData!!.getStatus() == AppConstants.statusPending){
+               hideTab()
+            }
+            else{
+              showTab()
+            }
+        }
+
         binding.viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             var currentPosition = 0
             override fun onPageSelected(newPosition: Int) {
@@ -133,6 +143,23 @@ open class ActivityDetail  : BaseActivity()  {
 
 
     private fun setProgressData() {
+    }
+
+  public fun showTab(){
+      (binding.tabLayout.getTabAt(1)!!.view as LinearLayout).visibility = View.VISIBLE
+      (binding.tabLayout.getTabAt(2)!!.view as LinearLayout).visibility = View.VISIBLE
+      (binding.tabLayout.getTabAt(3)!!.view as LinearLayout).visibility = View.VISIBLE
+      (binding.tabLayout.getTabAt(4)!!.view as LinearLayout).visibility = View.VISIBLE
+      (binding.tabLayout.getTabAt(5)!!.view as LinearLayout).visibility = View.VISIBLE
+  }
+
+    private fun hideTab(){
+
+        (binding.tabLayout.getTabAt(1)!!.view as LinearLayout).visibility = View.GONE
+        (binding.tabLayout.getTabAt(2)!!.view as LinearLayout).visibility = View.GONE
+        (binding.tabLayout.getTabAt(3)!!.view as LinearLayout).visibility = View.GONE
+        (binding.tabLayout.getTabAt(4)!!.view as LinearLayout).visibility = View.GONE
+        (binding.tabLayout.getTabAt(5)!!.view as LinearLayout).visibility = View.GONE
     }
 
 }

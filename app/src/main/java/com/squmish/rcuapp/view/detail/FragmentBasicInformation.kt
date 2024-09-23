@@ -58,15 +58,14 @@ class FragmentBasicInformation  : BaseFragment(), FragmentLifecycleInterface {
         val callback = requireActivity().onBackPressedDispatcher.addCallback(requireActivity()) {
 
         }
-
        // DashboardActivity().navController.popBackStack(R.id.dashboardFragment, false);
-
         return binding.root
     }
 
     private fun setAction() {
         binding.btnAccept.setOnClickListener {
             basicInformationModel.showAcceptRejectDialoug(true)
+            (activity as ActivityDetail).showTab()
         }
         binding.btnReject.setOnClickListener {
             basicInformationModel.showAcceptRejectDialoug(false)
@@ -80,7 +79,7 @@ class FragmentBasicInformation  : BaseFragment(), FragmentLifecycleInterface {
                binding.llAcceptReject.visibility = View.VISIBLE
            }
             else{
-               binding.llAcceptReject.visibility = View.GONE
+               binding.llAcceptReject.visibility = View.VISIBLE
             }
         }
     }

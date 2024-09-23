@@ -4,34 +4,18 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.content.IntentSender
 import android.content.pm.PackageManager
-import android.location.Address
-import android.location.Geocoder
-import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity.LOCATION_SERVICE
-import androidx.core.app.ActivityCompat
+import androidx.activity.addCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.google.android.gms.common.api.GoogleApiClient
-import com.google.android.gms.common.api.PendingResult
-import com.google.android.gms.common.api.Status
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationServices
-import com.google.android.gms.location.LocationSettingsRequest
-import com.google.android.gms.location.LocationSettingsResult
-import com.google.android.gms.location.LocationSettingsStatusCodes
-import com.karumi.dexter.Dexter
-import com.karumi.dexter.MultiplePermissionsReport
-import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import androidx.navigation.fragment.findNavController
+import com.squmish.rcuapp.R
 import com.squmish.rcuapp.databinding.DashboardFragmentBinding
 import com.squmish.rcuapp.model.pendingRequest.GetPendingRequestData
 import com.squmish.rcuapp.uttils.AppConstants
@@ -39,7 +23,6 @@ import com.squmish.rcuapp.uttils.Session.Companion.DATA
 import com.squmish.rcuapp.view.base.BaseFragment
 import com.squmish.rcuapp.view.detail.ActivityDetail
 import com.squmish.rcuapp.viewmodel.DashboardViewModel
-import java.util.Locale
 
 
 class DashboardFragment: BaseFragment() {
@@ -81,6 +64,18 @@ class DashboardFragment: BaseFragment() {
         binding.refreshLayout.setOnRefreshListener {
             dashboardViewModel.getPendingRequest()
         }
+
+        binding.layoutDetail.tvTitle.text = "Dashboard"
+
+        binding.layoutDetail.ivBack.setOnClickListener {
+            findNavController().navigate(R.id.action_dashboardFragment_to_dashboardMenuFragment)
+        }
+
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(requireActivity()) {
+            findNavController().navigate(R.id.action_dashboardFragment_to_dashboardMenuFragment)
+        }
+
+        (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
 
         return binding.root
     }

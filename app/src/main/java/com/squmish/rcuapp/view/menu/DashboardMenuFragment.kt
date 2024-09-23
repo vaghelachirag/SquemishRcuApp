@@ -6,8 +6,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import com.squmish.rcuapp.R
+import com.squmish.rcuapp.databinding.ActivityDashboardBinding
 import com.squmish.rcuapp.databinding.DashboardMenuFragmentBinding
 import com.squmish.rcuapp.view.base.BaseFragment
 import com.squmish.rcuapp.viewmodel.DashboardMenuViewModel
@@ -44,4 +46,10 @@ class DashboardMenuFragment: BaseFragment()  {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        (activity as AppCompatActivity?)!!.supportActionBar!!.show()
+        (activity as AppCompatActivity?)!!.supportActionBar!!.setDisplayHomeAsUpEnabled(false)
+        (activity as AppCompatActivity?)!!.supportActionBar!!.setHomeAsUpIndicator(R.drawable.ic_nav_menup)
+    }
 }
