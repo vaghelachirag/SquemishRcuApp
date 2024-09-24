@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import com.squmish.rcuapp.R
 import com.squmish.rcuapp.databinding.DashboardMenuFragmentBinding
+import com.squmish.rcuapp.model.dashboard.getDashboardApiResponse.GetMobileDashboardDetailDto
+import com.squmish.rcuapp.uttils.Utils
 import com.squmish.rcuapp.view.base.BaseFragment
 import com.squmish.rcuapp.viewmodel.DashboardMenuViewModel
 
@@ -39,11 +41,17 @@ class DashboardMenuFragment: BaseFragment()  {
         return binding.root
     }
 
-    fun  redirectToDetailScreen(rcuType: String?) {
-        val bundle = Bundle()
-        bundle.putString("RcuType", rcuType)
-        findNavController().navigate(R.id.action_dashboardMenuFragment_to_dashboardFragment,bundle)
-
+    fun  redirectToDetailScreen(getDashboard: GetMobileDashboardDetailDto) {
+        if (!getDashboard.getAdditionalCaption().isNullOrEmpty() && getDashboard.getAdditionalCaption().equals("0")){
+            context?.let { Utils().showToast(it,"No Data Found!") }
+        }else {
+            val bundle = Bundle()
+            bundle.putString("RcuType", getDashboard.getButtonCaption())
+            findNavController().navigate(
+                R.id.action_dashboardMenuFragment_to_dashboardFragment,
+                bundle
+            )
+        }
     }
 
     fun  redirectToWebView(rcuType: String?) {

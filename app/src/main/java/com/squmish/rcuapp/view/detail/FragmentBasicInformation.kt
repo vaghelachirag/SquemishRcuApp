@@ -2,22 +2,17 @@ package com.squmish.rcuapp.view.detail
 
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
-import androidx.fragment.app.FragmentManager
-import com.squmish.rcuapp.R
 import com.squmish.rcuapp.databinding.FragmentBasicInformationBinding
 import com.squmish.rcuapp.interfaces.FragmentLifecycleInterface
 import com.squmish.rcuapp.model.getverificationDetailResponse.GetVerificationDetailData
 import com.squmish.rcuapp.uttils.AppConstants
 import com.squmish.rcuapp.view.base.BaseFragment
-import com.squmish.rcuapp.view.menu.DashboardActivity
-import com.squmish.rcuapp.view.menu.DashboardFragment
 import com.squmish.rcuapp.viewmodel.verificationDetail.BasicInformationViewModel
 
 
@@ -45,7 +40,6 @@ class FragmentBasicInformation  : BaseFragment(), FragmentLifecycleInterface {
         }
     }
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentBasicInformationBinding.inflate(inflater, container, false)
@@ -56,14 +50,6 @@ class FragmentBasicInformation  : BaseFragment(), FragmentLifecycleInterface {
         setAction()
 
 
-        basicInformationModel.isLoading.observe(requireActivity()) { isLoading ->
-            if (isLoading && isAdded) showProgressbar()
-            else if (!isLoading && isAdded) hideProgressbar()
-        }
-
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(requireActivity()) {
-
-        }
         // DashboardActivity().navController.popBackStack(R.id.dashboardFragment, false);
         return binding.root
     }
@@ -84,7 +70,7 @@ class FragmentBasicInformation  : BaseFragment(), FragmentLifecycleInterface {
                 binding.llAcceptReject.visibility = View.VISIBLE
             }
             else{
-                binding.llAcceptReject.visibility = View.VISIBLE
+                binding.llAcceptReject.visibility = View.GONE
             }
         }
     }
@@ -103,16 +89,22 @@ class FragmentBasicInformation  : BaseFragment(), FragmentLifecycleInterface {
         dashboardActivity = activity
 
     }
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
+
 
     override fun onPauseFragment() {
 
     }
 
     override fun onResumeFragment(s: String?) {
+        Log.e("OnResume","Basic Information")
+        basicInformationModel.isLoading.observe(requireActivity()) { isLoading ->
+            if (isLoading && isAdded) showProgressbar()
+            else if (!isLoading && isAdded) hideProgressbar()
+        }
+
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(requireActivity()) {
+
+        }
 
     }
 

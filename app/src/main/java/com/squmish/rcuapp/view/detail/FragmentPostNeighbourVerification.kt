@@ -2,6 +2,7 @@ package com.squmish.rcuapp.view.detail
 
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,16 +43,7 @@ class FragmentPostNeighbourVerification  : BaseFragment(), FragmentLifecycleInte
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentPostNeighbourVerificationBinding.inflate(inflater, container, false)
-        binding.viewModel = postNeighbourVerificationViewModel
-        binding.lifecycleOwner = this
-        context?.let { postNeighbourVerificationViewModel.init(it) }
-//      basicInformationModel.init(context, FragmentDetail.selectedData!!)
 
-        postNeighbourVerificationViewModel.isLoading.observe(requireActivity()) { isLoading ->
-            if (isLoading && isAdded) showProgressbar()
-            else if (!isLoading && isAdded) hideProgressbar()
-        }
-        setView()
         return binding.root
     }
 
@@ -69,7 +61,7 @@ class FragmentPostNeighbourVerification  : BaseFragment(), FragmentLifecycleInte
 
         if(ActivityDetail.selectedData!!.getStatus() != null){
             if(ActivityDetail.selectedData!!.getStatus() == AppConstants.statusPending){
-                binding.constraintLayout.forEach { child -> child.setAllEnabled(false) }
+              //  binding.constraintLayout.forEach { child -> child.setAllEnabled(false) }
             }
             else{
                 binding.constraintLayout.forEach { child -> child.setAllEnabled(true) }
@@ -92,7 +84,18 @@ class FragmentPostNeighbourVerification  : BaseFragment(), FragmentLifecycleInte
     }
 
     override fun onResumeFragment(s: String?) {
+        Log.e("OnResume","Post Neighbour")
+        binding.viewModel = postNeighbourVerificationViewModel
+        binding.lifecycleOwner = this
+        context?.let { postNeighbourVerificationViewModel.init(it) }
+//      basicInformationModel.init(context, FragmentDetail.selectedData!!)
 
+        postNeighbourVerificationViewModel.isLoading.observe(requireActivity()) { isLoading ->
+            if (isLoading && isAdded) showProgressbar()
+            else if (!isLoading && isAdded) hideProgressbar()
+        }
+        setView()
+        Log.e("OnCrete","PhotoNeighbour")
     }
 
 }

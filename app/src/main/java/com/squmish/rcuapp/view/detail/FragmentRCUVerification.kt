@@ -57,7 +57,7 @@ class FragmentRCUVerification : BaseFragment(), FragmentLifecycleInterface {
     private fun setView() {
         if(ActivityDetail.selectedData!!.getStatus() != null){
             if(ActivityDetail.selectedData!!.getStatus() == AppConstants.statusPending){
-                binding.llMain.forEach { child -> child.setAllEnabled(false) }
+             //   binding.llMain.forEach { child -> child.setAllEnabled(false) }
             }
             else{
                 binding.llMain.forEach { child -> child.setAllEnabled(true) }

@@ -3,6 +3,7 @@ package com.squmish.rcuapp.view.detail
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,11 +37,48 @@ class FragmentPreNeighbourVerification : BaseFragment(), FragmentLifecycleInterf
         }
     }
 
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+        if (isVisibleToUser) {
+            Log.e("Fragment","Preneighbour")
+        } else {
+            Log.e("Fragment","Preneighbourn not visible")
+        }
+    }
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentPreNeighbourVerificationBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+    }
+
+    private fun setView() {
+        if(ActivityDetail.selectedData!!.getStatus() != null){
+            if(ActivityDetail.selectedData!!.getStatus() == AppConstants.statusPending){
+               // binding.constraintLayout.forEach { child -> child.setAllEnabled(false) }
+            }
+            else{
+                binding.constraintLayout.forEach { child -> child.setAllEnabled(true) }
+            }
+        }
+    }
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    override fun onPauseFragment() {
+
+    }
+    override fun onResumeFragment(s: String?) {
+        Log.e("OnResume","Pre Neighbour")
         binding.viewModel = preNeighbourVerificationViewModel
         binding.lifecycleOwner = this
         context?.let { preNeighbourVerificationViewModel.init(it) }
@@ -59,38 +97,6 @@ class FragmentPreNeighbourVerification : BaseFragment(), FragmentLifecycleInterf
                 binding.inpReason.visibility = View.VISIBLE
             }
         }
-
         setView()
-
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
-
-    private fun setView() {
-        if(ActivityDetail.selectedData!!.getStatus() != null){
-            if(ActivityDetail.selectedData!!.getStatus() == AppConstants.statusPending){
-                binding.constraintLayout.forEach { child -> child.setAllEnabled(false) }
-            }
-            else{
-                binding.constraintLayout.forEach { child -> child.setAllEnabled(true) }
-            }
-        }
-    }
-
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    override fun onPauseFragment() {
-
-    }
-
-    override fun onResumeFragment(s: String?) {
-
     }
 }

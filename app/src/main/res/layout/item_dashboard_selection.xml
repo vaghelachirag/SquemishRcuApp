@@ -82,9 +82,9 @@
 
         </FrameLayout>
 
-        <com.squmish.rcuapp.widget.HeaderText
+        <com.squmish.rcuapp.widget.SmallText
             android:id="@+id/title"
-            android:layout_width="148dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/_10sdp"

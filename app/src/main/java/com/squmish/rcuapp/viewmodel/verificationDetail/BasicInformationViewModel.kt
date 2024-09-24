@@ -97,6 +97,7 @@ class BasicInformationViewModel(private val context: Context, val binding: Fragm
                 if (ActivityDetail.selectedData!!.getDocuments() != null){
                     setVerificationDocumentAdapter()
                 }
+              //  (context as ActivityDetail).hideTab()
             }
         }
 
@@ -200,9 +201,9 @@ class BasicInformationViewModel(private val context: Context, val binding: Fragm
                        if(t.getStatusCode() == 200){
                            Utils().showToast(context,t.getMessage().toString())
                             FragmentBasicInformation().redirectToDashboardScreen()
-                           binding.llAcceptReject.visibility = View.GONE
-                           (context as ActivityDetail).showTab()
-                           ActivityDetail.selectedData!!.setStatus("Accepted")
+                            binding.llAcceptReject.visibility = View.GONE
+                         //  (context as ActivityDetail).showTab()
+                           (context as ActivityDetail).setAcceptedStatePageAdapter()
 
                        }else{
                            Utils().showToast(context,t.getMessage().toString())

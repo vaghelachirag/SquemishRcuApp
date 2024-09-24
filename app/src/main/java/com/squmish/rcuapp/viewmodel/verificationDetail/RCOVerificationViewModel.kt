@@ -28,6 +28,7 @@ class RCOVerificationViewModel(private val context: Context, private  val bindin
     }
 
 
+
     private fun getRcuVerificationURL(menuId: String) {
 
         if (Utility.isNetworkConnected(context)){

@@ -32,19 +32,15 @@ class FragmentRCOVerification: BaseFragment(), FragmentLifecycleInterface {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentRcoVerificationBinding.inflate(inflater, container, false)
-        binding.viewModel = rcuVerificationViewModel
-        binding.lifecycleOwner = this
-        rcuVerificationViewModel.init(context)
-        setObserver()
-        setView()
         return binding.root
     }
     @SuppressLint("SetJavaScriptEnabled")
     private fun setView() {
         if(ActivityDetail.selectedData!!.getStatus() != null){
             if(ActivityDetail.selectedData!!.getStatus() == AppConstants.statusPending){
-                  binding.constraintLayout.forEach { child -> child.setAllEnabled(false)
-                    binding.webView.getSettings().javaScriptEnabled = false;
+                    binding.constraintLayout.forEach {
+                  // child -> child.setAllEnabled(false)
+                  //  binding.webView.getSettings().javaScriptEnabled = false;
                 }
             }
             else{
@@ -126,6 +122,10 @@ class FragmentRCOVerification: BaseFragment(), FragmentLifecycleInterface {
     }
 
     override fun onResumeFragment(s: String?) {
-
+        binding.viewModel = rcuVerificationViewModel
+        binding.lifecycleOwner = this
+        rcuVerificationViewModel.init(context)
+        setObserver()
+        setView()
     }
 }

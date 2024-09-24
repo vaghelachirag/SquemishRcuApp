@@ -75,28 +75,13 @@ class FragmentPhotograph: BaseFragment(), FragmentLifecycleInterface {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentPhotographBinding.inflate(inflater, container, false)
-        binding.viewModel = photoVerificationViewModel
-        binding.lifecycleOwner = this
-        photoVerificationViewModel.init(context as Activity)
-
-        setView()
-
-        photoVerificationViewModel.isLoading.observe(requireActivity()) { isLoading ->
-            if (isLoading && isAdded) showProgressbar()
-            else if (!isLoading && isAdded) hideProgressbar()
-        }
-
-        binding.layoutCamera.setOnClickListener {
-            checkImagePickerPermission()
-        }
-
         return binding.root
     }
 
     private fun setView() {
         if(ActivityDetail.selectedData!!.getStatus() != null){
             if(ActivityDetail.selectedData!!.getStatus() == AppConstants.statusPending){
-                binding.constraintLayout.forEach { child -> child.setAllEnabled(false) }
+             //   binding.constraintLayout.forEach { child -> child.setAllEnabled(false) }
             }
             else{
                 binding.constraintLayout.forEach { child -> child.setAllEnabled(true) }
@@ -303,7 +288,24 @@ class FragmentPhotograph: BaseFragment(), FragmentLifecycleInterface {
     }
 
     override fun onResumeFragment(s: String?) {
+        Log.e("OnResume","Photo")
+        binding.viewModel = photoVerificationViewModel
+        binding.lifecycleOwner = this
+        photoVerificationViewModel.init(context as Activity)
 
+        setView()
+
+        Log.e("OnCrete","Photo")
+
+        photoVerificationViewModel.isLoading.observe(requireActivity()) { isLoading ->
+            if (isLoading && isAdded) showProgressbar()
+            else if (!isLoading && isAdded) hideProgressbar()
+        }
+
+        binding.layoutCamera.setOnClickListener {
+            checkImagePickerPermission()
+        }
     }
+
 
 }

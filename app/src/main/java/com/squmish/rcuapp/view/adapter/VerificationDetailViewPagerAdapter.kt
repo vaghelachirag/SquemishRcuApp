@@ -39,4 +39,9 @@ class VerificationDetailViewPagerAdapter(fragmentManager: FragmentManager, behav
         fragmentTitleList.add(title)
     }
 
+    fun removeFragment(fragment: BaseFragment, title: String) {
+        fragmentList.remove(fragment)
+        fragmentTitleList.remove(title)
+    }
+
 }

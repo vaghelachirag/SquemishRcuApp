@@ -82,7 +82,7 @@ class DashboardMenuViewModel(
                   dashboardMenuFragment.redirectToWebView(getdashboard.getButtonId().toString())
                 }
                 else{
-                    dashboardMenuFragment.redirectToDetailScreen(getdashboard.getButtonCaption(),)
+                    dashboardMenuFragment.redirectToDetailScreen(getdashboard)
                 }
             }
         })

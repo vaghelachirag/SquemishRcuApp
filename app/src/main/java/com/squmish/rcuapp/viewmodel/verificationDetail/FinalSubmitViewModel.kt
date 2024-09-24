@@ -1,5 +1,6 @@
 package com.squmish.rcuapp.viewmodel.verificationDetail
 
+import android.app.Activity
 import android.content.Context
 import android.util.Log
 import android.widget.ArrayAdapter
@@ -17,6 +18,7 @@ import com.squmish.rcuapp.room.InitDb
 import com.squmish.rcuapp.room.dao.MasterDataDao
 import com.squmish.rcuapp.uttils.AppConstants
 import com.squmish.rcuapp.uttils.Utility
+import com.squmish.rcuapp.view.detail.ActivityDetail
 import com.squmish.rcuapp.view.detail.FragmentBasicInformation
 import com.squmish.rcuapp.view.detail.FragmentFinalSubmit
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -78,9 +80,10 @@ class FinalSubmitViewModel(private val context: Context,private  val binding: Fr
                     override fun onNext(t: GetFinalSubmissionApiResponse) {
                         Log.e("Status",t.getStatusCode().toString())
                         isLoading.postValue(false)
+
                         if(t.getStatusCode() == 200){
                             Utils().showSnackBar(context,t.getMessage().toString(),binding.constraintLayout)
-                            FragmentFinalSubmit().redirectToDashboardScreen()
+                            (context as ActivityDetail).finish()
                         }else{
                             Utils().showSnackBar(context,t.getMessage().toString(),binding.constraintLayout)
                         }

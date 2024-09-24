@@ -3,10 +3,14 @@ package com.squmish.rcuapp.view.detail
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.forEach
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
+import com.squmish.rcuapp.R
 import com.squmish.rcuapp.databinding.FragmentFinalSubmitBinding
 import com.squmish.rcuapp.interfaces.FragmentLifecycleInterface
 import com.squmish.rcuapp.model.getverificationDetailResponse.GetVerificationDetailData
@@ -39,26 +43,20 @@ class FragmentFinalSubmit  : BaseFragment(), FragmentLifecycleInterface {
     }
 
     fun redirectToDashboardScreen(){
-        val intent = Intent(activity, DashboardActivity:: class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-        (activity as Activity).finish()
-        //  findNavController().navigate(R.id.action_fragmentbasicinformation_to_dashboardMenuFragment)
+        findNavController().navigate(R.id.dashboardFragment)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentFinalSubmitBinding.inflate(inflater, container, false)
-        binding.viewModel = finalSubmitViewModel
-        binding.lifecycleOwner = this
-        finalSubmitViewModel!!.init(context)
-        setView()
+
         return binding.root
     }
 
     private fun setView() {
         if(ActivityDetail.selectedData!!.getStatus() != null){
             if(ActivityDetail.selectedData!!.getStatus() == AppConstants.statusPending){
-                binding.constraintLayout.forEach { child -> child.setAllEnabled(false) }
+              //  binding.constraintLayout.forEach { child -> child.setAllEnabled(false) }
             }
             else{
                 binding.constraintLayout.forEach { child -> child.setAllEnabled(true) }
@@ -84,8 +82,12 @@ class FragmentFinalSubmit  : BaseFragment(), FragmentLifecycleInterface {
     override fun onPauseFragment() {
 
     }
-
     override fun onResumeFragment(s: String?) {
-
+        Log.e("OnResume","Final Submit")
+        binding.viewModel = finalSubmitViewModel
+        binding.lifecycleOwner = this
+        finalSubmitViewModel!!.init(context)
+        setView()
     }
+
 }
