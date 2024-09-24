@@ -250,6 +250,7 @@ class DashboardActivity : BaseActivity(){
         broadcastReceiver?.let {
             LocalBroadcastManager.getInstance(this).registerReceiver(it, intentFilter)
         }
+        navController = findNavController(R.id.navHostFragmentPickford)
     }
 
     override fun onPause() {

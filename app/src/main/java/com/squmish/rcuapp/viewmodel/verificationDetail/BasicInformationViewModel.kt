@@ -200,7 +200,10 @@ class BasicInformationViewModel(private val context: Context, val binding: Fragm
                        if(t.getStatusCode() == 200){
                            Utils().showToast(context,t.getMessage().toString())
                             FragmentBasicInformation().redirectToDashboardScreen()
-                         //  (context as ActivityDetail).showTab()
+                           binding.llAcceptReject.visibility = View.GONE
+                           (context as ActivityDetail).showTab()
+                           ActivityDetail.selectedData!!.setStatus("Accepted")
+
                        }else{
                            Utils().showToast(context,t.getMessage().toString())
                            FragmentBasicInformation().redirectToDashboardScreen()

@@ -144,6 +144,8 @@ open class ActivityDetail  : BaseActivity()  {
         (binding.tabLayout.getTabAt(1)!!.view as LinearLayout).visibility = View.VISIBLE
         (binding.tabLayout.getTabAt(2)!!.view as LinearLayout).visibility = View.VISIBLE
         (binding.tabLayout.getTabAt(3)!!.view as LinearLayout).visibility = View.VISIBLE
+        (binding.tabLayout.getTabAt(4)!!.view as LinearLayout).visibility = View.VISIBLE
+        (binding.tabLayout.getTabAt(5)!!.view as LinearLayout).visibility = View.VISIBLE
       //  (binding.tabLayout.getTabAt(4)!!.view as LinearLayout).visibility = View.VISIBLE
       //  (binding.tabLayout.getTabAt(5)!!.view as LinearLayout).visibility = View.VISIBLE
     }
@@ -153,6 +155,8 @@ open class ActivityDetail  : BaseActivity()  {
         (binding.tabLayout.getTabAt(1)!!.view as LinearLayout).visibility = View.GONE
         (binding.tabLayout.getTabAt(2)!!.view as LinearLayout).visibility = View.GONE
         (binding.tabLayout.getTabAt(3)!!.view as LinearLayout).visibility = View.GONE
+        (binding.tabLayout.getTabAt(4)!!.view as LinearLayout).visibility = View.GONE
+        (binding.tabLayout.getTabAt(5)!!.view as LinearLayout).visibility = View.GONE
        // (binding.tabLayout.getTabAt(4)!!.view as LinearLayout).visibility = View.GONE
      //   (binding.tabLayout.getTabAt(5)!!.view as LinearLayout).visibility = View.GONE
     }

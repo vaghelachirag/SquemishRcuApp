@@ -99,5 +99,6 @@ class DashboardFragment: BaseFragment() {
     override fun onResume() {
         super.onResume()
         dashboardViewModel.init(requireContext())
+        Log.e("OnResume","Dashboard")
     }
 }

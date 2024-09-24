@@ -99,8 +99,10 @@
 
         <action
             android:id="@+id/action_fragmentbasicinformation_to_dashboardMenuFragment"
-            app:destination="@id/dashboardMenuFragment" />
-
+            app:destination="@id/dashboardMenuFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/dashboardFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 
 </navigation>

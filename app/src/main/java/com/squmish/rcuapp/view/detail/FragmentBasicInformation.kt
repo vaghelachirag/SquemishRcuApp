@@ -4,18 +4,22 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
+import androidx.fragment.app.FragmentManager
 import com.squmish.rcuapp.R
-import com.squmish.rcuapp.view.base.BaseFragment
-import com.squmish.rcuapp.view.menu.DashboardActivity
 import com.squmish.rcuapp.databinding.FragmentBasicInformationBinding
 import com.squmish.rcuapp.interfaces.FragmentLifecycleInterface
 import com.squmish.rcuapp.model.getverificationDetailResponse.GetVerificationDetailData
 import com.squmish.rcuapp.uttils.AppConstants
+import com.squmish.rcuapp.view.base.BaseFragment
+import com.squmish.rcuapp.view.menu.DashboardActivity
+import com.squmish.rcuapp.view.menu.DashboardFragment
 import com.squmish.rcuapp.viewmodel.verificationDetail.BasicInformationViewModel
+
 
 class FragmentBasicInformation  : BaseFragment(), FragmentLifecycleInterface {
 
@@ -90,12 +94,7 @@ class FragmentBasicInformation  : BaseFragment(), FragmentLifecycleInterface {
     }
 
     fun redirectToDashboardScreen(){
-
-        dashboardActivity?.let{
-            val intent = Intent (it, DashboardActivity::class.java)
-            it.startActivity(intent)
-            it.finish()
-        }
+      // binding.llAcceptReject.visibility = View.GONE
     }
 
     @Deprecated("Deprecated in Java")

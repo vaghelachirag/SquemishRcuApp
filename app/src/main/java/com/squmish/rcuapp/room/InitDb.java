@@ -5,6 +5,10 @@ import android.util.Log;
 
 import com.google.firebase.FirebaseApp;
 
+import java.util.Objects;
+
+import io.reactivex.plugins.RxJavaPlugins;
+
 
 public class InitDb extends Application {
     public static AppDatabase appDatabase;
@@ -41,6 +45,9 @@ public class InitDb extends Application {
         super.onCreate();
         FirebaseApp.initializeApp(this);
         appDatabase = AppDatabase.getDatabase(this);
+        RxJavaPlugins.setErrorHandler(throwable -> {
+            Log.e("Error", Objects.requireNonNull(throwable.getMessage()));
+        }); // nothing or some logging
     }
 
 }
