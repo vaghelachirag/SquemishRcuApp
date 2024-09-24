@@ -44,6 +44,17 @@ class FragmentPostNeighbourVerification  : BaseFragment(), FragmentLifecycleInte
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentPostNeighbourVerificationBinding.inflate(inflater, container, false)
 
+        binding.viewModel = postNeighbourVerificationViewModel
+        binding.lifecycleOwner = this
+        context?.let { postNeighbourVerificationViewModel.init(it) }
+//      basicInformationModel.init(context, FragmentDetail.selectedData!!)
+
+        postNeighbourVerificationViewModel.isLoading.observe(requireActivity()) { isLoading ->
+            if (isLoading && isAdded) showProgressbar()
+            else if (!isLoading && isAdded) hideProgressbar()
+        }
+        setView()
+        Log.e("OnCrete","PhotoNeighbour")
         return binding.root
     }
 
@@ -85,17 +96,7 @@ class FragmentPostNeighbourVerification  : BaseFragment(), FragmentLifecycleInte
 
     override fun onResumeFragment(s: String?) {
         Log.e("OnResume","Post Neighbour")
-        binding.viewModel = postNeighbourVerificationViewModel
-        binding.lifecycleOwner = this
-        context?.let { postNeighbourVerificationViewModel.init(it) }
-//      basicInformationModel.init(context, FragmentDetail.selectedData!!)
 
-        postNeighbourVerificationViewModel.isLoading.observe(requireActivity()) { isLoading ->
-            if (isLoading && isAdded) showProgressbar()
-            else if (!isLoading && isAdded) hideProgressbar()
-        }
-        setView()
-        Log.e("OnCrete","PhotoNeighbour")
     }
 
 }

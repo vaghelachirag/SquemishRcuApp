@@ -74,6 +74,7 @@ class DashboardViewModel(val context: Context, val dashboardFragment: DashboardF
                     override fun onFailed(code: Int, message: String) {
                         isLoading.postValue(false)
                         binding.refreshLayout.isRefreshing = false
+                        Log.e("Status",code.toString())
                     }
 
                     override fun onNext(t: GetPendingRequestResponse) {
@@ -100,12 +101,14 @@ class DashboardViewModel(val context: Context, val dashboardFragment: DashboardF
                         }else{
                             isLoading.postValue(false)
                             Utils().showToast(context,t.getMessage().toString())
+                            Log.e("StatusCode",t.getStatus().toString())
                         }
                         Log.e("StatusCode",t.getStatus().toString())
                     }
 
                 })
         }else{
+
             isLoading.postValue(false)
             Utils().showToast(context,context.getString(R.string.nointernetconnection).toString())
         }

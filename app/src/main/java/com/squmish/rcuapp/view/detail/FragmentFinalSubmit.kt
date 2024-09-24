@@ -50,6 +50,10 @@ class FragmentFinalSubmit  : BaseFragment(), FragmentLifecycleInterface {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentFinalSubmitBinding.inflate(inflater, container, false)
 
+        binding.viewModel = finalSubmitViewModel
+        binding.lifecycleOwner = this
+        finalSubmitViewModel!!.init(context)
+        setView()
         return binding.root
     }
 
@@ -84,10 +88,7 @@ class FragmentFinalSubmit  : BaseFragment(), FragmentLifecycleInterface {
     }
     override fun onResumeFragment(s: String?) {
         Log.e("OnResume","Final Submit")
-        binding.viewModel = finalSubmitViewModel
-        binding.lifecycleOwner = this
-        finalSubmitViewModel!!.init(context)
-        setView()
+
     }
 
 }

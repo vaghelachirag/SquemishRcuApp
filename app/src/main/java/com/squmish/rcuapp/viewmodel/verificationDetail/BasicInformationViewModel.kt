@@ -203,7 +203,8 @@ class BasicInformationViewModel(private val context: Context, val binding: Fragm
                             FragmentBasicInformation().redirectToDashboardScreen()
                             binding.llAcceptReject.visibility = View.GONE
                          //  (context as ActivityDetail).showTab()
-                           (context as ActivityDetail).setAcceptedStatePageAdapter()
+                         //  (context as ActivityDetail).setAcceptedStatePageAdapter()
+                           (context as ActivityDetail).finish()
 
                        }else{
                            Utils().showToast(context,t.getMessage().toString())

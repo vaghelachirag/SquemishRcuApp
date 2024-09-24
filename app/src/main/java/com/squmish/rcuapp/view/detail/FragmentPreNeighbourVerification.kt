@@ -50,6 +50,26 @@ class FragmentPreNeighbourVerification : BaseFragment(), FragmentLifecycleInterf
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentPreNeighbourVerificationBinding.inflate(inflater, container, false)
+
+        binding.viewModel = preNeighbourVerificationViewModel
+        binding.lifecycleOwner = this
+        context?.let { preNeighbourVerificationViewModel.init(it) }
+
+        preNeighbourVerificationViewModel.isLoading.observe(requireActivity()) { isLoading ->
+            if (isLoading && isAdded) showProgressbar()
+            else if (!isLoading && isAdded) hideProgressbar()
+        }
+
+        preNeighbourVerificationViewModel.isNeighbourReconised.observeForever {
+            if (it){
+                binding.inpReason.visibility = View.GONE
+                binding.edtReason.setText("")
+            }
+            else{
+                binding.inpReason.visibility = View.VISIBLE
+            }
+        }
+        setView()
         return binding.root
     }
 
@@ -79,24 +99,6 @@ class FragmentPreNeighbourVerification : BaseFragment(), FragmentLifecycleInterf
     }
     override fun onResumeFragment(s: String?) {
         Log.e("OnResume","Pre Neighbour")
-        binding.viewModel = preNeighbourVerificationViewModel
-        binding.lifecycleOwner = this
-        context?.let { preNeighbourVerificationViewModel.init(it) }
 
-        preNeighbourVerificationViewModel.isLoading.observe(requireActivity()) { isLoading ->
-            if (isLoading && isAdded) showProgressbar()
-            else if (!isLoading && isAdded) hideProgressbar()
-        }
-
-        preNeighbourVerificationViewModel.isNeighbourReconised.observeForever {
-            if (it){
-                binding.inpReason.visibility = View.GONE
-                binding.edtReason.setText("")
-            }
-            else{
-                binding.inpReason.visibility = View.VISIBLE
-            }
-        }
-        setView()
     }
 }

@@ -49,6 +49,7 @@ class PostNeighbourVerificationViewModel(private val context: Context, private v
         isNeighbourReconised.value = false
         isNeighbourReconisedText.value = ""
         selectedReasonPosition.value = 0
+        reason.set("")
 
         if (ActivityDetail.selectedData != null){
             neighbour3Name.set(Utility.getNullToBlankString(ActivityDetail.selectedData!!.getFirequestPostNeighboutVerificationDto()!!.getNeighbour3Name().toString()))
@@ -69,7 +70,7 @@ class PostNeighbourVerificationViewModel(private val context: Context, private v
 
         isNeighbourReconised.value = ActivityDetail.selectedData!!.getFirequestPostNeighboutVerificationDto()!!.getIsNeighbourRecognised().toString() != "false"
 
-        setSelectedNeighbourRecognized(ActivityDetail.selectedData!!.getFirequestPostNeighboutVerificationDto()!!.getIsNeighbourRecognised().toString())
+        setSelectedNeighbourRecognized(Utility.getNullToBlankString(ActivityDetail.selectedData!!.getFirequestPostNeighboutVerificationDto()!!.getIsNeighbourRecognised().toString()))
 
         binding.spnNeighbourReconised.setListAdapter(neighbourRecognisedList)
 
@@ -89,7 +90,7 @@ class PostNeighbourVerificationViewModel(private val context: Context, private v
             }
         })
 
-        binding.spnNeighbourReconised.setText(ActivityDetail.selectedData!!.getFirequestPostNeighboutVerificationDto()!!.getIsNeighbourRecognised().toString())
+        binding.spnNeighbourReconised.setText(Utility.getNullToBlankString(ActivityDetail.selectedData!!.getFirequestPostNeighboutVerificationDto()!!.getIsNeighbourRecognised().toString()))
     }
 
     private fun setSelectedNeighbourRecognized(isText: String) {
@@ -113,7 +114,7 @@ class PostNeighbourVerificationViewModel(private val context: Context, private v
         } else if (neighbour4Mobile.get().toString().length < 10){
             Utils().showSnackBar(context,"Please Enter Valid Neighbour2 Mobile Number",binding.constraintLayout)
         }else*/
-        if (binding.spnNeighbourReconised.text.isNullOrEmpty()) {
+        if (binding.spnNeighbourReconised.text.isNullOrEmpty() || binding.spnNeighbourReconised.text.equals("null")) {
            Utils().showSnackBar(context, "Please Select Reason", binding.constraintLayout)
        }
         else {

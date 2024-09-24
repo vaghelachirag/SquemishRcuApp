@@ -78,6 +78,7 @@ open class Networking(private val context: Context?) {
                     chain.request().newBuilder()
                         .header("Authorization", "Bearer " + session.user!!.getToken())
                         .build()
+
                 } else {
                     chain.request().newBuilder()
                         .build()

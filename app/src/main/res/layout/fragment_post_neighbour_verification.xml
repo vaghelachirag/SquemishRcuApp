@@ -180,7 +180,7 @@
                         android:layout_height="@dimen/edit_text_size"
                         android:hint="@string/neighbour4Mobile"
                         android:imeOptions="actionNext"
-                        android:inputType="text"
+                        android:inputType="number"
                         android:text="@={viewModel.neighbour4Mobile}"
                         android:textColor="@color/black"
                         android:textColorHint="@color/gray_323232"

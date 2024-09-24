@@ -68,12 +68,14 @@ class LoginViewModel(
         val androidModel = Build.MODEL
         val deviceToken = session.getStoreTokenByKey().toString()
 
+
         val params = HashMap<String,Any>()
         params["EmployeeCode"] = email.get().toString()
         params["Password"] = password.get().toString()
         params["AppId"] = "BCF97D6D0DB4C5E83107TR11"
         params["DeviceId"] = deviceId
         params["firebasetoken"] = deviceToken
+        params["AppVersion"] = "1.0"
 
         if (Utility.isNetworkConnected(context)){
             isLoading.postValue(true)

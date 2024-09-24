@@ -82,7 +82,7 @@ class PreNeighbourVerificationViewModel(private val context: Context, val bindin
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             }
         })
-        binding.spnNeighbourReconised.setText(ActivityDetail.selectedData!!.getFirequestPreNeighboutVerificationDto()!!.getIsNeighbourRecognised().toString())
+        binding.spnNeighbourReconised.setText(Utility.getNullToBlankString(ActivityDetail.selectedData!!.getFirequestPreNeighboutVerificationDto()!!.getIsNeighbourRecognised().toString()))
     }
 
     // On Saved Clicked

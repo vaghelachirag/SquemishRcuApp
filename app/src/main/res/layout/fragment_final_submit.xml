@@ -133,7 +133,7 @@
                         android:layout_marginRight="@dimen/_50sdp"
                         android:layout_marginBottom="@dimen/_30sdp"
                         android:onClick="@{(view) -> viewModel.onSaveClicked()}"
-                        android:text="Save"
+                        android:text="Submit"
                         app:backgroundTint="@null"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
