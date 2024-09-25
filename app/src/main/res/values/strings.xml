@@ -185,7 +185,7 @@
     <!--  Residence Verification-->
     <string name="refNo">Ref No :  </string>
     <string name="caseID">Case Id : </string>
-    <string name="bankName">bank/nbfc : </string>
+    <string name="bankName">Bank/nbfc : </string>
     <string name="verificationFor">Verification for : </string>
     <string name="verificationType">Verification Type : </string>
     <string name="applicant">Applicant/ Father Name :</string>

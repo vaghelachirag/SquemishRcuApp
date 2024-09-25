@@ -54,6 +54,7 @@ import com.squmish.rcuapp.model.getMenuListResponse.GetMenuListData
 import com.squmish.rcuapp.model.getMenuListResponse.GetMenuListResponse
 import com.squmish.rcuapp.network.CallbackObserver
 import com.squmish.rcuapp.network.Networking
+import com.squmish.rcuapp.room.InitDb
 import com.squmish.rcuapp.services.LocationUpdatesService
 import com.squmish.rcuapp.uttils.AppConstants
 import com.squmish.rcuapp.uttils.Session
@@ -63,6 +64,9 @@ import com.squmish.rcuapp.view.adapter.MenuItemAdapter
 import com.squmish.rcuapp.view.base.BaseActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 @Suppress("DEPRECATION")
@@ -552,5 +556,15 @@ class DashboardActivity : BaseActivity(){
             .show()
     }
 
+    fun redirectToLogin(){
+     Log.e("Login","Login")
+        session!!.clearSession()
+        CoroutineScope(Dispatchers.IO).launch {
+            InitDb.appDatabase.clearAllTables()
+        }
+        val intentLogin = Intent(this,MainActivity()::class.java)
+        startActivity(intentLogin)
+        finish()
+    }
 
 }

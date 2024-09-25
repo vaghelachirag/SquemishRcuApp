@@ -15,6 +15,7 @@ import com.squmish.rcuapp.network.CallbackObserver
 import com.squmish.rcuapp.network.Networking
 import com.squmish.rcuapp.uttils.Utility
 import com.squmish.rcuapp.uttils.Utils
+import com.squmish.rcuapp.view.menu.DashboardActivity
 import com.squmish.rcuapp.view.menu.DashboardMenuFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -50,6 +51,9 @@ class DashboardMenuViewModel(
 
                     override fun onFailed(code: Int, message: String) {
                         isLoading.postValue(false)
+                        Log.e("Status",code.toString())
+                        Utils().showToast(context,"Authentication token has expired")
+                        (context as DashboardActivity).redirectToLogin()
                     }
 
                     override fun onNext(t: GetDashboardApiResponse) {

@@ -167,7 +167,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_3sdp"
                 android:gravity="center_vertical"
-                android:text="Remember password"
+                android:text="Remember"
                 android:textColor="@color/black2"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@+id/chkRememberPassword"
