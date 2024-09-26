@@ -108,7 +108,7 @@ class BasicInformationViewModel(private val context: Context, val binding: Fragm
     }
 
     private fun setAction() {
-        binding.txtBackendNameHeader.setOnClickListener {
+     /*   binding.txtBackendNameHeader.setOnClickListener {
             val intent = Intent(Intent.ACTION_DIAL)
             intent.setData(Uri.parse("tel:"+ ActivityDetail.selectedData!!.getBackendMobileNo()))
             context.startActivity(intent)
@@ -132,7 +132,7 @@ class BasicInformationViewModel(private val context: Context, val binding: Fragm
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(destinationURI))
             context.startActivity(intent)
             }
-        }
+        }*/
     }
 
     private fun getAcceptRejectList() {
