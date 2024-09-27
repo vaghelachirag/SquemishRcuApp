@@ -29,7 +29,9 @@
             card_view:cardUseCompatPadding="true">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_5sdp"
+                android:paddingBottom="@dimen/_10sdp"
                 tools:context=".MainActivity">
 
                 <LinearLayout
@@ -49,7 +51,7 @@
 
                             <TableLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
                                 >
 
                                 <TableRow
@@ -360,7 +362,7 @@
                                     <com.squmish.rcuapp.widget.SmallText
                                         android:id="@+id/txtBasicAddress"
                                         android:layout_width="wrap_content"
-                                        android:layout_height="27dp"
+                                        android:layout_height="wrap_content"
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
                                         android:layout_marginRight="1dp"
@@ -690,7 +692,7 @@
                                         android:layout_height="match_parent"
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
-                                        android:layout_marginBottom="0dp"
+                                        android:layout_marginBottom="1dp"
                                         android:layout_weight="100"
                                        android:background="@color/white"
                                         android:gravity="center_vertical"
@@ -704,7 +706,7 @@
                                     <com.squmish.rcuapp.widget.SmallText
                                         android:layout_width="@dimen/_200sdp"
                                         android:layout_height="match_parent"
-                                        android:layout_marginBottom="0dp"
+                                        android:layout_marginBottom="1dp"
                                         android:layout_marginLeft="1dp"
                                         android:layout_marginTop="1dp"
                                         android:layout_marginRight="1dp"

@@ -80,7 +80,8 @@ class BasicInformationViewModel(private val context: Context, val binding: Fragm
             addressFor.set(Utility.getNullToBlankString(ActivityDetail.selectedData!!.getApplicantAddress().toString()) +" "+ Utility.getNullToBlankString(
                 ActivityDetail.selectedData!!.getApplicantPinCode().toString()) +" "+  Utility.getNullToBlankString(
                 ActivityDetail.selectedData!!.getApplicantCity().toString() +" "+ ActivityDetail.selectedData!!.getApplicantState().toString()))
-            applicantMobileNumber.set(Utility.getNullToBlankString(ActivityDetail.selectedData!!.getApplicantMobile().toString()))
+            applicantMobileNumber.set(Utility.getNullToBlankString(ActivityDetail.selectedData!!.getApplicantMobile().toString()) +  " / "+Utility.getNullToBlankString(
+                ActivityDetail.selectedData!!.getApplicantSecondaryMobile().toString()))
             applicantfathername.set(Utility.getNullToBlankString(ActivityDetail.selectedData!!.getApplicantName().toString()) + " / "+Utility.getNullToBlankString(
                 ActivityDetail.selectedData!!.getApplicantFatherName().toString()))
             productsubproduct.set(Utility.getNullToBlankString(ActivityDetail.selectedData!!.getLoanProductName().toString())  + " / "+ Utility.getNullToBlankString(
