@@ -183,21 +183,21 @@
 
 
     <!--  Residence Verification-->
-    <string name="refNo">Ref No :  </string>
-    <string name="caseID">Case Id : </string>
-    <string name="bankName">Bank/nbfc : </string>
-    <string name="verificationFor">Verification for : </string>
-    <string name="verificationType">Verification Type : </string>
-    <string name="applicant">Applicant/ Father Name :</string>
-    <string name="coapplicant">Co-applicant / Guarantor/ Seller Name :</string>
-    <string name="addressFor">Address :</string>
-    <string name="applicantfathername">Applicant/ Father Name :</string>
-    <string name="productsubproduct">Product/Sub Product :</string>
-    <string name="officeName">Business / Office Name :</string>
-    <string name="prepost">Pre/Post :</string>
-    <string name="loanAmount">Loan Amount :</string>
-    <string name="triggers">Triggers :</string>
-    <string name="backendname">Assign :</string>
+    <string name="refNo">Ref No</string>
+    <string name="caseID">Case Id</string>
+    <string name="bankName">Bank/Nbfc</string>
+    <string name="verificationFor">Verification for</string>
+    <string name="verificationType">Verification Type</string>
+    <string name="applicant">Applicant/ Father Name</string>
+    <string name="coapplicant">Co-applicant / Guarantor/ Seller Name</string>
+    <string name="addressFor">Address</string>
+    <string name="applicantfathername">Applicant/ Father Name</string>
+    <string name="productsubproduct">Product/Sub Product</string>
+    <string name="officeName">Business / Office Name</string>
+    <string name="prepost">Pre/Post</string>
+    <string name="loanAmount">Loan Amount</string>
+    <string name="triggers">Triggers</string>
+    <string name="backendname">Assign</string>
 
 
    <!-- Final Submit-->

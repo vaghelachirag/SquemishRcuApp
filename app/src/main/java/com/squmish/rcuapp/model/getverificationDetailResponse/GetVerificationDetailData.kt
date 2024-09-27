@@ -1,9 +1,9 @@
 package com.squmish.rcuapp.model.getverificationDetailResponse
 
-import com.squmish.rcuapp.model.saveDocumentProfileVerification.SaveDocumentProfileVerification
-import com.squmish.rcuapp.model.saveresidenceverification.SaveFirequestResidenceVerification
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import com.squmish.rcuapp.model.saveDocumentProfileVerification.SaveDocumentProfileVerification
+import com.squmish.rcuapp.model.saveresidenceverification.SaveFirequestResidenceVerification
 
 
 class GetVerificationDetailData {
@@ -343,6 +343,10 @@ class GetVerificationDetailData {
     @SerializedName("backendMobileNo")
     @Expose
     private var backendMobileNo: String? = null
+
+    @SerializedName("verificationFor")
+    @Expose
+    private var verificationFor: String? = null
 
     @SerializedName("firequestBusinessVerification")
     @Expose
@@ -844,6 +848,14 @@ class GetVerificationDetailData {
 
     fun getBankName(): String? {
         return bankName
+    }
+
+    fun getVerificationFor(): String {
+        return verificationFor!!
+    }
+
+    fun setVerificationFor(verificationFor: String?) {
+        this.verificationFor = verificationFor
     }
 
     fun setBankName(bankName: String?) {

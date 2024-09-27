@@ -70,7 +70,7 @@ class BasicInformationViewModel(private val context: Context, val binding: Fragm
             caseID.set(Utility.getNullToBlankString(ActivityDetail.selectedData!!.getCaseId().toString()))
             bankName.set(Utility.getNullToBlankString(ActivityDetail.selectedData!!.getBankAlias().toString()) +" "+  Utility.getNullToBlankString(
                 ActivityDetail.selectedData!!.getBankName().toString()))
-            verificationFor.set(Utility.getNullToBlankString(ActivityDetail.selectedData!!.getSecondaryType().toString()))
+            verificationFor.set(Utility.getNullToBlankString(ActivityDetail.selectedData!!.getVerificationFor().toString()))
             verificationType.set(Utility.getNullToBlankString(ActivityDetail.selectedData!!.getVerificationTypeName().toString()) + "/"+ Utility.getNullToBlankString(
                 ActivityDetail.selectedData!!.getDocumentName().toString()) + "/"+Utility.getNullToBlankString(
                 ActivityDetail.selectedData!!.getSubType().toString()) )
@@ -108,7 +108,7 @@ class BasicInformationViewModel(private val context: Context, val binding: Fragm
     }
 
     private fun setAction() {
-     /*   binding.txtBackendNameHeader.setOnClickListener {
+        binding.txtBackendNameHeader.setOnClickListener {
             val intent = Intent(Intent.ACTION_DIAL)
             intent.setData(Uri.parse("tel:"+ ActivityDetail.selectedData!!.getBackendMobileNo()))
             context.startActivity(intent)
@@ -132,7 +132,7 @@ class BasicInformationViewModel(private val context: Context, val binding: Fragm
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(destinationURI))
             context.startActivity(intent)
             }
-        }*/
+        }
     }
 
     private fun getAcceptRejectList() {

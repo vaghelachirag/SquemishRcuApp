@@ -84,8 +84,9 @@
                                         android:layout_marginTop="1dp"
                                         android:layout_weight="6"
                                         android:textSize="@dimen/_12sdp"
+                                        android:paddingLeft="@dimen/_8sdp"
                                         android:background="@color/white"
-                                        android:gravity="center"
+                                        android:gravity="start"
                                         android:text="@={viewModel.refNo}"
                                         android:textColor="@color/gray_323232"
                                         android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -122,7 +123,8 @@
                                         android:layout_weight="6"
                                         android:textSize="@dimen/_12sdp"
                                         android:background="@color/white"
-                                        android:gravity="center"
+                                        android:gravity="start"
+                                        android:paddingLeft="@dimen/_8sdp"
                                         android:text="@={viewModel.caseID}"
                                         android:textColor="@color/gray_323232"
                                         android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -299,6 +301,8 @@
 
                                 </TableRow>
 
+
+
                                 <TableRow
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -329,6 +333,57 @@
                                     android:background="@android:color/darker_gray" >
 
                                     <com.squmish.rcuapp.widget.HeaderText
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginLeft="1dp"
+                                        android:layout_marginTop="1dp"
+                                        android:layout_marginBottom="0dp"
+                                        android:layout_marginRight="1dp"
+                                        android:layout_weight="1"
+                                        android:background="@color/white"
+                                        android:gravity="center_vertical"
+                                        android:layout_gravity="center_vertical"
+                                        android:paddingLeft="@dimen/_8sdp"
+                                        android:text="@string/address"
+                                        android:textAppearance="?android:attr/textAppearanceMedium"
+                                        android:textColor="@color/gray_323232"
+                                        android:textSize="@dimen/_12sdp" />
+
+
+                                </TableRow>
+
+                                <TableRow
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@android:color/darker_gray" >
+
+                                    <com.squmish.rcuapp.widget.SmallText
+                                        android:id="@+id/txtBasicAddress"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="27dp"
+                                        android:layout_marginLeft="1dp"
+                                        android:layout_marginTop="1dp"
+                                        android:layout_marginRight="1dp"
+                                        android:layout_marginBottom="0dp"
+                                        android:layout_weight="6"
+                                        android:background="@color/white"
+                                        android:drawableTint="@color/main_bg"
+                                        android:gravity="start"
+                                        android:paddingLeft="@dimen/_8sdp"
+                                        android:paddingRight="@dimen/_2sdp"
+                                        android:text="@={viewModel.addressFor}"
+                                        android:textAppearance="?android:attr/textAppearanceMedium"
+                                        android:textColor="@color/gray_323232"
+                                        android:textSize="@dimen/_12sdp" />
+
+                                </TableRow>
+
+                                <TableRow
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@android:color/darker_gray" >
+
+                                    <com.squmish.rcuapp.widget.HeaderText
                                         android:layout_width="@dimen/_120sdp"
                                         android:layout_height="match_parent"
                                         android:layout_marginLeft="1dp"
@@ -345,7 +400,8 @@
                                         android:textSize="@dimen/_12sdp" />
 
                                     <com.squmish.rcuapp.widget.SmallText
-                                        android:layout_width="@dimen/_200sdp"
+                                        android:id="@+id/txtBasicMobileNumber"
+                                        android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:layout_marginBottom="0dp"
                                         android:layout_marginLeft="1dp"
@@ -353,10 +409,10 @@
                                         android:layout_marginRight="1dp"
                                         android:layout_weight="6"
                                        android:background="@color/white"
-                                        android:gravity="center"
+                                        android:gravity="start"
+                                        android:paddingLeft="@dimen/_8sdp"
                                         android:textSize="@dimen/_12sdp"
                                         android:paddingRight="@dimen/_2sdp"
-                                        android:paddingLeft="@dimen/_2sdp"
                                         android:text="@={viewModel.applicantMobileNumber}"
                                         android:textColor="@color/gray_323232"
                                         android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -558,7 +614,7 @@
                                         android:textSize="@dimen/_12sdp" />
 
                                     <com.squmish.rcuapp.widget.SmallText
-                                        android:layout_width="@dimen/_200sdp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:layout_marginBottom="0dp"
                                         android:layout_marginLeft="1dp"
@@ -566,10 +622,10 @@
                                         android:layout_marginRight="1dp"
                                         android:layout_weight="6"
                                        android:background="@color/white"
-                                        android:gravity="center"
+                                        android:gravity="start"
                                         android:textSize="@dimen/_12sdp"
                                         android:paddingRight="@dimen/_2sdp"
-                                        android:paddingLeft="@dimen/_2sdp"
+                                        android:paddingLeft="@dimen/_8sdp"
                                         android:text="@={viewModel.loanAmount}"
                                         android:textColor="@color/gray_323232"
                                         android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -654,10 +710,10 @@
                                         android:layout_marginRight="1dp"
                                         android:layout_weight="6"
                                        android:background="@color/white"
-                                        android:gravity="center"
+                                        android:gravity="start"
                                         android:textSize="@dimen/_12sdp"
                                         android:paddingRight="@dimen/_2sdp"
-                                        android:paddingLeft="@dimen/_2sdp"
+                                        android:paddingLeft="@dimen/_8sdp"
                                         android:textColor="@color/colorPrimary"
                                         android:text="@={viewModel.backendName}"
                                         android:textAppearance="?android:attr/textAppearanceMedium" />
