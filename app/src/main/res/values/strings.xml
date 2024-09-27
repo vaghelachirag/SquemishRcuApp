@@ -185,7 +185,7 @@
     <!--  Residence Verification-->
     <string name="refNo">Ref No</string>
     <string name="caseID">Case Id</string>
-    <string name="bankName">Bank/Nbfc</string>
+    <string name="bankName">Bank/NBFC</string>
     <string name="verificationFor">Verification for</string>
     <string name="verificationType">Verification Type</string>
     <string name="applicant">Applicant/ Father Name</string>
@@ -197,7 +197,8 @@
     <string name="prepost">Pre/Post</string>
     <string name="loanAmount">Loan Amount</string>
     <string name="triggers">Triggers</string>
-    <string name="backendname">Assign</string>
+    <string name="backendname">Assign By</string>
+    <string name="assigndt">Assign Dt</string>
 
 
    <!-- Final Submit-->

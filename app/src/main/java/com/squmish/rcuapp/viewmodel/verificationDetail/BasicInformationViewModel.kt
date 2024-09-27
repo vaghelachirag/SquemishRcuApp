@@ -53,6 +53,8 @@ class BasicInformationViewModel(private val context: Context, val binding: Fragm
     var loanAmount : ObservableField<String> = ObservableField()
     var triggers : ObservableField<String> = ObservableField()
     var backendName : ObservableField<String> = ObservableField()
+    var assignDt : ObservableField<String> = ObservableField()
+
 
     private var masterDataDao: MasterDataDao? = null
 
@@ -93,7 +95,7 @@ class BasicInformationViewModel(private val context: Context, val binding: Fragm
             backendName.set(Utility.getNullToBlankString(
                 ActivityDetail.selectedData!!.getBackendName().toString() + " " +Utility.getNullToBlankString(
                     ActivityDetail.selectedData!!.getBackendMobileNo().toString())))
-
+            assignDt.set(Utility.getNullToBlankString(ActivityDetail.selectedData!!.getFiassignedAt().toString()))
             if (ActivityDetail.selectedData !=null){
                 if (ActivityDetail.selectedData!!.getDocuments() != null){
                     setVerificationDocumentAdapter()

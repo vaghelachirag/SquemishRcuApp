@@ -14,7 +14,6 @@ import android.media.ExifInterface
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.provider.CalendarContract.Colors
 import android.provider.MediaStore
 import android.text.Layout
 import android.text.StaticLayout
@@ -26,9 +25,6 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.core.content.FileProvider
 import androidx.core.view.forEach
-import com.karumi.dexter.BuildConfig
-import com.squmish.rcuapp.view.base.BaseFragment
-import com.squmish.rcuapp.viewmodel.verificationDetail.PictureViewModel
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -41,8 +37,9 @@ import com.squmish.rcuapp.uttils.ImagePickerDialog
 import com.squmish.rcuapp.uttils.Utility
 import com.squmish.rcuapp.uttils.Utility.Companion.setAllEnabled
 import com.squmish.rcuapp.uttils.onItemClick
+import com.squmish.rcuapp.view.base.BaseFragment
 import com.squmish.rcuapp.view.menu.DashboardActivity
-import com.squmish.rcuapp.view.menu.DashboardFragment
+import com.squmish.rcuapp.viewmodel.verificationDetail.PictureViewModel
 import java.io.File
 import java.io.FileOutputStream
 import java.util.Date
@@ -97,7 +94,7 @@ class FragmentPhotograph: BaseFragment(), FragmentLifecycleInterface {
     private fun setView() {
         if(ActivityDetail.selectedData!!.getStatus() != null){
             if(ActivityDetail.selectedData!!.getStatus() == AppConstants.statusPending){
-             //   binding.constraintLayout.forEach { child -> child.setAllEnabled(false) }
+                //   binding.constraintLayout.forEach { child -> child.setAllEnabled(false) }
             }
             else{
                 binding.constraintLayout.forEach { child -> child.setAllEnabled(true) }
@@ -266,7 +263,7 @@ class FragmentPhotograph: BaseFragment(), FragmentLifecycleInterface {
 
             val fOut: FileOutputStream = FileOutputStream(imgFile)
             val mutableBitmap = getResizedBitmap(mutableBitmap!!, 500);
-            mutableBitmap.compress(Bitmap.CompressFormat.PNG, 80, fOut)
+            mutableBitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut)
             fOut.flush()
             fOut.close()
 
@@ -277,17 +274,11 @@ class FragmentPhotograph: BaseFragment(), FragmentLifecycleInterface {
     }
 
     fun getResizedBitmap(image: Bitmap, maxSize: Int): Bitmap {
-        var width = image.getWidth()
-        var height = image.getHeight()
-        val bitmapRatio = width.toFloat() / height.toFloat()
-        if (bitmapRatio > 1) {
-            width = maxSize
-            height = (width / bitmapRatio).toInt()
-        } else {
-            height = maxSize
-            width = (height * bitmapRatio).toInt()
-        }
-        return Bitmap.createScaledBitmap(image, width, height, true)
+
+        val nh = (image.height * (512.0 / image.width)).toInt()
+        val scaled = Bitmap.createScaledBitmap(image, 512, nh, true)
+
+        return scaled
     }
 
 
