@@ -10,6 +10,7 @@ import com.squmish.rcuapp.R
 import com.squmish.rcuapp.databinding.ItemDashboardBinding
 import com.squmish.rcuapp.interfaces.OnItemSelected
 import com.squmish.rcuapp.model.pendingRequest.GetPendingRequestData
+import com.squmish.rcuapp.uttils.Utility
 import com.squmish.rcuapp.viewmodel.DashboardViewModel
 
 class DashboardAdapter(val context: Context, private val list: ArrayList<GetPendingRequestData>, val viewModel: DashboardViewModel, val onItemSelected: OnItemSelected<GetPendingRequestData>,) :  RecyclerView.Adapter<DashboardViewHolder>() {
@@ -35,7 +36,8 @@ class DashboardAdapter(val context: Context, private val list: ArrayList<GetPend
         holder.binding.cardView.setOnClickListener {
             onItemSelected.onItemSelected(list[position], position)
         }
-
+        holder.binding.txtVerificationFor.text = Utility.getNullToBlankString(list[position].getVerificationFor().toString())
+        holder.binding.txtAssignDt.text = Utility.getNullToBlankString(list[position].getFiassignedAt().toString())
         holder.binding.txtApplicateName.text =  list[position].getApplicantName()  + " [Applicant]"
         holder.binding.txtAddress.text = list[position].getApplicantAddress() + ", "+list[position].getApplicantCity() +  ", "+ list[position].getApplicantPinCode() + ", "+  list[position].getApplicantState()
     }

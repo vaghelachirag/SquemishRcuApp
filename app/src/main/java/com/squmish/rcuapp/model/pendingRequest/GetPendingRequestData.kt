@@ -174,6 +174,12 @@ class GetPendingRequestData {
     @Expose
     private var typeOfBusiness: String? = null
 
+
+    @SerializedName("verificationFor")
+    @Expose
+    private var verificationFor: String? = null
+
+
     @SerializedName("createBy")
     @Expose
     private var createBy: Int? = null
@@ -681,6 +687,15 @@ class GetPendingRequestData {
     fun setFiassignedAt(fiassignedAt: String?) {
         this.fiassignedAt = fiassignedAt
     }
+
+    fun getVerificationFor(): String {
+        return verificationFor!!
+    }
+
+    fun setVerificationFor(verificationFor: String?) {
+        this.verificationFor = verificationFor
+    }
+
 
     fun getFiassignedBy(): Int? {
         return fiassignedBy

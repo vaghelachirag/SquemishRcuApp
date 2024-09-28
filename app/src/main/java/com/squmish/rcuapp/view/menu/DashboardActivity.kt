@@ -46,6 +46,10 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.LocationSettingsRequest
 import com.google.android.gms.location.LocationSettingsResult
 import com.google.android.gms.location.LocationSettingsStatusCodes
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.MultiplePermissionsReport
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.squmish.rcuapp.MainActivity
 import com.squmish.rcuapp.R
 import com.squmish.rcuapp.databinding.ActivityDashboardBinding
@@ -108,6 +112,7 @@ class DashboardActivity : BaseActivity(){
 
 
 
+
     @SuppressLint("DiscouragedPrivateApi", "SimpleDateFormat", "SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -160,19 +165,26 @@ class DashboardActivity : BaseActivity(){
             googleApiClient!!.connect();
         }
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this@DashboardActivity, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), MY_PERMISSIONS_REQUEST_LOCATION)
-        } else {
-            Log.e("MainActivity:","Location Permission Already Granted")
-            if (getLocationMode() == 3) {
-                Log.e("MainActivity:","Already set High Accuracy Mode")
-                initializeService()
-            } else {
-                Log.e("MainActivity:","Alert Dialog Shown")
-               // showAlertDialog(this@DashboardActivity)
-                requestGPSSettings()
-            }
-        }
+
+
+        Dexter.withActivity(this)
+            .withPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
+            .withListener(object : MultiplePermissionsListener {
+                override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
+                    if (getLocationMode() == 3) {
+                        Log.e("MainActivity:","Already set High Accuracy Mode")
+                        initializeService()
+                    } else {
+                        Log.e("MainActivity:","Alert Dialog Shown")
+                        // showAlertDialog(this@DashboardActivity)
+                        requestGPSSettings()
+                    }
+                }
+
+                override fun onPermissionRationaleShouldBeShown(permissions: MutableList<com.karumi.dexter.listener.PermissionRequest>?, token: PermissionToken?) {
+                    token!!.continuePermissionRequest()
+                }
+            }).withErrorListener { }.onSameThread().check()
 
 
         broadcastReceiver = object : BroadcastReceiver() {

@@ -95,11 +95,57 @@
             </LinearLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/ll_Address"
+                android:id="@+id/ll_VerificationFor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:ignore="MissingConstraints,RtlSymmetry"
                 card_view:layout_constraintBottom_toBottomOf="@+id/divider1"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingTop="@dimen/_8sdp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="2"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <com.squmish.rcuapp.widget.HeaderText
+                        android:id="@+id/txtVerificationForHeader"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.3"
+                        android:text="@string/verificationFor"
+                        android:gravity="center_vertical"
+                        android:visibility="visible"
+                        android:textColor="@color/gray_323232"
+                        android:drawableStart="@drawable/icon_user"
+                        android:drawableTint="@color/gray_323232"
+                        android:drawablePadding="3sp"
+                        android:textSize="12sp"
+                        tools:ignore="MissingConstraints">
+                    </com.squmish.rcuapp.widget.HeaderText>
+                    <com.squmish.rcuapp.widget.SmallText
+                        android:id="@+id/txtVerificationFor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:visibility="visible"
+                        android:layout_gravity="start"
+                        android:layout_weight="0.7"
+                        android:textColor="@color/gray_323232"
+                        android:drawablePadding="3sp"
+                        android:textSize="12sp"
+                        tools:ignore="MissingConstraints,SmallSp">
+                    </com.squmish.rcuapp.widget.SmallText>
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/ll_Address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:ignore="MissingConstraints,RtlSymmetry"
+                card_view:layout_constraintBottom_toBottomOf="@+id/ll_VerificationFor"
                 android:paddingStart="@dimen/_8sdp"
                 android:paddingTop="@dimen/_8sdp">
 
@@ -269,6 +315,52 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@={itemData.caseId}"
+                        android:gravity="start"
+                        android:visibility="visible"
+                        android:layout_gravity="start"
+                        android:layout_weight="0.7"
+                        android:textColor="@color/gray_323232"
+                        android:drawablePadding="3sp"
+                        android:textSize="12sp"
+                        tools:ignore="MissingConstraints,SmallSp">
+                    </com.squmish.rcuapp.widget.SmallText>
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/ll_AssignDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:ignore="MissingConstraints,RtlSymmetry"
+                card_view:layout_constraintBottom_toBottomOf="@+id/ll_CaseId"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingTop="@dimen/_8sdp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="2"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <com.squmish.rcuapp.widget.HeaderText
+                        android:id="@+id/txtAssignDateHeader"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.3"
+                        android:text="@string/assignDate"
+                        android:gravity="center_vertical"
+                        android:visibility="visible"
+                        android:textColor="@color/gray_323232"
+                        android:drawableStart="@drawable/icon_list"
+                        android:drawableTint="@color/gray_323232"
+                        android:drawablePadding="3sp"
+                        android:textSize="12sp"
+                        tools:ignore="MissingConstraints">
+                    </com.squmish.rcuapp.widget.HeaderText>
+                    <com.squmish.rcuapp.widget.SmallText
+                        android:id="@+id/txtAssignDt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:gravity="start"
                         android:visibility="visible"
                         android:layout_gravity="start"

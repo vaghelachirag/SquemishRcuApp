@@ -44,6 +44,7 @@ import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
+import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -163,6 +164,15 @@ class Utility {
                 currentDate = mainString
             }
             return currentDate;
+        }
+
+
+        fun convertDate(date: String): String{
+            var currentDate : String = "";
+            var odt = OffsetDateTime.parse(date);
+            var dtf = DateTimeFormatter.ofPattern("MMM dd, uuuu", Locale.ENGLISH);
+            System.out.println(dtf.format(odt));
+            return  dtf.format(odt)
         }
 
 

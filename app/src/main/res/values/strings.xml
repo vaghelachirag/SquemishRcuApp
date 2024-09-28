@@ -172,11 +172,13 @@
     <string name="alredayhaveId">Already have Account? Login here</string>
 
 
+    <string name="verificationfor">Verification For :  </string>
     <string name="address">Address :  </string>
     <string name="mobileNumber">Mobile No :  </string>
     <string name="bank">Bank : </string>
     <string name="product">Product : </string>
     <string name="caseId">CaseId : </string>
+    <string name="assignDate">Assign Dt : </string>
     <string name="fitype">Fi Type : </string>
     <string name="totalVerification">Total Verification :</string>
 
