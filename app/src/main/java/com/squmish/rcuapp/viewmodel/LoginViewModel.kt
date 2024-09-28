@@ -11,7 +11,6 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import com.squmish.rcuapp.uttils.Utils
-import com.example.rcuapp.view.LoginFragment
 import com.squmish.rcuapp.BuildConfig
 import com.squmish.rcuapp.view.menu.DashboardActivity
 import com.squmish.rcuapp.R
@@ -23,6 +22,7 @@ import com.squmish.rcuapp.network.CallbackObserver
 import com.squmish.rcuapp.network.Networking
 import com.squmish.rcuapp.uttils.Session
 import com.squmish.rcuapp.uttils.Utility
+import com.squmish.rcuapp.view.LoginFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 

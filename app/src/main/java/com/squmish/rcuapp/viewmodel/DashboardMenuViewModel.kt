@@ -70,8 +70,6 @@ class DashboardMenuViewModel(
                         Log.e("StatusCode",t.getStatus().toString())
                     }
 
-
-
                 })
         }else{
             Utils().showToast(context,context.getString(R.string.nointernetconnection).toString())

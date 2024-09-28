@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/LoginFragment"
-        android:name="com.example.rcuapp.view.LoginFragment"
+        android:name="com.squmish.rcuapp.view.LoginFragment"
         android:label="@string/login_fragment_label"
         tools:layout="@layout/loginscreen"
         app:enterAnim="@anim/nav_default_enter_anim"

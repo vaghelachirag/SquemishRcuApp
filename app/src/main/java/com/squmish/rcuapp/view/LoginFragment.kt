@@ -1,4 +1,4 @@
-package com.example.rcuapp.view
+package com.squmish.rcuapp.view
 
 import android.content.Context
 import android.graphics.Typeface
