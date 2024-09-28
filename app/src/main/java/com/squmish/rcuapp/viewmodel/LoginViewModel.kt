@@ -12,6 +12,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import com.squmish.rcuapp.uttils.Utils
 import com.example.rcuapp.view.LoginFragment
+import com.squmish.rcuapp.BuildConfig
 import com.squmish.rcuapp.view.menu.DashboardActivity
 import com.squmish.rcuapp.R
 import com.squmish.rcuapp.databinding.LoginscreenBinding
@@ -75,7 +76,7 @@ class LoginViewModel(
         params["AppId"] = "BCF97D6D0DB4C5E83107TR11"
         params["DeviceId"] = deviceId
         params["firebasetoken"] = deviceToken
-        params["AppVersion"] = "1.0"
+        params["AppVersion"] = BuildConfig.VERSION_NAME.toString()
 
         if (Utility.isNetworkConnected(context)){
             isLoading.postValue(true)

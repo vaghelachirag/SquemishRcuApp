@@ -36,12 +36,14 @@ import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.databinding.BindingAdapter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.squmish.rcuapp.R
 import com.squmish.rcuapp.uttils.AppConstants.baseURL
 import java.io.*
 import java.text.DecimalFormat
 import java.text.NumberFormat
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.OffsetDateTime
@@ -167,14 +169,23 @@ class Utility {
         }
 
 
-        fun convertDate(date: String): String{
-            var currentDate : String = "";
-            var odt = OffsetDateTime.parse(date);
-            var dtf = DateTimeFormatter.ofPattern("MMM dd, uuuu", Locale.ENGLISH);
-            System.out.println(dtf.format(odt));
-            return  dtf.format(odt)
-        }
 
+        @SuppressLint("SimpleDateFormat")
+        fun convertDateTime(value: String?) : String {
+            var outputString = ""
+            if (value != null) {
+                val cal = Calendar.getInstance()
+                try {
+                    val input = SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss")
+                    cal.time = input.parse(value)!!
+                    val output = SimpleDateFormat("dd/MM/yyyy")
+                    outputString =  output.format(cal.timeInMillis).toString()
+                } catch (e: ParseException) {
+                    e.printStackTrace()
+                }
+            }
+            return outputString
+        }
 
         private fun getDataColumn(
             context: Context, uri: Uri?, selection: String?,

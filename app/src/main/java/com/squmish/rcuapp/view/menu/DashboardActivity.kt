@@ -50,6 +50,7 @@ import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import com.squmish.rcuapp.BuildConfig
 import com.squmish.rcuapp.MainActivity
 import com.squmish.rcuapp.R
 import com.squmish.rcuapp.databinding.ActivityDashboardBinding
@@ -256,7 +257,7 @@ class DashboardActivity : BaseActivity(){
 
 
     private fun setVersionName() {
-        binding.txtVersion
+        binding.txtVersion.text = "Version : " +BuildConfig.VERSION_NAME
     }
 
     override fun onResume() {

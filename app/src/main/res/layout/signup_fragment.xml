@@ -122,10 +122,10 @@
                 android:layout_marginTop="@dimen/_8sdp"
                 app:hintTextColor="@color/main_bg"
                 android:textColor="@color/black"
-                app:layout_constraintBottom_toTopOf="@id/chkRememberPassword"
+                app:layout_constraintBottom_toTopOf="@id/inpEmail"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:passwordToggleEnabled="true"
+                app:passwordToggleEnabled="false"
                 app:layout_constraintTop_toBottomOf="@+id/inpEmail"
                 tools:ignore="MissingConstraints">
 
@@ -135,7 +135,7 @@
                     android:layout_height="@dimen/edit_text_size"
                     android:background="@null"
                     android:hint="@string/remark"
-                    android:inputType="textPassword"
+                    android:inputType="text"
                     android:gravity="center_vertical"
                     android:imeOptions="actionDone"
                     android:maxLength="50"
@@ -150,30 +150,6 @@
             </com.google.android.material.textfield.TextInputLayout>
 
 
-            <com.google.android.material.checkbox.MaterialCheckBox
-                android:id="@+id/chkRememberPassword"
-                style="@style/MaterialCheckBoxStyle"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:background="@android:color/white"
-                android:button="@null"
-                android:minWidth="0dp"
-                android:minHeight="0dp"
-                android:layout_marginStart="@dimen/_5sdp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/inpPwd" />
-
-            <com.squmish.rcuapp.widget.SmallText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_3sdp"
-                android:gravity="center_vertical"
-                android:text="Remember password"
-                android:textColor="@color/black2"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="@+id/chkRememberPassword"
-                app:layout_constraintStart_toEndOf="@+id/chkRememberPassword"
-                app:layout_constraintTop_toTopOf="@+id/chkRememberPassword"
-                tools:ignore="SmallSp" />
 
             <com.squmish.rcuapp.widget.SmallText
                 android:id="@+id/txtRedirectToLogin"
@@ -201,7 +177,7 @@
                 android:textAllCaps="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/chkRememberPassword" />
+                app:layout_constraintTop_toBottomOf="@+id/inpPwd" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

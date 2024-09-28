@@ -32,6 +32,11 @@ class FragmentRCOVerification: BaseFragment(), FragmentLifecycleInterface {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentRcoVerificationBinding.inflate(inflater, container, false)
+        binding.viewModel = rcuVerificationViewModel
+        binding.lifecycleOwner = this
+        rcuVerificationViewModel.init(context)
+        setObserver()
+        setView()
         return binding.root
     }
     @SuppressLint("SetJavaScriptEnabled")
@@ -122,10 +127,6 @@ class FragmentRCOVerification: BaseFragment(), FragmentLifecycleInterface {
     }
 
     override fun onResumeFragment(s: String?) {
-        binding.viewModel = rcuVerificationViewModel
-        binding.lifecycleOwner = this
-        rcuVerificationViewModel.init(context)
-        setObserver()
-        setView()
+
     }
 }
