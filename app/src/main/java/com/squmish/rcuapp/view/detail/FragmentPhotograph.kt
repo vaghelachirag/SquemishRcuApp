@@ -263,7 +263,7 @@ class FragmentPhotograph: BaseFragment(), FragmentLifecycleInterface {
 
             val fOut: FileOutputStream = FileOutputStream(imgFile)
             val mutableBitmap = getResizedBitmap(mutableBitmap!!, 500);
-            mutableBitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut)
+            mutableBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut)
             fOut.flush()
             fOut.close()
 

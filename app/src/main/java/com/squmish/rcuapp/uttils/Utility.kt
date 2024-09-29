@@ -178,7 +178,7 @@ class Utility {
                 try {
                     val input = SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss")
                     cal.time = input.parse(value)!!
-                    val output = SimpleDateFormat("dd/MM/yyyy")
+                    val output = SimpleDateFormat("dd-M-yyyy hh:mm:ss")
                     outputString =  output.format(cal.timeInMillis).toString()
                 } catch (e: ParseException) {
                     e.printStackTrace()

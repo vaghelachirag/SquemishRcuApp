@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "450766187243",
-    "project_id": "squmishrcuapp",
-    "storage_bucket": "squmishrcuapp.appspot.com"
+    "project_number": "1054678505074",
+    "project_id": "squeamish-8b25f",
+    "storage_bucket": "squeamish-8b25f.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:450766187243:android:86738598a495c303112cae",
+        "mobilesdk_app_id": "1:1054678505074:android:068aaa1a9d087646ea54eb",
         "android_client_info": {
           "package_name": "com.squmish.rcuapp"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDilnoMAbk0Cr8UGWlWnWKPd7SDGwCkG7M"
+          "current_key": "AIzaSyAhUEyi3thIV_Vyt39knZSA2cXobCPnRdQ"
         }
       ],
       "services": {
