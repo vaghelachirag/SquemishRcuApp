@@ -25,6 +25,7 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.core.content.FileProvider
 import androidx.core.view.forEach
+import androidx.lifecycle.lifecycleScope
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -40,6 +41,8 @@ import com.squmish.rcuapp.uttils.onItemClick
 import com.squmish.rcuapp.view.base.BaseFragment
 import com.squmish.rcuapp.view.menu.DashboardActivity
 import com.squmish.rcuapp.viewmodel.verificationDetail.PictureViewModel
+import id.zelory.compressor.Compressor
+import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
 import java.util.Date
@@ -254,11 +257,14 @@ class FragmentPhotograph: BaseFragment(), FragmentLifecycleInterface {
     }
 
     private fun saveImage(mutableBitmap: Bitmap?) {
+
         val destPath: String? = Objects.requireNonNull(Objects.requireNonNull(requireActivity()).getExternalFilesDir(null)!!).absolutePath
         val imagesFolder = File(destPath, this.resources.getString(R.string.app_name))
+
+
         try {
             imagesFolder.mkdirs()
-            imgFile = File(imagesFolder, "LocationImage" + ".jpg")
+            imgFile = File(imagesFolder, "LocationImage" + ".JPEG")
             imagePath = FileProvider.getUriForFile(requireActivity(), com.squmish.rcuapp.BuildConfig.APPLICATION_ID  + ".fileProvider", imgFile!!)
 
             val fOut: FileOutputStream = FileOutputStream(imgFile)

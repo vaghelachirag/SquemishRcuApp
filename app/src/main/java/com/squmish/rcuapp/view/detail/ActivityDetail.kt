@@ -134,56 +134,13 @@ open class ActivityDetail  : BaseActivity()  {
 
         viewPagerAdapter!!.addFragment(FragmentBasicInformation.newInstance(selectedData), "Basic Information")
 
-        if (!selectedData!!.isDocumentVerification){
-            viewPagerAdapter!!.addFragment(FragmentPreNeighbourVerification.newInstance(selectedData), "Pre-Neighbour Verification")
-        }
+        viewPagerAdapter!!.addFragment(FragmentPreNeighbourVerification.newInstance(selectedData), "Pre-Neighbour Verification")
 
         viewPagerAdapter!!.addFragment(FragmentRCOVerification.newInstance(selectedData), "RCU Verification")
 
-        viewPagerAdapter!!.addFragment(FragmentPhotograph.newInstance(), "Photograph")
-        if (!selectedData!!.isDocumentVerification){
-            viewPagerAdapter!!.addFragment(FragmentPostNeighbourVerification.newInstance(selectedData), "Post-Neighbour Verification")
-        }
-
-        viewPagerAdapter!!.addFragment(FragmentFinalSubmit.newInstance(selectedData), "Final Submit")
-
-        binding.viewPager.adapter = viewPagerAdapter
-        binding.tabLayout.setupWithViewPager(binding.viewPager, true)
-        binding.viewPager.currentItem = 0
-        binding.viewPager.isSaveEnabled = true
-        binding.viewPager.offscreenPageLimit = 8
-
-
-        binding.viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            var currentPosition = 0
-            override fun onPageSelected(newPosition: Int) {
-                val fragmentToHide: FragmentLifecycleInterface =
-                    viewPagerAdapter!!.getItem(currentPosition) as FragmentLifecycleInterface
-                fragmentToHide.onPauseFragment()
-                val fragmentToShow: FragmentLifecycleInterface =
-                    viewPagerAdapter!!.getItem(newPosition) as FragmentLifecycleInterface
-                fragmentToShow.onResumeFragment(null)
-                currentPosition = newPosition
-            }
-            override fun onPageScrolled(arg0: Int, arg1: Float, arg2: Int) {
-            }
-            override fun onPageScrollStateChanged(arg0: Int) {}
-        })
-    }
-
-    fun setAcceptedStatePageAdapter() {
-
-        selectedData!!.setStatus("Assign")
-        if (!selectedData!!.isDocumentVerification){
-            viewPagerAdapter!!.addFragment(FragmentPreNeighbourVerification.newInstance(selectedData), "Pre-Neighbour Verification")
-        }
-
-        viewPagerAdapter!!.addFragment(FragmentRCOVerification.newInstance(selectedData), "RCU Verification")
+        viewPagerAdapter!!.addFragment(FragmentPostNeighbourVerification.newInstance(selectedData), "Post-Neighbour Verification")
 
         viewPagerAdapter!!.addFragment(FragmentPhotograph.newInstance(), "Photograph")
-        if (!selectedData!!.isDocumentVerification){
-            viewPagerAdapter!!.addFragment(FragmentPostNeighbourVerification.newInstance(selectedData), "Post-Neighbour Verification")
-        }
 
         viewPagerAdapter!!.addFragment(FragmentFinalSubmit.newInstance(selectedData), "Final Submit")
 

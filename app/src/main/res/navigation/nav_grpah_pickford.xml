@@ -44,6 +44,9 @@
             app:launchSingleTop="true"
             app:popUpTo="@+id/dashboardFragment"
             app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_dashboardFragment_to_webViewFragment"
+            app:destination="@id/webViewFragment" />
 
 
     </fragment>
@@ -62,6 +65,12 @@
         app:popUpToInclusive="true"
         tools:layout="@layout/fragment_load_web_url">
 
+        <action
+            android:id="@+id/action_webViewFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment" />
+        <action
+            android:id="@+id/action_webViewFragment_to_dashboardMenuFragment"
+            app:destination="@id/dashboardMenuFragment" />
     </fragment>
 
     <fragment
