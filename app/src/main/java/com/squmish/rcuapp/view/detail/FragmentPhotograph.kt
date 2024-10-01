@@ -201,6 +201,7 @@ class FragmentPhotograph: BaseFragment(), FragmentLifecycleInterface {
             bitmap = Utility.rotateImage(bitmap,angle)
             binding.ivImage.setImageBitmap(bitmap)
 
+
             val workingBitmap: Bitmap = Bitmap.createBitmap(bitmap)
             val mutableBitmap = workingBitmap.copy(Bitmap.Config.ARGB_8888, true)
 
@@ -262,20 +263,11 @@ class FragmentPhotograph: BaseFragment(), FragmentLifecycleInterface {
         val imagesFolder = File(destPath, this.resources.getString(R.string.app_name))
 
 
-        try {
-            imagesFolder.mkdirs()
-            imgFile = File(imagesFolder, "LocationImage" + ".JPEG")
-            imagePath = FileProvider.getUriForFile(requireActivity(), com.squmish.rcuapp.BuildConfig.APPLICATION_ID  + ".fileProvider", imgFile!!)
-
-            val fOut: FileOutputStream = FileOutputStream(imgFile)
-            val mutableBitmap = getResizedBitmap(mutableBitmap!!, 500);
-            mutableBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut)
-            fOut.flush()
-            fOut.close()
-
-            photoVerificationViewModel.saveSurveyPicture(imgFile!!)
-        } catch (e: Exception) {
-            e.printStackTrace()
+        lifecycleScope.launch {
+            val compressedImageFile = Compressor.compress(requireActivity(), imgFile!!)
+            // bitmap = BitmapFactory.decodeFile(compressedImageFile.absolutePath)
+            Log.e("CompressPath",compressedImageFile.absolutePath.toString())
+            photoVerificationViewModel.saveSurveyPicture(compressedImageFile)
         }
     }
 
@@ -302,8 +294,5 @@ class FragmentPhotograph: BaseFragment(), FragmentLifecycleInterface {
 
     override fun onResumeFragment(s: String?) {
         Log.e("OnResume","Photo")
-
     }
-
-
 }
