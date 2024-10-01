@@ -13,9 +13,11 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.squmish.rcuapp.R
 import com.squmish.rcuapp.databinding.FragmentLoadWebUrlBinding
 import com.squmish.rcuapp.view.base.BaseFragment
@@ -43,6 +45,10 @@ class WebViewFragment: BaseFragment() {
 
         requireActivity().onBackPressedDispatcher.addCallback(requireActivity(), callback)
 
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(requireActivity()) {
+            findNavController().navigate(R.id.action_webViewFragment_to_dashboardMenuFragment)
+        }
+
         webViewViewModel.isLoading.observe(requireActivity()) { isLoading ->
             if (isLoading && isAdded) showProgressbar()
             else if (!isLoading && isAdded) hideProgressbar()
@@ -52,7 +58,6 @@ class WebViewFragment: BaseFragment() {
             if(it.isNotEmpty()){
                 Log.e("URL",it.toString())
                 binding.webView.getSettings().javaScriptEnabled = true;
-
 
                 showProgressbar()
                 binding.webView.setWebViewClient(object : WebViewClient() {

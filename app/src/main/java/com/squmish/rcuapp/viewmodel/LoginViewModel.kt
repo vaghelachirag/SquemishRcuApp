@@ -55,6 +55,20 @@ class LoginViewModel(
             Utils().showSnackBar(context,"Please Enter Your Password",binding.constraintLayout)
         }
         else{
+            var session = Session(context)
+
+            if (binding.chkRememberPassword.isChecked) {
+                session.storeDataByKey(Session.KEY_USER_EMAIL, binding.edtEmailAddress.text.toString(),)
+                session.storeDataByKey(Session.KEY_USER_PASSWORD, binding.edtPassword.text.toString(),)
+                session.storeDataByKey(Session.KEY_USER_REMEMBER, binding.chkRememberPassword.isChecked,)
+
+            } else {
+                session.storeDataByKey(Session.KEY_USER_EMAIL, "")
+                session.storeDataByKey(Session.KEY_USER_PASSWORD, "")
+                session.storeDataByKey(Session.KEY_USER_REMEMBER, false)
+                session.storeDataByKey(Session.KEY_USER_NAME,"")
+            }
+
             callLoginAPI()
         }
     }

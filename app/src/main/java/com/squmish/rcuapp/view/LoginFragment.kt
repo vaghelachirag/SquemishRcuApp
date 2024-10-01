@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.squmish.rcuapp.R
 import com.squmish.rcuapp.databinding.LoginscreenBinding
+import com.squmish.rcuapp.uttils.Session
 import com.squmish.rcuapp.view.base.BaseFragment
 import com.squmish.rcuapp.viewmodel.LoginViewModel
 
@@ -31,6 +32,14 @@ class LoginFragment : BaseFragment() {
         _binding = LoginscreenBinding.inflate(inflater, container, false)
         binding.viewModel = signInViewModel
         binding.lifecycleOwner = this
+
+        val email: String = session.getDataByKey(Session.KEY_USER_EMAIL, "")
+        val pwd: String = session.getDataByKey(Session.KEY_USER_PASSWORD, "")
+        session.storeDataByKey(Session.KEY_USER_NAME,"")
+        signInViewModel.email.set(email)
+        signInViewModel.password.set(pwd)
+
+        binding.chkRememberPassword.isChecked = session.getDataByKey(Session.KEY_USER_REMEMBER, false)
 
         signInViewModel.isLoading.observe(requireActivity()) { isLoading ->
             if (isLoading && isAdded) showProgressbar()
