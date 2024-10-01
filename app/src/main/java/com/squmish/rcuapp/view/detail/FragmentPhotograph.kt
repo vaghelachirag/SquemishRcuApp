@@ -258,7 +258,7 @@ class FragmentPhotograph: BaseFragment(), FragmentLifecycleInterface {
         val imagesFolder = File(destPath, this.resources.getString(R.string.app_name))
         try {
             imagesFolder.mkdirs()
-            imgFile = File(imagesFolder, "LocationImage" + ".jpg")
+            imgFile = File(imagesFolder, "LocationImage" + ".JPEG")
             imagePath = FileProvider.getUriForFile(requireActivity(), com.squmish.rcuapp.BuildConfig.APPLICATION_ID  + ".fileProvider", imgFile!!)
 
             val fOut: FileOutputStream = FileOutputStream(imgFile)
