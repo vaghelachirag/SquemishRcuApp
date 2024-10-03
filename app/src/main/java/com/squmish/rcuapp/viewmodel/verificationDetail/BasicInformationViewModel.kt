@@ -111,6 +111,16 @@ class BasicInformationViewModel(private val context: Context, val binding: Fragm
     }
 
     private fun setAction() {
+
+       Log.e("FiStatus",ActivityDetail.selectedData!!.getStatus().toString())
+
+        if (!ActivityDetail.selectedData!!.getStatus().isNullOrEmpty()){
+            if (ActivityDetail.selectedData!!.getStatus()!!.equals("REJECTED")){
+                binding.txtRejectReason.visibility = View.VISIBLE
+                binding.txtRejectReason.text = Utility.getNullToBlankString(ActivityDetail.selectedData!!.getRejectReason().toString())
+            }
+        }
+
         binding.txtBackendNameHeader.setOnClickListener {
             val intent = Intent(Intent.ACTION_DIAL)
             intent.setData(Uri.parse("tel:"+ ActivityDetail.selectedData!!.getBackendMobileNo()))

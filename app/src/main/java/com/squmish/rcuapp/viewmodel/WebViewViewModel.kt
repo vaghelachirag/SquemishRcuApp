@@ -11,6 +11,7 @@ import com.squmish.rcuapp.network.CallbackObserver
 import com.squmish.rcuapp.network.Networking
 import com.squmish.rcuapp.uttils.Session
 import com.squmish.rcuapp.uttils.Utility
+import com.squmish.rcuapp.view.menu.DashboardActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -31,7 +32,7 @@ class WebViewViewModel(private val context: Context): BaseViewModel() {
             isLoading.postValue(true)
             Networking.with(context)
                 .getServices()
-                .getMenuURLResponse(menuId)
+                .getMenuURLResponse(menuId,DashboardActivity.currentLat.toString(),DashboardActivity.currentLong.toString())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : CallbackObserver<GetMenuURLResponse>() {

@@ -80,6 +80,7 @@ class DashboardFragment: BaseFragment() {
 
         try {
             (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
+            (context as DashboardActivity).setTitle()
         }catch (e : Exception){
         }
 

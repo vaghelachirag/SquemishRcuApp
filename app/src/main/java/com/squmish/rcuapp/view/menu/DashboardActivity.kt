@@ -268,6 +268,13 @@ class DashboardActivity : BaseActivity(){
             LocalBroadcastManager.getInstance(this).registerReceiver(it, intentFilter)
         }
         navController = findNavController(R.id.navHostFragmentPickford)
+
+        if (title != null) binding.tvTitle.text = "Dashboard"
+        Log.e("OnResume","OnResume")
+    }
+
+    fun  setTitle(){
+        if (title != null) binding.tvTitle.text = "Dashboard"
     }
 
     override fun onPause() {

@@ -66,5 +66,6 @@ class DashboardMenuFragment: BaseFragment()  {
         (activity as AppCompatActivity?)!!.supportActionBar!!.show()
         (activity as AppCompatActivity?)!!.supportActionBar!!.setDisplayHomeAsUpEnabled(false)
         (activity as AppCompatActivity?)!!.supportActionBar!!.setHomeAsUpIndicator(R.drawable.ic_nav_menup)
+        (context as DashboardActivity).setTitle()
     }
 }

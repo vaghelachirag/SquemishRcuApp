@@ -66,7 +66,7 @@ interface ApiInterface {
     fun getChangePasswordApiResponse(@Body requestBody: RequestBody): Observable<GetChangePasswordResponse>
 
     @GET("api/MobileAppMenu/GetWebViewUrl")
-    fun getMenuURLResponse(@Query("menuId") menuId: String): Observable<GetMenuURLResponse>
+    fun getMenuURLResponse(@Query("menuId") menuId: String,@Query("Latitude") latitude: String,@Query("Longitude") longitude: String): Observable<GetMenuURLResponse>
 
     @POST("api/FiRequest/SaveVerification")
     fun getSaveFiResidenceResponse(@Body requestBody: SaveVerificationDataDetail): Observable<GetSaveResidenceVerificationResponse>

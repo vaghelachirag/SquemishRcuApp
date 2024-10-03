@@ -32,11 +32,25 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_5sdp"
                 android:paddingBottom="@dimen/_10sdp"
+                android:orientation="vertical"
                 tools:context=".MainActivity">
+
+
+                <com.squmish.rcuapp.widget.HeaderText
+                    android:id="@+id/txt_RejectReason"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:visibility="gone"
+                    android:layout_margin="@dimen/_3sdp"
+                    android:textColor="@color/red">
+
+                </com.squmish.rcuapp.widget.HeaderText>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:orientation="vertical" >
 
                     <LinearLayout
@@ -51,8 +65,7 @@
 
                             <TableLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                >
+                                android:layout_height="match_parent">
 
                                 <TableRow
                                     android:id="@+id/tableRow1"

@@ -43,8 +43,11 @@ import com.squmish.rcuapp.view.menu.DashboardActivity
 import com.squmish.rcuapp.viewmodel.verificationDetail.PictureViewModel
 import id.zelory.compressor.Compressor
 import kotlinx.coroutines.launch
+import java.io.ByteArrayOutputStream
 import java.io.File
+import java.io.FileNotFoundException
 import java.io.FileOutputStream
+import java.io.IOException
 import java.util.Date
 import java.util.Objects
 
@@ -62,6 +65,7 @@ class FragmentPhotograph: BaseFragment(), FragmentLifecycleInterface {
     private var imagePath: Uri? = null
     private val cameraCode: Int = 0x50
     val galleryCode: Int = 0x51
+    private var compressedImage: File? = null
 
     companion object {
         fun newInstance(): FragmentPhotograph {
@@ -188,8 +192,10 @@ class FragmentPhotograph: BaseFragment(), FragmentLifecycleInterface {
     @SuppressLint("DefaultLocale")
     private fun uploadImage() {
         if (imgFile != null) {
+
             val filePath: String = imgFile!!.absolutePath
             var bitmap = BitmapFactory.decodeFile(filePath)
+
 
             val ei = ExifInterface(filePath)
             val orientation: Int = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED)
@@ -197,6 +203,8 @@ class FragmentPhotograph: BaseFragment(), FragmentLifecycleInterface {
 
 
             var angle  =  Utility.rotateImageAngle(orientation)
+
+
 
             bitmap = Utility.rotateImage(bitmap,angle)
             binding.ivImage.setImageBitmap(bitmap)
@@ -258,16 +266,44 @@ class FragmentPhotograph: BaseFragment(), FragmentLifecycleInterface {
     }
 
     private fun saveImage(mutableBitmap: Bitmap?) {
-
         val destPath: String? = Objects.requireNonNull(Objects.requireNonNull(requireActivity()).getExternalFilesDir(null)!!).absolutePath
         val imagesFolder = File(destPath, this.resources.getString(R.string.app_name))
 
+        //create a file to write bitmap data
+        val locationImageFile: File = File(requireActivity().cacheDir, this.resources.getString(R.string.app_name) + ".jpg")
+        locationImageFile.createNewFile()
+        var bitmap: Bitmap = mutableBitmap!!
+        val bos = ByteArrayOutputStream()
+
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100 /*ignored for PNG*/, bos);
+        var bitmapdata = bos.toByteArray()
+        var fos: FileOutputStream? = null
+        try {
+            fos = FileOutputStream(locationImageFile)
+        } catch (e: FileNotFoundException) {
+            e.printStackTrace()
+        }
+
+
+        try {
+            fos!!.write(bitmapdata)
+            fos!!.flush()
+            fos!!.close()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
 
         lifecycleScope.launch {
-            val compressedImageFile = Compressor.compress(requireActivity(), imgFile!!)
-            // bitmap = BitmapFactory.decodeFile(compressedImageFile.absolutePath)
-            Log.e("CompressPath",compressedImageFile.absolutePath.toString())
-            photoVerificationViewModel.saveSurveyPicture(compressedImageFile)
+            compressedImage = Compressor.compress(requireActivity(), locationImageFile)
+            bitmap = BitmapFactory.decodeFile(compressedImage!!.absolutePath)
+            setCompressedImage()
+        }
+
+    }
+
+    private fun setCompressedImage() {
+        compressedImage?.let {
+            photoVerificationViewModel.saveSurveyPicture(compressedImage!!)
         }
     }
 
