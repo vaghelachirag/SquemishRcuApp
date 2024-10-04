@@ -54,7 +54,7 @@
 
     <fragment
         android:id="@+id/webViewFragment"
-        android:name="com.example.rcuapp.view.menu.WebViewFragment"
+        android:name="com.squmish.rcuapp.view.menu.WebViewFragment"
         android:label="@string/webView_fragment_label"
         app:enterAnim="@anim/nav_default_enter_anim"
         app:exitAnim="@anim/nav_default_exit_anim"

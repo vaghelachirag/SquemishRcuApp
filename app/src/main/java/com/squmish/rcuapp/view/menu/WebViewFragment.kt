@@ -1,7 +1,10 @@
-package com.example.rcuapp.view.menu
+package com.squmish.rcuapp.view.menu
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,19 +12,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
+import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.squmish.rcuapp.R
 import com.squmish.rcuapp.databinding.FragmentLoadWebUrlBinding
 import com.squmish.rcuapp.view.base.BaseFragment
-import com.squmish.rcuapp.view.menu.DashboardActivity
 import com.squmish.rcuapp.viewmodel.WebViewViewModel
 
 
@@ -41,6 +42,25 @@ class WebViewFragment: BaseFragment() {
         binding.lifecycleOwner = this
         menuId = requireArguments().getString("webURL").toString()
         context?.let { webViewViewModel.init(it,menuId) }
+
+        val webSettings: WebSettings = binding.webView.getSettings()
+        webSettings.javaScriptEnabled = true
+        webSettings.javaScriptCanOpenWindowsAutomatically = true
+        webSettings.loadWithOverviewMode = false
+        webSettings.allowFileAccess = true
+        webSettings.builtInZoomControls = false
+        webSettings.displayZoomControls = false
+
+        webSettings.allowFileAccess = true;
+        webSettings.allowContentAccess = true;
+
+        webSettings.domStorageEnabled = true
+        //        webSettings.setAppCacheEnabled(false);
+        webSettings.loadsImagesAutomatically = true
+        webSettings.useWideViewPort = false
+        webSettings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
+
+
         Log.e("MenuId",menuId)
 
         requireActivity().onBackPressedDispatcher.addCallback(requireActivity(), callback)
@@ -53,6 +73,19 @@ class WebViewFragment: BaseFragment() {
             if (isLoading && isAdded) showProgressbar()
             else if (!isLoading && isAdded) hideProgressbar()
         }
+
+        binding.webView.setWebViewClient(object : WebViewClient() {
+            @Deprecated("Deprecated in Java")
+            override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+                if (url.endsWith(".pdf")) {
+                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+                    // if want to download pdf manually create AsyncTask here
+                    // and download file
+                    return true
+                }
+                return false
+            }
+        })
 
         webViewViewModel.webViewURL.observeForever {
             if(it.isNotEmpty()){
