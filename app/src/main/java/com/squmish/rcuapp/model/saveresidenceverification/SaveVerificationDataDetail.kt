@@ -1,4 +1,4 @@
-package com.example.rcuapp.model.saveresidenceverification
+package com.squmish.rcuapp.model.saveresidenceverification
 
 import com.squmish.rcuapp.model.saveDocumentProfileVerification.SaveDocumentProfileVerification
 import com.google.gson.annotations.Expose

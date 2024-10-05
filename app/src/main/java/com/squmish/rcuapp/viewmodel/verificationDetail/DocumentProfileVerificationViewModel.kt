@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.RadioGroup
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
-import com.example.rcuapp.model.saveresidenceverification.SaveVerificationDataDetail
+import com.squmish.rcuapp.model.saveresidenceverification.SaveVerificationDataDetail
 
 import com.squmish.rcuapp.uttils.Utils
 import com.squmish.rcuapp.view.detail.ActivityDetail
@@ -22,7 +22,6 @@ import com.squmish.rcuapp.network.Networking
 import com.squmish.rcuapp.uttils.AppConstants
 import com.squmish.rcuapp.uttils.Utility
 import com.squmish.rcuapp.view.menu.DashboardActivity
-import com.squmish.rcuapp.view.menu.DashboardFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 

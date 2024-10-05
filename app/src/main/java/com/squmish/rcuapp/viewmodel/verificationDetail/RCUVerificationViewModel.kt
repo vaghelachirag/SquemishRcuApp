@@ -9,9 +9,8 @@ import android.view.View
 import android.widget.RadioGroup
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rcuapp.model.saveresidenceverification.SaveResidanceApplicantFamilyDetail
-import com.example.rcuapp.model.saveresidenceverification.SaveVerificationDataDetail
+import com.squmish.rcuapp.model.saveresidenceverification.SaveVerificationDataDetail
 import com.squmish.rcuapp.uttils.Utils
 import com.squmish.rcuapp.view.detail.ActivityDetail
 import com.google.gson.Gson
@@ -27,7 +26,6 @@ import com.squmish.rcuapp.room.dao.MasterDataDao
 import com.squmish.rcuapp.uttils.AppConstants
 import com.squmish.rcuapp.uttils.Utility
 import com.squmish.rcuapp.view.menu.DashboardActivity
-import com.squmish.rcuapp.view.menu.DashboardFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.CoroutineScope

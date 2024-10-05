@@ -904,7 +904,7 @@
                         android:clipToPadding="false"
                         android:fadeScrollbars="false"
                         android:paddingTop="6dp"
-                        android:visibility="gone"
+                        android:visibility="visible"
                         android:paddingBottom="6dp"
                         android:layout_marginLeft="@dimen/_10sdp"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

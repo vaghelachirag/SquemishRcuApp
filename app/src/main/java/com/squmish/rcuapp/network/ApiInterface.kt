@@ -1,5 +1,5 @@
 package com.squmish.rcuapp.network
-import com.example.rcuapp.model.saveresidenceverification.SaveVerificationDataDetail
+import com.squmish.rcuapp.model.saveresidenceverification.SaveVerificationDataDetail
 import com.squmish.rcuapp.model.changepassword.GetChangePasswordResponse
 import com.squmish.rcuapp.model.dashboard.getDashboardApiResponse.GetDashboardApiResponse
 import com.squmish.rcuapp.model.finalSubmission.GetFinalSubmissionApiResponse
