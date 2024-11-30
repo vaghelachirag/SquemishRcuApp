@@ -121,4 +121,5 @@ dependencies {
     implementation ("com.google.firebase:firebase-messaging:23.0.3")
 
     implementation ("id.zelory:compressor:3.0.1")
+
 }

@@ -234,6 +234,11 @@
         <item>Photo Not Available</item>
     </string-array>
 
+    <string-array name="billing_type">
+        <item>Shipper</item>
+        <item>Consignee</item>
+    </string-array>
+
 
     <string-array name="house_locality_array">
         <item>Years</item>
