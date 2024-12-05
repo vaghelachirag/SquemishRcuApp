@@ -2,294 +2,238 @@ package com.squmish.rcuapp
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Intent
-import android.content.IntentFilter
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Canvas
-import android.graphics.Matrix
-import android.graphics.Paint
-import android.media.ExifInterface
+import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.util.Log
-import androidx.annotation.RequiresApi
+import android.view.KeyEvent
+import android.view.View
+import android.webkit.ValueCallback
+import android.webkit.WebChromeClient
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.FileProvider
-import androidx.lifecycle.lifecycleScope
-import com.karumi.dexter.Dexter
-import com.karumi.dexter.MultiplePermissionsReport
-import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.squmish.rcuapp.databinding.ActivityTestBinding
-import com.squmish.rcuapp.model.dashboard.DashboardDataModel
-import id.zelory.compressor.Compressor
-import kotlinx.coroutines.launch
 import java.io.File
-import java.io.FileNotFoundException
-import java.io.FileOutputStream
 import java.io.IOException
+import java.text.SimpleDateFormat
 import java.util.Date
-import java.util.Objects
 
 
 class ActivityTest: AppCompatActivity()  {
     private lateinit var binding: ActivityTestBinding
-
-    private var dashboardDataModel = mutableListOf<DashboardDataModel>()
-
-
-  //  private val dashboardMenuViewModel by lazy { DashboardMenuViewModel(this,binding) }
-
-    private var imgFile: File? = null
-    private var imagePath: Uri? = null
-    private val cameraCode: Int = 0x50
-    val galleryCode: Int = 0x51
+    private var WebView: WebView? = null
+    private val TAG: String = MainActivity::class.java.simpleName
 
 
+    private var mCM: String? = null
+    private var mUM: ValueCallback<Uri>? = null
+    private var mUMA: ValueCallback<Array<Uri>>? = null
+    private
+    val FCR: Int = 1
+
+    @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTestBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setAction()
-    }
 
-    private fun setAction() {
-        binding.btnCamera.setOnClickListener {
-            checkImagePickerPermission()
-        }
-    }
+        WebView = binding.webView1
 
-
-    // For Check Image permission
-    private fun checkImagePickerPermission() {
-        Dexter.withActivity(this)
-            .withPermissions(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE)
-            .withListener(object : MultiplePermissionsListener {
-                override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
-                    // openImagePickerDialog()
-                    displayCamera()
-
-                    /* if (report!!.areAllPermissionsGranted()) {
-                         openImagePickerDialog()
-                     } else {
-                         Utility.showSettingsDialog(requireActivity())
-                     }
-                     if (report.isAnyPermissionPermanentlyDenied) {
-                         Utility.showSettingsDialog(requireActivity())
-                     }*/
-                }
-
-                override fun onPermissionRationaleShouldBeShown(permissions: MutableList<com.karumi.dexter.listener.PermissionRequest>?, token: PermissionToken?) {
-                    token!!.continuePermissionRequest()
-                }
-            }).withErrorListener { }.onSameThread().check()
-    }
-
-
-    // Display Camera Pic
-    fun displayCamera() {
-        val destPath: String? = Objects.requireNonNull(Objects.requireNonNull(this).getExternalFilesDir(null)!!).absolutePath
-        val imagesFolder = File(destPath, this.resources.getString(R.string.app_name))
-        try {
-            imagesFolder.mkdirs()
-            imgFile = File(imagesFolder, Date().time.toString() + ".jpg")
-            imagePath = FileProvider.getUriForFile(
+        if (Build.VERSION.SDK_INT >= 23 && (ContextCompat.checkSelfPermission(
                 this,
-                com.squmish.rcuapp.BuildConfig.APPLICATION_ID + ".fileProvider",
-                imgFile!!
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(
+                this, Manifest.permission.CAMERA
+            ) != PackageManager.PERMISSION_GRANTED)
+        ) {
+            ActivityCompat.requestPermissions(
+                this@ActivityTest,
+                arrayOf<String>(
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.CAMERA
+                ),
+                1
             )
-            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, imagePath)
-            startActivityForResult(intent, cameraCode)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-
-    @RequiresApi(Build.VERSION_CODES.Q)
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == cameraCode && resultCode == Activity.RESULT_OK) {
-            uploadImage()
-        }
-    }
-    // For Upload Image
-    @RequiresApi(Build.VERSION_CODES.Q)
-    @SuppressLint("DefaultLocale")
-    private fun uploadImage() {
-        if (imgFile != null) {
-         Log.e("Image", imgFile!!.absolutePath.toString())
-         Log.e("CompressImage",imagePath.toString())
-       //  Log.e("CompressImage",compressImage(imagePath.toString()))
-        }
-        // e.g calling from activity lifecycle scope
-        lifecycleScope.launch {
-            val compressedImageFile = Compressor.compress(this@ActivityTest, imgFile!!)
-            var bitmap = BitmapFactory.decodeFile(compressedImageFile.absolutePath)
-            binding.ivMainTest.setImageBitmap(bitmap)
-            binding.ivMain.setImageBitmap(BitmapFactory.decodeFile(imgFile!!.absolutePath))
-            val compressedSize: Long = compressedImageFile.length() / 1024
-            val originalSize: Long = imgFile!!.length() / 1024
-            binding.txtSize.text = compressedSize.toString() + "Kb " + " "+ originalSize + "Kb"
-        }
-    }
-
-
-    override fun onResume() {
-        super.onResume()
-        val intentFilter = IntentFilter()
-        intentFilter.addAction("NotifyUser")
-    }
-
-    fun compressImage(imageUri: String): String {
-        val filePath = getRealPathFromURI(imageUri)
-        var scaledBitmap: Bitmap? = null
-
-        val options = BitmapFactory.Options()
-
-        //      by setting this field as true, the actual bitmap pixels are not loaded in the memory. Just the bounds are loaded. If
-//      you try the use the bitmap here, you will get null.
-        options.inJustDecodeBounds = true
-        var bmp = BitmapFactory.decodeFile(filePath, options)
-
-        var actualHeight = options.outHeight
-        var actualWidth = options.outWidth
-
-        //      the image's max dimention is gonna be: 512x512
-        val maxSize = 512.0f
-
-        //      width and height values are set maintaining the aspect ratio of the image
-        val ratio =
-            if (actualWidth > actualHeight) maxSize / actualWidth else maxSize / actualHeight
-        actualWidth = (actualWidth * ratio).toInt()
-        actualHeight = (actualHeight * ratio).toInt()
-
-        //      setting inSampleSize value allows to load a scaled down version of the original image
-        options.inSampleSize = calculateInSampleSize(options, actualWidth, actualHeight)
-
-        //      inJustDecodeBounds set to false to load the actual bitmap
-        options.inJustDecodeBounds = false
-
-        //      this options allow android to claim the bitmap memory if it runs low on memory
-        options.inPurgeable = true
-        options.inInputShareable = true
-        options.inTempStorage = ByteArray(16 * 1024)
-
-        try {
-//          load the bitmap from its path
-            bmp = BitmapFactory.decodeFile(filePath, options)
-        } catch (exception: OutOfMemoryError) {
-            exception.printStackTrace()
-        }
-        try {
-            scaledBitmap = Bitmap.createBitmap(actualWidth, actualHeight, Bitmap.Config.ARGB_8888)
-        } catch (exception: OutOfMemoryError) {
-            exception.printStackTrace()
         }
 
-        val ratioX = actualWidth / options.outWidth.toFloat()
-        val ratioY = actualHeight / options.outHeight.toFloat()
-        val middleX = actualWidth / 2.0f
-        val middleY = actualHeight / 2.0f
+        val webSettings = WebView!!.settings
+        webSettings.javaScriptEnabled = true
+        webSettings.allowFileAccess = true
 
-        val scaleMatrix: Matrix = Matrix()
-        scaleMatrix.setScale(ratioX, ratioY, middleX, middleY)
+        webSettings.mixedContentMode = 0
+        WebView!!.setLayerType(View.LAYER_TYPE_HARDWARE, null)
+        WebView!!.webViewClient = Callback()
 
-        val canvas: Canvas = Canvas(scaledBitmap!!)
-        canvas.setMatrix(scaleMatrix)
-        canvas.drawBitmap(
-            bmp,
-            middleX - bmp.width / 2,
-            middleY - bmp.height / 2,
-            Paint(Paint.FILTER_BITMAP_FLAG)
-        )
-
-        //      check the rotation of the image and display it properly
-        val exif: ExifInterface
-        try {
-            exif = ExifInterface(filePath!!)
-
-            val orientation: Int = exif.getAttributeInt(
-                ExifInterface.TAG_ORIENTATION, 0
-            )
-            Log.d("EXIF", "Exif: $orientation")
-            val matrix: Matrix = Matrix()
-            if (orientation == 6) {
-                matrix.postRotate(90F)
-                Log.d("EXIF", "Exif: $orientation")
-            } else if (orientation == 3) {
-                matrix.postRotate(180F)
-                Log.d("EXIF", "Exif: $orientation")
-            } else if (orientation == 8) {
-                matrix.postRotate(270F)
-                Log.d("EXIF", "Exif: $orientation")
+        //WebView.loadUrl("https://infeeds.com/");
+        WebView!!.loadUrl("https://poonammanagement.com/MobileApp/ReimubersementIndex?UserId=74&BranchId=1&Latitude=0.0&Longitude=0.0&Token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJKV1RTZXJ2aWNlQWNjZXNzVG9rZW4iLCJqdGkiOiJmOWRlNTE5Yy1hY2E4LTQ3YmYtYjhlYi0wM2JlYTI0M2FiNjAiLCJpYXQiOiIwMy0xMi0yMDI0IDE2OjMxOjM3IiwiVXNlckxvZ0lkIjoiMjg2NDg1IiwiVXNlcklkIjoiNzQiLCJFbXBsb3llZUlkIjoiMTM0IiwiQnVzaW5lc3NJZCI6IjIwIiwiZXhwIjoxNzMzMjcwNDAwLCJpc3MiOiJKV1RBdXRoZW50aWNhdGlvblNlcnZlciIsImF1ZCI6IkpXVFNlcnZpY2VQb3N0bWFuQ2xpZW50In0.D0uZIChupig4KRy9BZiDcDPGNeS6pwJuaKRTL3gKt9Y")
+        WebView!!.webChromeClient = object : WebChromeClient() {
+            //For Android 3.0+
+            fun openFileChooser(uploadMsg: ValueCallback<Uri>) {
+                mUM = uploadMsg
+                val i = Intent(Intent.ACTION_GET_CONTENT)
+                i.addCategory(Intent.CATEGORY_OPENABLE)
+                i.setType("*/*")
+                this@ActivityTest.startActivityForResult(
+                    Intent.createChooser(i, "File Chooser"),
+                   FCR
+                )
             }
-            scaledBitmap = Bitmap.createBitmap(
-                scaledBitmap!!, 0, 0,
-                scaledBitmap!!.width, scaledBitmap!!.height, matrix,
-                true
+
+            //For Android 4.1+
+            fun openFileChooser(
+                uploadMsg: ValueCallback<Uri>,
+                acceptType: String?,
+                capture: String?
+            ) {
+                mUM = uploadMsg
+                val i = Intent(Intent.ACTION_GET_CONTENT)
+                i.addCategory(Intent.CATEGORY_OPENABLE)
+                i.setType("*/*")
+                this@ActivityTest.startActivityForResult(
+                    Intent.createChooser(i, "File Chooser"),
+                    FCR
+                )
+            }
+
+            //For Android 5.0+
+            @SuppressLint("QueryPermissionsNeeded")
+            override fun onShowFileChooser(
+                webView: WebView, filePathCallback: ValueCallback<Array<Uri>>,
+                fileChooserParams: FileChooserParams
+            ): Boolean {
+                mUMA?.onReceiveValue(null)
+                mUMA = filePathCallback
+                var takePictureIntent: Intent? = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                if (takePictureIntent!!.resolveActivity(this@ActivityTest.packageManager) != null) {
+                    var photoFile: File? = null
+                    try {
+                        photoFile = createImageFile()
+                        takePictureIntent.putExtra("PhotoPath", mCM)
+                    } catch (ex: IOException) {
+                       // Log.e(MainActivity.TAG, "Image file creation failed", ex)
+                    }
+                    if (photoFile != null) {
+                        mCM = "file:" + photoFile.absolutePath
+                        takePictureIntent.putExtra(
+                            MediaStore.EXTRA_OUTPUT,
+                            Uri.fromFile(photoFile)
+                        )
+                    } else {
+                        takePictureIntent = null
+                    }
+                }
+                val contentSelectionIntent = Intent(Intent.ACTION_GET_CONTENT)
+                contentSelectionIntent.addCategory(Intent.CATEGORY_OPENABLE)
+                contentSelectionIntent.setType("*/*")
+                val intentArray = if (takePictureIntent != null) {
+                    arrayOf<Intent?>(takePictureIntent)
+                } else {
+                    arrayOfNulls(0)
+                }
+
+                val chooserIntent = Intent(Intent.ACTION_CHOOSER)
+                chooserIntent.putExtra(Intent.EXTRA_INTENT, contentSelectionIntent)
+                chooserIntent.putExtra(Intent.EXTRA_TITLE, "Image Chooser")
+                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, intentArray)
+                startActivityForResult(chooserIntent, FCR)
+                return true
+            }
+        }
+
+
+        // Create an image file
+        @Throws(IOException::class)
+        fun createImageFiles(): File {
+            @SuppressLint("SimpleDateFormat") val timeStamp =
+                SimpleDateFormat("yyyyMMdd_HHmmss").format(
+                    Date()
+                )
+            val imageFileName = "img_" + timeStamp + "_"
+            val storageDir =
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+            return File.createTempFile(imageFileName, ".jpg", storageDir)
+        }
+
+    }
+
+    class Callback : WebViewClient() {
+        @Deprecated("Deprecated in Java")
+        override fun onReceivedError(
+            view: WebView,
+            errorCode: Int,
+            description: String,
+            failingUrl: String
+        ) {
+
+        }
+    }
+
+    // Create an image file
+    @Throws(IOException::class)
+    private fun createImageFile(): File {
+        @SuppressLint("SimpleDateFormat") val timeStamp =
+            SimpleDateFormat("yyyyMMdd_HHmmss").format(
+                Date()
             )
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-
-        var out: FileOutputStream? = null
-        val filename = getFilename()
-        try {
-            out = FileOutputStream(filename)
-
-            //          write the compressed bitmap at the destination specified by filename.
-            scaledBitmap!!.compress(Bitmap.CompressFormat.JPEG, 80, out)
-        } catch (e: FileNotFoundException) {
-            e.printStackTrace()
-        }
-
-        return filename
+        val imageFileName = "img_" + timeStamp + "_"
+        val storageDir =
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(imageFileName, ".jpg", storageDir)
     }
 
-    fun getFilename(): String {
-        val file = File(Environment.getExternalStorageDirectory().path, "MyFolder/Images")
-        if (!file.exists()) {
-            file.mkdirs()
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        if (event.action == KeyEvent.ACTION_DOWN) {
+            when (keyCode) {
+                KeyEvent.KEYCODE_BACK -> {
+                    if (WebView!!.canGoBack()) {
+                        WebView!!.goBack()
+                    } else {
+                        finish()
+                    }
+                    return true
+                }
+            }
         }
-        val uriSting = (file.absolutePath + "/" + System.currentTimeMillis() + ".jpg")
-        return uriSting
+        return super.onKeyDown(keyCode, event)
     }
 
-    private fun getRealPathFromURI(contentURI: String): String? {
-        val contentUri = Uri.parse(contentURI)
-        val cursor = contentResolver.query(contentUri, null, null, null, null)
-        if (cursor == null) {
-            return contentUri.path
-        } else {
-            cursor.moveToFirst()
-            val index = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA)
-            return cursor.getString(index)
-        }
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig!!)
     }
 
-    fun calculateInSampleSize(options: BitmapFactory.Options, reqWidth: Int, reqHeight: Int): Int {
-        val height = options.outHeight
-        val width = options.outWidth
-        var inSampleSize = 1
 
-        if (height > reqHeight || width > reqWidth) {
-            val heightRatio = Math.round(height.toFloat() / reqHeight.toFloat())
-            val widthRatio = Math.round(width.toFloat() / reqWidth.toFloat())
-            inSampleSize = if (heightRatio < widthRatio) heightRatio else widthRatio
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
+        super.onActivityResult(requestCode, resultCode, intent)
+        var results: Array<Uri>? = null
+        //Check if response is positive
+        if (resultCode == RESULT_OK) {
+            if (requestCode == FCR) {
+                if (null == mUMA) {
+                    return
+                }
+                if (intent == null) {
+                    //Capture Photo if no image available
+                    if (mCM != null) {
+                        results = arrayOf(Uri.parse(mCM))
+                    }
+                } else {
+                    val dataString = intent.dataString
+                    if (dataString != null) {
+                        results = arrayOf(Uri.parse(dataString))
+                    }
+                }
+            }
         }
-        val totalPixels = (width * height).toFloat()
-        val totalReqPixelsCap = (reqWidth * reqHeight * 2).toFloat()
-        while (totalPixels / (inSampleSize * inSampleSize) > totalReqPixelsCap) {
-            inSampleSize++
-        }
-
-        return inSampleSize
+        mUMA!!.onReceiveValue(results)
+        mUMA = null
     }
+
 }

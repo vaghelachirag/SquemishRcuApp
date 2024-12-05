@@ -47,10 +47,12 @@ class DashboardMenuViewModel(
                 .subscribe(object : CallbackObserver<GetDashboardApiResponse>() {
                     override fun onSuccess(response: GetDashboardApiResponse) {
                         isLoading.postValue(false)
+                        binding.refreshLayout.isRefreshing = false
                     }
 
                     override fun onFailed(code: Int, message: String) {
                         isLoading.postValue(false)
+                        binding.refreshLayout.isRefreshing = false
                         Log.e("Status",code.toString())
                         Utils().showToast(context,"Authentication token has expired")
                         (context as DashboardActivity).redirectToLogin()
@@ -58,6 +60,7 @@ class DashboardMenuViewModel(
 
                     override fun onNext(t: GetDashboardApiResponse) {
                         isLoading.postValue(false)
+                        binding.refreshLayout.isRefreshing = false
                         Log.e("Status",t.getStatusCode().toString())
                         if(t.getStatusCode() == 200){
                             if(t.getData() != null){
