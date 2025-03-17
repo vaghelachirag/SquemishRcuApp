@@ -43,11 +43,13 @@ public class InitDb extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
         FirebaseApp.initializeApp(this);
         appDatabase = AppDatabase.getDatabase(this);
         RxJavaPlugins.setErrorHandler(throwable -> {
             Log.e("Error", Objects.requireNonNull(throwable.getMessage()));
         }); // nothing or some logging
+
     }
 
 }

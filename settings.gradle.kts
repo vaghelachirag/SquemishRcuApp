@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "SqumishRcuApp"
 include(":app")
- 
+include(":crashyreporter")
