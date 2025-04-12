@@ -26,6 +26,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.FileProvider
 import androidx.core.view.forEach
 import androidx.lifecycle.lifecycleScope
+import com.karumi.dexter.BuildConfig
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -175,7 +176,7 @@ class FragmentPhotograph: BaseFragment(), FragmentLifecycleInterface {
             imgFile = File(imagesFolder, Date().time.toString() + ".jpg")
             imagePath = FileProvider.getUriForFile(
                 requireActivity(),
-                com.squmish.rcuapp.BuildConfig.APPLICATION_ID + ".fileProvider",
+                BuildConfig.APPLICATION_ID + ".fileProvider",
                 imgFile!!
             )
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)

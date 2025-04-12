@@ -27,7 +27,7 @@
     <uses-permission android:name="android.permission.LOCATION_SETTINGS_ENABLED" />
 
     <application
-        android:name=".App"
+        android:name=".room.InitDb"
         android:allowBackup="true"
         android:enableOnBackInvokedCallback="true"
         android:dataExtractionRules="@xml/data_extraction_rules"

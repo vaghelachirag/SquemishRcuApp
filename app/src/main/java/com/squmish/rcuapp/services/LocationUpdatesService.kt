@@ -12,7 +12,6 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.BitmapFactory
 import android.graphics.Color
-import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.media.RingtoneManager
@@ -24,7 +23,6 @@ import android.os.HandlerThread
 import android.os.IBinder
 import android.os.Looper
 import android.util.Log
-import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.TaskStackBuilder
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -221,18 +219,21 @@ class LocationUpdatesService : Service(){
     fun onNewLocation(location: Location) {
         Log.e("Location", "New location: $location")
 
-        var addresses: List<Address?>
-        val geocoder = Geocoder(this, Locale.getDefault())
-        addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)!!;
-        val address = addresses[0]!!.getAddressLine(0)
+        try {
+            val geocoder = Geocoder(this, Locale.getDefault())
+            val addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
 
-        DashboardActivity.currentLat = location.latitude
-        DashboardActivity.currentLong = location.longitude
-        DashboardActivity.useraddress = address
+            val address = addresses?.firstOrNull()?.getAddressLine(0) ?: "Address not found"
+            DashboardActivity.currentLat = location.latitude
+            DashboardActivity.currentLong = location.longitude
+            DashboardActivity.useraddress = address
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
 
-     /*   var toast = Toast.makeText(applicationContext,location.latitude.toString() + " "+location.longitude.toString() + " "+address,Toast.LENGTH_SHORT)
-        toast.show()
-*/
+        /*   var toast = Toast.makeText(applicationContext,location.latitude.toString() + " "+location.longitude.toString() + " "+address,Toast.LENGTH_SHORT)
+           toast.show()
+   */
         currentLocation = location
 
         val sharedPreferences = getSharedPreferences(USER_PREFS, Context.MODE_PRIVATE)
@@ -297,9 +298,7 @@ class LocationUpdatesService : Service(){
         // Set the Channel ID for Android O.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             builder.setChannelId("location_service_channel") // Channel ID
-        } else {
-            builder.priority = Notification.PRIORITY_HIGH
-        }
+        } else builder.priority = Notification.PRIORITY_HIGH
 
         return builder.build()
     }

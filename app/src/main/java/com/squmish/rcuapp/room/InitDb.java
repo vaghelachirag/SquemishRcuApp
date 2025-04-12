@@ -4,11 +4,11 @@ import android.app.Application;
 import android.util.Log;
 
 import com.google.firebase.FirebaseApp;
+import com.squmish.rcuapp.uttils.CustomizedExceptionHandler;
 
 import java.util.Objects;
 
 import io.reactivex.plugins.RxJavaPlugins;
-
 
 public class InitDb extends Application {
     public static AppDatabase appDatabase;
@@ -43,6 +43,7 @@ public class InitDb extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Thread.setDefaultUncaughtExceptionHandler(new CustomizedExceptionHandler("/mnt/sdcard/"));
 
         FirebaseApp.initializeApp(this);
         appDatabase = AppDatabase.getDatabase(this);
@@ -50,6 +51,9 @@ public class InitDb extends Application {
             Log.e("Error", Objects.requireNonNull(throwable.getMessage()));
         }); // nothing or some logging
 
+
     }
 
 }
+
+
