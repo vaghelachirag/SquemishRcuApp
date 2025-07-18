@@ -3,9 +3,7 @@ package com.squmish.rcuapp.view.detail
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.view.WindowManager
-import android.widget.LinearLayout
 import androidx.viewpager.widget.ViewPager
 import com.squmish.rcuapp.databinding.ActivityDetailBinding
 import com.squmish.rcuapp.interfaces.FragmentLifecycleInterface
@@ -16,9 +14,6 @@ import com.squmish.rcuapp.view.adapter.VerificationDetailViewPagerAdapter
 import com.squmish.rcuapp.view.base.BaseActivity
 import com.squmish.rcuapp.view.detail.fiRequest.FragmentRCOVerification
 import com.squmish.rcuapp.viewmodel.DetailViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 
 open class ActivityDetail  : BaseActivity()  {

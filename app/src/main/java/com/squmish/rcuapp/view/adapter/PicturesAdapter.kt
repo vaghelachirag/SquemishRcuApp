@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.rcuapp.view.dialougs.FullScreenImageDialoug
+import com.squmish.rcuapp.view.dialougs.FullScreenImageDialoug
 import com.squmish.rcuapp.R
 import com.squmish.rcuapp.databinding.ItemPicturesBinding
 import com.squmish.rcuapp.model.getverificationDetailResponse.GetFiVerificationDocument

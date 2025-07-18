@@ -11,7 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.example.rcuapp.view.dialougs.FullScreenImageDialoug
+import com.squmish.rcuapp.view.dialougs.FullScreenImageDialoug
 import com.squmish.rcuapp.R
 import com.squmish.rcuapp.databinding.ItemDocumentBinding
 import com.squmish.rcuapp.interfaces.OnItemSelected

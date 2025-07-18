@@ -1,4 +1,4 @@
-package com.example.rcuapp.view.dialougs
+package com.squmish.rcuapp.view.dialougs
 
 import android.annotation.SuppressLint
 import android.app.Dialog

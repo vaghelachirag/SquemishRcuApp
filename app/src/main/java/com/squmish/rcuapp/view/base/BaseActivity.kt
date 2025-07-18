@@ -9,7 +9,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import com.example.rcuapp.view.dialougs.ProgressDialog
+import com.squmish.rcuapp.view.dialougs.ProgressDialog
 import com.squmish.rcuapp.R
 import com.squmish.rcuapp.databinding.ActivityDashboardBinding
 import com.squmish.rcuapp.uttils.Session

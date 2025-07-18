@@ -18,6 +18,7 @@ import com.squmish.rcuapp.network.CallbackObserver
 import com.squmish.rcuapp.network.Networking
 import com.squmish.rcuapp.uttils.AppConstants
 import com.squmish.rcuapp.uttils.Utility
+import com.squmish.rcuapp.view.menu.DashboardActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -144,12 +145,15 @@ class PictureViewModel(private val context: Context, private val  binding: Fragm
 
 
     //    For Save Survey Picture
+    @SuppressLint("DefaultLocale")
     fun saveSurveyPicture(imgFile: File) {
 
         val requestBody: RequestBody = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
             .addFormDataPart("firequestid", AppConstants.verificationId.toString())
             .addFormDataPart("document", imgFile.name, imgFile.asRequestBody("image/*".toMediaTypeOrNull()))
+            .addFormDataPart("Latitude", String.format("%.6f", DashboardActivity.currentLat))
+            .addFormDataPart("Longitude", String.format("%.6f", DashboardActivity.currentLong))
             .build()
 
         when {

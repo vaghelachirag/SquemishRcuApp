@@ -3,7 +3,7 @@ package com.squmish.rcuapp.view.base
 import android.app.Activity
 import android.content.Context
 import androidx.fragment.app.Fragment
-import com.example.rcuapp.view.dialougs.ProgressDialog
+import com.squmish.rcuapp.view.dialougs.ProgressDialog
 import com.squmish.rcuapp.R
 import com.squmish.rcuapp.uttils.Session
 
